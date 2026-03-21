@@ -8,13 +8,18 @@ public class GameStateManager : MonoBehaviour
 {
     public GameState CurrentState { get; private set; }
 
-    GameContext context;
+    public readonly GameContext Context = new GameContext();
 
-    void Awake() => StartGame();
+    void Awake()
+    {
+        CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
+        CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
+
+        StartGame();
+    }
 
     public void StartGame()
     {
-        context = new GameContext();
         TransitionTo(GameState.Setup);
     }
 
@@ -52,8 +57,6 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    //TODO: this random is being run in the same frame so its all the same.
-    //Need to find a better way to get these
     ISticker GetRandomSticker()
     {
         List<ISticker> stickers =
@@ -76,11 +79,11 @@ public class GameStateManager : MonoBehaviour
         var discardPile = new DiscardPile();
         var player = new Player(deck, hand, discardPile);
 
-        context.Player = player;
-        context.Enemy = new Enemy(InitializeDeck());
+        Context.Player = player;
+        Context.Enemy = new Enemy(InitializeDeck());
 
-        context.Player.Deck.Shuffle();
-        context.Enemy.Deck.Shuffle();
+        Context.Player.Deck.Shuffle();
+        Context.Enemy.Deck.Shuffle();
 
         player.Draw();
 
@@ -90,10 +93,10 @@ public class GameStateManager : MonoBehaviour
     void EnterEnemyPlaysCard()
     {
         Debug.Log("---ENEMY PLAYS CARD---");
-        var enemy = context.Enemy;
+        var enemy = Context.Enemy;
         var card = enemy.Deck.Draw();
 
-        context.EnemyCurrentCard = card;
+        Context.EnemyCurrentCard = card;
         Debug.Log($"Enemy plays: {card}");
 
         TransitionTo(GameState.PlayerPlaysCard);
@@ -102,14 +105,7 @@ public class GameStateManager : MonoBehaviour
     void EnterPlayerPlaysCard()
     {
         Debug.Log("---PLAYER PLAYS CARD---");
-        
-        //TODO: Wait for player input
-        
-        Debug.Log(" >>> Faking player input");
-        var player = context.Player;
-        var card = player.Hand.Cards.PickOne();
-        
-        HandlePlayerSelectedCard(card);
+        Debug.Log("Waiting for player input.");
     }
 
     public void HandlePlayerSelectedCard(Card card)
@@ -117,7 +113,8 @@ public class GameStateManager : MonoBehaviour
         if (CurrentState != GameState.PlayerPlaysCard)
             return;
 
-        context.PlayerCurrentCard = card;
+        Debug.Log($"Player plays {card}");
+        Context.PlayerCurrentCard = card;
         TransitionTo(GameState.RevealStickers);
     }
 
@@ -125,33 +122,29 @@ public class GameStateManager : MonoBehaviour
     {
         Debug.Log("---REVEAL STICKERS---");
 
-        context.AvailableStickers.Clear();
+        Context.AvailableStickers.Clear();
 
         for (var i = 0; i < 3; i++)
-            context.AvailableStickers.Add(GetRandomSticker());
+            Context.AvailableStickers.Add(GetRandomSticker());
 
-        Debug.Log($"Available stickers: {string.Join(",", context.AvailableStickers)}");
+        Debug.Log($"Available stickers: {string.Join(",", Context.AvailableStickers)}");
         TransitionTo(GameState.PlayerPlaceSticker);
     }
 
     void EnterPlayerPlaceSticker()
     {
         Debug.Log("---PLAYER PLACES STICKER---");
-        //TODO: Wait for player input
-
-        Debug.Log(" >>> Faking player input");
-        var sticker = context.AvailableStickers.PickOne();
-        HandlePlayerSelectedSticker(sticker);
+        Debug.Log("Waiting for player input.");
     }
 
-    public void HandlePlayerSelectedSticker(ISticker sticker)
+    public void HandlePlayerSelectedSticker(ISticker sticker, Card card)
     {
         if (CurrentState != GameState.PlayerPlaceSticker)
             return;
 
-        context.AvailableStickers.Remove(sticker);
-        context.PlayerCurrentCard.Stickers.Add(sticker);
-        Debug.Log($"Adding {sticker} to {context.PlayerCurrentCard}");
+        Context.AvailableStickers.Remove(sticker);
+        card.Stickers.Add(sticker);
+        Debug.Log($"Adding {sticker} to {card}");
 
         TransitionTo(GameState.EnemyPlaceSticker);
     }
@@ -159,11 +152,11 @@ public class GameStateManager : MonoBehaviour
     void EnterEnemyPlaceSticker()
     {
         Debug.Log("---ENEMY PLACES STICKER---");
-        
+
         //TODO: pick between available stickers!
-        var random = context.AvailableStickers.PickOne();
-        context.EnemyCurrentCard.Stickers.Add(random);
-        Debug.Log($"Adding {random} to {context.EnemyCurrentCard}");
+        var random = Context.AvailableStickers.PickOne();
+        Context.EnemyCurrentCard.Stickers.Add(random);
+        Debug.Log($"Adding {random} to {Context.EnemyCurrentCard}");
 
         TransitionTo(GameState.ConflictResolution);
     }
