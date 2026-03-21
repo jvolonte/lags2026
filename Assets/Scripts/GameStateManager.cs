@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using CardZones;
+using Factories;
 using Stickers;
 using UnityEngine;
 
@@ -8,10 +8,15 @@ public class GameStateManager : MonoBehaviour
 {
     public GameState CurrentState { get; private set; }
 
-    public readonly GameContext Context = new GameContext();
+    public readonly GameContext Context = new();
+
+    readonly CardFactory cardFactory = new();
+    readonly StickerFactory stickerFactory = new();
+    DeckFactory deckFactory;
 
     void Awake()
     {
+        deckFactory = new DeckFactory(cardFactory);
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
 
@@ -25,62 +30,35 @@ public class GameStateManager : MonoBehaviour
 
     void TransitionTo(GameState newState)
     {
+        Debug.Log($"STATE: {CurrentState} --> {newState}");
         CurrentState = newState;
-
-        switch (newState)
-        {
-            case GameState.Setup:
-                EnterSetup();
-                break;
-            case GameState.EnemyPlaysCard:
-                EnterEnemyPlaysCard();
-                break;
-            case GameState.PlayerPlaysCard:
-                EnterPlayerPlaysCard();
-                break;
-            case GameState.RevealStickers:
-                EnterRevealStickers();
-                break;
-            case GameState.PlayerPlaceSticker:
-                EnterPlayerPlaceSticker();
-                break;
-            case GameState.EnemyPlaceSticker:
-                EnterEnemyPlaceSticker();
-                break;
-            case GameState.ConflictResolution:
-                EnterConflictResolution();
-                break;
-            case GameState.Draw:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
-        }
+        EnterState(newState);
     }
 
-    ISticker GetRandomSticker()
+    void EnterState(GameState newState)
     {
-        List<ISticker> stickers =
-            new()
-            {
-                new AdditiveSticker(UnityEngine.Random.Range(1, 10)),
-                new AdditiveSticker(UnityEngine.Random.Range(1, 10)),
-                new MultiplierSticker(1.5f),
-                new MultiplierSticker(2f),
-            };
-
-        return stickers.PickOne();
+        switch (newState)
+        {
+            case GameState.Setup: EnterSetup(); break;
+            case GameState.EnemyPlaysCard: EnterEnemyPlaysCard(); break;
+            case GameState.PlayerPlaysCard: EnterPlayerPlaysCard(); break;
+            case GameState.RevealStickers: EnterRevealStickers(); break;
+            case GameState.PlayerPlaceSticker: EnterPlayerPlaceSticker(); break;
+            case GameState.EnemyPlaceSticker: EnterEnemyPlaceSticker(); break;
+            case GameState.ConflictResolution: EnterConflictResolution(); break;
+            case GameState.Draw: EnterDraw(); break;
+        }
     }
 
     void EnterSetup()
     {
-        Debug.Log("---SETUP---");
-        var deck = InitializeDeck();
+        var deck = deckFactory.CreateRandom();
         var hand = new Hand();
         var discardPile = new DiscardPile();
         var player = new Player(deck, hand, discardPile);
 
         Context.Player = player;
-        Context.Enemy = new Enemy(InitializeDeck());
+        Context.Enemy = new Enemy(1, InitializeDeck());
 
         Context.Player.Deck.Shuffle();
         Context.Enemy.Deck.Shuffle();
@@ -104,11 +82,10 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaysCard()
     {
-        Debug.Log("---PLAYER PLAYS CARD---");
         Debug.Log("Waiting for player input.");
     }
 
-    public void HandlePlayerSelectedCard(Card card)
+    void HandlePlayerSelectedCard(Card card)
     {
         if (CurrentState != GameState.PlayerPlaysCard)
             return;
@@ -120,24 +97,23 @@ public class GameStateManager : MonoBehaviour
 
     void EnterRevealStickers()
     {
-        Debug.Log("---REVEAL STICKERS---");
-
         Context.AvailableStickers.Clear();
 
         for (var i = 0; i < 3; i++)
-            Context.AvailableStickers.Add(GetRandomSticker());
+            Context.AvailableStickers.Add(stickerFactory.GetRandom());
 
         Debug.Log($"Available stickers: {string.Join(",", Context.AvailableStickers)}");
+
+        //TODO: this might need an event from UI to transition once all stickers are shown.
         TransitionTo(GameState.PlayerPlaceSticker);
     }
 
     void EnterPlayerPlaceSticker()
     {
-        Debug.Log("---PLAYER PLACES STICKER---");
         Debug.Log("Waiting for player input.");
     }
 
-    public void HandlePlayerSelectedSticker(ISticker sticker, Card card)
+    void HandlePlayerSelectedSticker(ISticker sticker, Card card)
     {
         if (CurrentState != GameState.PlayerPlaceSticker)
             return;
@@ -151,21 +127,24 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaceSticker()
     {
-        Debug.Log("---ENEMY PLACES STICKER---");
-
         //TODO: pick between available stickers!
         var random = Context.AvailableStickers.PickOne();
         Context.EnemyCurrentCard.Stickers.Add(random);
         Debug.Log($"Adding {random} to {Context.EnemyCurrentCard}");
 
+        Context.AvailableStickers.Clear();
         TransitionTo(GameState.ConflictResolution);
     }
 
     void EnterConflictResolution()
     {
-        Debug.Log("---CONFLICT RESOLUTION---");
-
         //TODO: handle context and cards depending on result
+    }
+
+    void EnterDraw()
+    {
+        Context.Player.Draw();
+        TransitionTo(GameState.EnemyPlaysCard);
     }
 
     static Deck InitializeDeck() =>
@@ -178,4 +157,10 @@ public class GameStateManager : MonoBehaviour
                 new(UnityEngine.Random.Range(1, 13), Suit.Golds),
             }
         );
+
+    void OnDestroy()
+    {
+        CombatEventManager.OnPlayCard -= HandlePlayerSelectedCard;
+        CombatEventManager.OnAddSticker -= HandlePlayerSelectedSticker;
+    }
 }
