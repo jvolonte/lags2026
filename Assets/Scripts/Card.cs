@@ -9,11 +9,11 @@ public class Card
     public List<ISticker> Stickers;
     public int Evaluation { get; set; }
 
-    public Card(int value, Suit suit, List<ISticker> stickers)
+    public Card(int value, Suit suit, List<ISticker> stickers = null)
     {
         Value = value;
         Suit = suit;
-        Stickers = stickers;
+        Stickers = stickers ?? new List<ISticker>();
         Evaluation = Value;
     }
 
