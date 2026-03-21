@@ -9,5 +9,7 @@ namespace Stickers
         public AdditiveSticker(int value) => Value = value;
 
         public void Resolve(Card source, Card other) => source.Evaluation += Value;
+
+        public override string ToString() => $"Additive: {Value}";
     }
 }
