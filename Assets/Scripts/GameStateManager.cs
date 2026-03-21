@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CardZones;
 using Factories;
 using Stickers;
@@ -58,7 +57,7 @@ public class GameStateManager : MonoBehaviour
         var player = new Player(deck, hand, discardPile);
 
         Context.Player = player;
-        Context.Enemy = new Enemy(1, InitializeDeck());
+        Context.Enemy = new Enemy(1, deckFactory.CreateRandom());
 
         Context.Player.Deck.Shuffle();
         Context.Enemy.Deck.Shuffle();
@@ -139,6 +138,8 @@ public class GameStateManager : MonoBehaviour
     void EnterConflictResolution()
     {
         //TODO: handle context and cards depending on result
+        
+        TransitionTo(GameState.Draw);
     }
 
     void EnterDraw()
@@ -146,17 +147,6 @@ public class GameStateManager : MonoBehaviour
         Context.Player.Draw();
         TransitionTo(GameState.EnemyPlaysCard);
     }
-
-    static Deck InitializeDeck() =>
-        new(
-            new List<Card>
-            {
-                new(UnityEngine.Random.Range(1, 13), Suit.Cups),
-                new(UnityEngine.Random.Range(1, 13), Suit.Swords),
-                new(UnityEngine.Random.Range(1, 13), Suit.Clubs),
-                new(UnityEngine.Random.Range(1, 13), Suit.Golds),
-            }
-        );
 
     void OnDestroy()
     {
