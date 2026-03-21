@@ -74,6 +74,7 @@ public class GameStateManager : MonoBehaviour
         var card = enemy.Deck.Draw();
 
         Context.EnemyCurrentCard = card;
+        CombatEventManager.EnemyPlayCard(card);
         Debug.Log($"Enemy plays: {card}");
 
         TransitionTo(GameState.PlayerPlaysCard);
