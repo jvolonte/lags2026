@@ -12,5 +12,7 @@ namespace Stickers
         {
             ruleSet.GreaterValueWins = !ruleSet.GreaterValueWins;
         }
+        
+        public override string ToString() => $"Reverse";
     }
 }

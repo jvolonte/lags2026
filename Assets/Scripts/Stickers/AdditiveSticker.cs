@@ -11,6 +11,7 @@ namespace Stickers
         public void Resolve(Card source, Card other) => source.Evaluation += Value;
 
         public void ApplyRule(WinRuleSet ruleSet) {}
+        
         public override string ToString() => $"Additive: {Value}";
     }
 }
