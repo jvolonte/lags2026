@@ -16,7 +16,7 @@ public class Player
 
     public void Draw()
     {
-        while (Hand.CanDraw)
+        while (Hand.CanDraw && (Deck.Count > 0 || Discard.Count > 0))
         {
             var drawnCard = Deck.Draw();
             Hand.Add(drawnCard);
@@ -26,8 +26,6 @@ public class Player
     public void Play(Card card)
     {
         Hand.Play(card);
-        //TODO: add it to the field
-
-        Debug.Log($"Cards left in hand: {Hand.Count}");
+        Debug.Log($">Cards left in hand: {Hand.Count}");
     }
 }

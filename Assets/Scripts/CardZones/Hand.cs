@@ -16,6 +16,8 @@ namespace CardZones
         {
             if (Cards.Contains(card))
                 Cards.Remove(card);
+            
+            CombatEventManager.PlayCard(card);
         }
     }
 }

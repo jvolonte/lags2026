@@ -24,8 +24,9 @@ namespace Views
                 }
                 
                 var player = context.Player;
-                var card = player.Hand.Cards.PickOne();
-                CombatEventManager.PlayCard(card);
+                var hand = player.Hand;
+                var card = hand.Cards.PickOne();
+                player.Play(card);
             });
 
             addRandomStickerButton.onClick.AddListener(() =>

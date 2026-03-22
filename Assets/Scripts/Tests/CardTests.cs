@@ -17,6 +17,8 @@ namespace Tests
 
         static void PlayCardFromHandTest()
         {
+            var discardPile = new DiscardPile();
+
             var deck = new Deck(
                 new List<Card>
                 {
@@ -24,12 +26,12 @@ namespace Tests
                     new(3, Suit.Clubs),
                     new(1, Suit.Swords),
                     new(8, Suit.Swords),
-                }
+                },
+                discardPile
             );
             deck.Shuffle();
 
             var hand = new Hand();
-            var discardPile = new DiscardPile();
             var player = new Player(deck, hand, discardPile);
             player.Draw();
 

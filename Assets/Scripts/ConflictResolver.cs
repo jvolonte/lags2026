@@ -38,21 +38,32 @@ public class ConflictResolver
 
     void ResolvePlayerWin(ConflictResult result, GameContext context)
     {
-        Debug.Log("PLAYER WON");
+        Debug.Log("---PLAYER WON---");
         context.Enemy.Damage();
 
         context.Player.Discard.Add(context.PlayerCurrentCard);
         context.Player.Discard.Add(context.EnemyCurrentCard);
+        Cleanup(context);
     }
 
     void ResolveEnemyWin(ConflictResult result, GameContext context)
     {
-        Debug.Log("ENEMY WON");
+        Debug.Log("---ENEMY WON---");
+        Cleanup(context);
     }
 
     void ResolveTie(ConflictResult result, GameContext context)
     {
-        Debug.Log("IT'S A TIE");
+        Debug.Log("---TIE---");
         context.Player.Discard.Add(context.PlayerCurrentCard);
+        Cleanup(context);
+    }
+
+    void Cleanup(GameContext context)
+    {
+        context.PlayerCurrentCard = null;
+        context.EnemyCurrentCard = null;
+        context.AvailableStickers.Clear();
+        CombatEventManager.ClearTable();
     }
 }

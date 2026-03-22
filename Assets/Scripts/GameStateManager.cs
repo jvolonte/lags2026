@@ -19,6 +19,9 @@ public class GameStateManager : MonoBehaviour
     EvaluationView playerEvaluationView;
     EvaluationView enemyEvaluationView;
 
+    [Header("Views")] [SerializeField] DeckView deckView;
+    [SerializeField] DiscardPileView discardPileView;
+
     void Awake()
     {
         deckFactory = new DeckFactory(cardFactory);
@@ -55,15 +58,19 @@ public class GameStateManager : MonoBehaviour
             case GameState.EnemyPlaceSticker: EnterEnemyPlaceSticker(); break;
             case GameState.ConflictResolution: StartCoroutine(EnterConflictResolution()); break;
             case GameState.Draw: EnterDraw(); break;
+            case GameState.GameOver: EnterGameOver(); break;
         }
     }
 
     void EnterSetup()
     {
-        var deck = deckFactory.CreateRandom();
-        var hand = new Hand();
         var discardPile = new DiscardPile();
+        var deck = deckFactory.CreateRandom(discardPile);
+        var hand = new Hand();
         var player = new Player(deck, hand, discardPile);
+
+        deckView.Bind(deck);
+        discardPileView.Bind(discardPile);
 
         Context.Player = player;
         Context.Enemy = new Enemy(1);
@@ -89,7 +96,7 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaysCard()
     {
-        Debug.Log("Waiting for player input.");
+        Debug.Log("Waiting for player input...");
     }
 
     void HandlePlayerSelectedCard(Card card)
@@ -147,25 +154,16 @@ public class GameStateManager : MonoBehaviour
     {
         var resolver = new ConflictResolver();
         var result = resolver.Resolve(Context);
-        resolver.ApplyOutcome(result, Context);
 
         yield return PlayEvaluationPhase(
             Context.PlayerCurrentCard.Calculate(Context.EnemyCurrentCard),
             Context.EnemyCurrentCard.Calculate(Context.PlayerCurrentCard)
         );
-
         yield return new WaitForSeconds(2);
 
-        Cleanup();
-        TransitionTo(GameState.Draw);
-    }
+        resolver.ApplyOutcome(result, Context);
 
-    void Cleanup()
-    {
-        Context.PlayerCurrentCard = null;
-        Context.EnemyCurrentCard = null;
-        Context.AvailableStickers.Clear();
-        CombatEventManager.ClearTable();
+        TransitionTo(GameState.Draw);
     }
 
     IEnumerator PlayEvaluationPhase(EvaluationContext playerEval, EvaluationContext enemyEval)
@@ -178,8 +176,24 @@ public class GameStateManager : MonoBehaviour
 
     void EnterDraw()
     {
+        if (OutOfCards())
+        {
+            TransitionTo(GameState.GameOver);
+            return;
+        }
+
         Context.Player.Draw();
         TransitionTo(GameState.EnemyPlaysCard);
+    }
+
+    bool OutOfCards() =>
+        Context.Player.Hand.Count <= 0 &&
+        Context.Player.Deck.Count <= 0 &&
+        Context.Player.Discard.Count <= 0;
+
+    void EnterGameOver()
+    {
+        Debug.Log("GAME OVER!!!");
     }
 
     void OnDestroy()

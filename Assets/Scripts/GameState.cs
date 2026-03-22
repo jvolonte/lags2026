@@ -7,5 +7,6 @@ public enum GameState
     PlayerPlaceSticker,
     EnemyPlaceSticker,
     ConflictResolution,
-    Draw
+    Draw,
+    GameOver
 }

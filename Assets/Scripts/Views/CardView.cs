@@ -10,10 +10,12 @@ namespace Views
         [SerializeField] TextMeshProUGUI valueTextRotated; 
         public EvaluationView evaluationView;
 
-        public void SetCard(Card card)
+        public void SetCard(Card card, bool showEvaluation = true)
         {
             SetValue(card.Value);
             SetVisual(card);
+            
+            evaluationView.gameObject.SetActive(showEvaluation);
         }
 
         void SetValue(int value)

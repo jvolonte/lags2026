@@ -634,6 +634,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+--- !u!114 &503038278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4028474427465191081, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef74a4ff80534b01b41abf6bcd076797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Views.DiscardPileView
+--- !u!114 &503038279 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8167673185259399956, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3eb6be68b034ee599d84385eab7ada4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Views.DeckView
 --- !u!1 &832192444
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,6 +685,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596dc1ac51c249e58af315d34b3eba4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateManager
+  deckView: {fileID: 503038279}
+  discardPileView: {fileID: 503038278}
 --- !u!4 &832192446
 Transform:
   m_ObjectHideFlags: 0

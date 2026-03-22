@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace CardZones
@@ -6,9 +7,17 @@ namespace CardZones
     {
         public List<Card> Cards = new();
         public int Count => Cards.Count;
-        public Card Peek() => Cards[0];
-        
-        public virtual void Add(Card card) => Cards.Add(card);
+        public event Action<Card> OnCardAdded;
+        public event Action<Card> OnCardRemoved;
+        public event Action OnEmptied;
+
+        public virtual Card Peek() => Cards[0];
+
+        public virtual void Add(Card card)
+        {
+            Cards.Add(card);
+            OnCardAdded?.Invoke(card);
+        }
 
         public virtual Card Draw()
         {
@@ -16,7 +25,14 @@ namespace CardZones
 
             var card = Cards[0];
             Cards.RemoveAt(0);
+            OnCardRemoved?.Invoke(card);
             return card;
+        }
+
+        public void Clear()
+        {
+            Cards.Clear();
+            OnEmptied?.Invoke();
         }
     }
 }
