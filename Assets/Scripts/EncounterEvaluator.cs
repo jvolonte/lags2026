@@ -1,30 +1,24 @@
-using System.Collections.Generic;
-using System.Linq;
-using System;
-
 public static class EncounterEvaluator
 {
-
-    // TODO: Contemplar el caso EMPATE
-
-    public static Card GetWinner(Card card, Card otherCard)
+    public static ConflictOutcome DetermineOutcome(
+        int playerValue, int enemyValue, Card playerCard, Card enemyCard, WinRuleSet ruleSet
+    )
     {
-        WinRuleSet ruleSet = new(); 
-        List<Card> cards = new() { card, otherCard };
+        playerCard.ApplyStickerRules(ruleSet);
+        enemyCard.ApplyStickerRules(ruleSet);
 
-        card.Calculate(otherCard);
-        otherCard.Calculate(card);
+        if (playerValue > enemyValue)
+            return ruleSet.HigherValueWins
+                ? ConflictOutcome.PlayerWin
+                : ConflictOutcome.EnemyWin;
 
-        card.ApplyStickerRules(ruleSet);
-        otherCard.ApplyStickerRules(ruleSet);
+        if (enemyValue > playerValue)
+            return ruleSet.HigherValueWins
+                ? ConflictOutcome.EnemyWin
+                : ConflictOutcome.PlayerWin;
 
-        Func<Card, Card, bool> func = ruleSet.GreaterValueWins ? IsStronger : IsWeaker;
-        return cards.Aggregate((acc, c) => func(c, acc) ? c : acc); 
+        return ConflictOutcome.Tie;
     }
-
-    private static bool IsStronger(Card card, Card other) => card.Evaluation > other.Evaluation;
-
-    private static bool IsWeaker(Card card, Card other) => card.Evaluation < other.Evaluation;
 }
 
 public enum ConflictOutcome
@@ -43,6 +37,5 @@ public struct ConflictResult
 
 public class WinRuleSet
 {
-    public bool GreaterValueWins {get; set;} = true;
-
+    public bool HigherValueWins { get; set; } = true;
 }

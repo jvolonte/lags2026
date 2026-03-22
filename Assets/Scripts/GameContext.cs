@@ -10,4 +10,5 @@ public class GameContext
     public Card PlayerCurrentCard;
     
     public List<ISticker> AvailableStickers = new();
+    public WinRuleSet RuleSet;
 }

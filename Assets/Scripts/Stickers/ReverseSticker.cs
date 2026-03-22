@@ -10,7 +10,7 @@ namespace Stickers
 
         public void ApplyRule(WinRuleSet ruleSet)
         {
-            ruleSet.GreaterValueWins = !ruleSet.GreaterValueWins;
+            ruleSet.HigherValueWins = !ruleSet.HigherValueWins;
         }
         
         public override string ToString() => $"Reverse";

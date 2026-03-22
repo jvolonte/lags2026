@@ -29,7 +29,7 @@ public class Card
 
     public void ApplyStickerRules(WinRuleSet ruleSet)
     {
-        foreach (ISticker sticker in Stickers.OrderBy(s => s.Priority))
+        foreach (var sticker in Stickers.OrderBy(s => s.Priority))
             sticker.ApplyRule(ruleSet);
     }
 

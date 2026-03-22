@@ -59,6 +59,7 @@ public class GameStateManager : MonoBehaviour
 
         Context.Player = player;
         Context.Enemy = new Enemy(1, deckFactory.CreateRandom());
+        Context.RuleSet = new WinRuleSet { HigherValueWins = true };
 
         Context.Player.Deck.Shuffle();
         Context.Enemy.Deck.Shuffle();
@@ -139,9 +140,9 @@ public class GameStateManager : MonoBehaviour
     IEnumerator EnterConflictResolution()
     {
         var resolver = new ConflictResolver();
-        var result = resolver.Resolve(Context.PlayerCurrentCard, Context.EnemyCurrentCard);
+        var result = resolver.Resolve(Context);
         resolver.ApplyOutcome(result, Context);
-        
+
         Context.PlayerCurrentCard = null;
         Context.EnemyCurrentCard = null;
         Context.AvailableStickers.Clear();
@@ -149,27 +150,6 @@ public class GameStateManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         TransitionTo(GameState.Draw);
-    }
-
-    void ResolveTie() => 
-        Context.Player.Discard.Add(Context.PlayerCurrentCard);
-
-    void ResolveEnemyWin()
-    {
-        
-    }
-
-    void ResolvePlayerWin()
-    {
-        Context.Enemy.Damage();
-
-        if (Context.Enemy.Health > 0)
-        {
-            //TODO: next enemy
-        }
-        
-        Context.Player.Discard.Add(Context.PlayerCurrentCard);
-        Context.Player.Discard.Add(Context.EnemyCurrentCard);
     }
 
     void EnterDraw()

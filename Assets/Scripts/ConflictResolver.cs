@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class ConflictResolver
 {
-    public ConflictResult Resolve(Card playerCard, Card enemyCard)
+    public ConflictResult Resolve(GameContext context)
     {
+        var playerCard = context.PlayerCurrentCard;
+        var enemyCard = context.EnemyCurrentCard;
+
         var playerValue = Mathf.FloorToInt(playerCard.Calculate(enemyCard));
         var enemyValue = Mathf.FloorToInt(enemyCard.Calculate(playerCard));
 
-        var outcome = DetermineOutcome(playerValue, enemyValue);
+        var outcome = EncounterEvaluator.DetermineOutcome(
+            playerValue, enemyValue, playerCard, enemyCard, context.RuleSet
+        );
 
         return new ConflictResult
         {
@@ -15,18 +20,6 @@ public class ConflictResolver
             EnemyValue = enemyValue,
             Outcome = outcome
         };
-    }
-
-    ConflictOutcome DetermineOutcome(int playerValue, int enemyValue)
-    {
-        //TODO: should use encounter evaluator 
-        if (playerValue > enemyValue)
-            return ConflictOutcome.PlayerWin;
-
-        if (enemyValue > playerValue)
-            return ConflictOutcome.EnemyWin;
-
-        return ConflictOutcome.Tie;
     }
 
     public void ApplyOutcome(ConflictResult result, GameContext context)
@@ -41,19 +34,21 @@ public class ConflictResolver
 
     void ResolvePlayerWin(ConflictResult result, GameContext context)
     {
+        Debug.Log("PLAYER WON");
         context.Enemy.Damage();
-        
+
         context.Player.Discard.Add(context.PlayerCurrentCard);
         context.Player.Discard.Add(context.EnemyCurrentCard);
     }
 
     void ResolveEnemyWin(ConflictResult result, GameContext context)
     {
-        
+        Debug.Log("ENEMY WON");
     }
 
     void ResolveTie(ConflictResult result, GameContext context)
     {
+        Debug.Log("IT'S A TIE");
         context.Player.Discard.Add(context.PlayerCurrentCard);
     }
 }
