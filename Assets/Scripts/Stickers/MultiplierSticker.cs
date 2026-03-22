@@ -10,11 +10,16 @@ namespace Stickers
 
         public MultiplierSticker(float value) => Value = value;
 
-        public void Resolve(Card source, Card other) =>
-            source.Evaluation = Mathf.FloorToInt(source.Evaluation * Value);
-            
-        public void ApplyRule(WinRuleSet ruleSet) {}
-        
+        public void Resolve(EvaluationContext context, Card source, Card other)
+        {
+            var newValue = Mathf.FloorToInt(context.Value * Value);
+            context.AddStep(newValue, $"*{Value}", StepType.Multiply);
+        }
+
+        public void ApplyRule(WinRuleSet ruleSet)
+        {
+        }
+
         public override string ToString() => $"Multiplier: {Value}";
     }
 }

@@ -20,7 +20,6 @@ namespace Views
         {
             valueText.text = value.ToString();
             valueTextRotated.text = value.ToString();
-            
             evaluationView.SetValue(value);
         }
 

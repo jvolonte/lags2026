@@ -17,14 +17,18 @@ public class Card
         Evaluation = Value;
     }
 
-    public float Calculate(Card other)
+    public EvaluationContext Calculate(Card other)
     {
-        Evaluation = Value;
-        
-        foreach (var sticker in Stickers.OrderBy(s => s.Priority)) 
-            sticker.Resolve(this, other);
+        var context = new EvaluationContext
+        {
+            Value = Value
+        };
+        context.AddStep(Value, "Base", StepType.Base);
 
-        return Evaluation;
+        foreach (var sticker in Stickers.OrderBy(s => s.Priority))
+            sticker.Resolve(context, this, other);
+
+        return context;
     }
 
     public void ApplyStickerRules(WinRuleSet ruleSet)
@@ -37,9 +41,26 @@ public class Card
 }
 
 public enum Suit
- {
-     Golds,
-     Cups,
-     Clubs,
-     Swords
- }
+{
+    Golds,
+    Cups,
+    Clubs,
+    Swords
+}
+
+public struct EvaluationStep
+{
+    public int PreviousValue;
+    public int NewValue;
+    public string Description;
+    public StepType Type;
+}
+
+public enum StepType
+{
+    Base,
+    Add,
+    Multiply,
+    Conditional,
+    Critical
+}

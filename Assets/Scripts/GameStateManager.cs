@@ -149,6 +149,9 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.ClearTable();
 
         yield return new WaitForSeconds(2);
+        // yield return enemyEvaluationView.PlayEvaluationCoroutine(enemyEval);
+        // yield return playerEvaluationView.PlayEvaluationCoroutine(playerEval);
+        
         TransitionTo(GameState.Draw);
     }
 

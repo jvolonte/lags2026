@@ -8,7 +8,11 @@ namespace Stickers
 
         public AdditiveSticker(int value) => Value = value;
 
-        public void Resolve(Card source, Card other) => source.Evaluation += Value;
+        public void Resolve(EvaluationContext context, Card source, Card other)
+        {
+            var newValue = context.Value + Value;
+            context.AddStep(newValue, $"+{Value}", StepType.Add);
+        }
 
         public void ApplyRule(WinRuleSet ruleSet) {}
         

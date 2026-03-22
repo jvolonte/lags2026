@@ -7,17 +7,21 @@ public class ConflictResolver
         var playerCard = context.PlayerCurrentCard;
         var enemyCard = context.EnemyCurrentCard;
 
-        var playerValue = Mathf.FloorToInt(playerCard.Calculate(enemyCard));
-        var enemyValue = Mathf.FloorToInt(enemyCard.Calculate(playerCard));
+        var playerEvaluationContext = playerCard.Calculate(enemyCard);
+        var enemyEvaluationContext = enemyCard.Calculate(playerCard);
 
         var outcome = EncounterEvaluator.DetermineOutcome(
-            playerValue, enemyValue, playerCard, enemyCard, context.RuleSet
+            playerEvaluationContext.Value,
+            enemyEvaluationContext.Value,
+            playerCard,
+            enemyCard,
+            context.RuleSet
         );
 
         return new ConflictResult
         {
-            PlayerValue = playerValue,
-            EnemyValue = enemyValue,
+            PlayerValue = playerEvaluationContext.Value,
+            EnemyValue = enemyEvaluationContext.Value,
             Outcome = outcome
         };
     }
