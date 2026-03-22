@@ -10,4 +10,6 @@ public class Enemy
         Health = health;
         Deck = deck;
     }
+
+    public void Damage(int damage = 1) => Health -= damage;
 }

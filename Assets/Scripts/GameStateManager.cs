@@ -1,3 +1,4 @@
+using System.Collections;
 using CardZones;
 using Factories;
 using Stickers;
@@ -44,7 +45,7 @@ public class GameStateManager : MonoBehaviour
             case GameState.RevealStickers: EnterRevealStickers(); break;
             case GameState.PlayerPlaceSticker: EnterPlayerPlaceSticker(); break;
             case GameState.EnemyPlaceSticker: EnterEnemyPlaceSticker(); break;
-            case GameState.ConflictResolution: EnterConflictResolution(); break;
+            case GameState.ConflictResolution: StartCoroutine(EnterConflictResolution()); break;
             case GameState.Draw: EnterDraw(); break;
         }
     }
@@ -69,7 +70,6 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaysCard()
     {
-        Debug.Log("---ENEMY PLAYS CARD---");
         var enemy = Context.Enemy;
         var card = enemy.Deck.Draw();
 
@@ -136,11 +136,40 @@ public class GameStateManager : MonoBehaviour
         TransitionTo(GameState.ConflictResolution);
     }
 
-    void EnterConflictResolution()
+    IEnumerator EnterConflictResolution()
     {
-        //TODO: handle context and cards depending on result
+        var resolver = new ConflictResolver();
+        var result = resolver.Resolve(Context.PlayerCurrentCard, Context.EnemyCurrentCard);
+        resolver.ApplyOutcome(result, Context);
         
+        Context.PlayerCurrentCard = null;
+        Context.EnemyCurrentCard = null;
+        Context.AvailableStickers.Clear();
+        CombatEventManager.ClearTable();
+
+        yield return new WaitForSeconds(2);
         TransitionTo(GameState.Draw);
+    }
+
+    void ResolveTie() => 
+        Context.Player.Discard.Add(Context.PlayerCurrentCard);
+
+    void ResolveEnemyWin()
+    {
+        
+    }
+
+    void ResolvePlayerWin()
+    {
+        Context.Enemy.Damage();
+
+        if (Context.Enemy.Health > 0)
+        {
+            //TODO: next enemy
+        }
+        
+        Context.Player.Discard.Add(Context.PlayerCurrentCard);
+        Context.Player.Discard.Add(Context.EnemyCurrentCard);
     }
 
     void EnterDraw()

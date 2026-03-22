@@ -1,4 +1,3 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -26,6 +25,20 @@ public static class EncounterEvaluator
     private static bool IsStronger(Card card, Card other) => card.Evaluation > other.Evaluation;
 
     private static bool IsWeaker(Card card, Card other) => card.Evaluation < other.Evaluation;
+}
+
+public enum ConflictOutcome
+{
+    PlayerWin,
+    EnemyWin,
+    Tie
+}
+
+public struct ConflictResult
+{
+    public int PlayerValue;
+    public int EnemyValue;
+    public ConflictOutcome Outcome;
 }
 
 public class WinRuleSet

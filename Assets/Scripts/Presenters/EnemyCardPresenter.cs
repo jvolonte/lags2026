@@ -10,11 +10,23 @@ namespace Presenters
 
         CardView currentView;
 
-        void Awake() => 
+        void Awake()
+        {
             CombatEventManager.OnEnemyPlayCard += HandleEnemyCardPlayed;
+            CombatEventManager.OnClearTable += HandleClearTable;
+        }
 
-        void OnDestroy() =>
+        void HandleClearTable()
+        {
+            if (currentView != null)
+                Destroy(currentView.gameObject);
+        }
+
+        void OnDestroy()
+        {
             CombatEventManager.OnEnemyPlayCard -= HandleEnemyCardPlayed;
+            CombatEventManager.OnClearTable -= HandleClearTable;
+        }
 
         void HandleEnemyCardPlayed(Card card)
         {
