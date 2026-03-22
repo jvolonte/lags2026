@@ -39,11 +39,11 @@ Shader "Vertex Color Folliage"
             float4 _OverrideColor;
             float4 _Wind;
 
-            float2 windVertexDisplacement (appdata v, float steps, float offset) 
+            float2 windVertexDisplacement (appdata v, float offset) 
             {
                 float phase = v.vertex.x * 0.7 + v.vertex.y * 0.3 + offset; 
 
-                float steppedTime = floor(_Time.y / (1.0 / steps)) / steps;
+                float steppedTime = _Time.y;
 
                 float sway1 = sin(steppedTime * _Wind.z + phase);               
                 float sway2 = sin(steppedTime * _Wind.z * 2.3 + phase * 1.7) * 0.5; 
@@ -66,7 +66,7 @@ Shader "Vertex Color Folliage"
                 float3 worldOrigin = UNITY_MATRIX_M._m03_m13_m23;
                 float offset = worldOrigin.x + worldOrigin.z;
 
-                v.vertex.xz += windVertexDisplacement(v, 6, sin(offset*0.5));
+                v.vertex.xz += windVertexDisplacement(v, sin(offset*0.5));
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 
                 //o.vertex = VertexWiggle(v.vertex);
