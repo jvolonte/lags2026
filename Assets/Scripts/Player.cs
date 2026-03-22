@@ -19,9 +19,7 @@ public class Player
         while (Hand.CanDraw)
         {
             var drawnCard = Deck.Draw();
-            Debug.Log($"Drawing {drawnCard} from deck");
             Hand.Add(drawnCard);
-            Debug.Log($"Adding {drawnCard} to hand");
         } 
     }
 

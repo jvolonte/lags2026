@@ -14,5 +14,7 @@ namespace Stickers
             source.Evaluation = Mathf.FloorToInt(source.Evaluation * Value);
             
         public void ApplyRule(WinRuleSet ruleSet) {}
+        
+        public override string ToString() => $"Multiplier: {Value}";
     }
 }
