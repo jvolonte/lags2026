@@ -27,6 +27,12 @@ public class Card
         return Evaluation;
     }
 
+    public void ApplyStickerRules(WinRuleSet ruleSet)
+    {
+        foreach (ISticker sticker in Stickers.OrderBy(s => s.Priority))
+            sticker.ApplyRule(ruleSet);
+    }
+
     public override string ToString() => $"{Value} of {Suit}";
 }
 

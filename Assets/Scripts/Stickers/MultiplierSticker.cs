@@ -12,5 +12,7 @@ namespace Stickers
 
         public void Resolve(Card source, Card other) =>
             source.Evaluation = Mathf.FloorToInt(source.Evaluation * Value);
+            
+        public void ApplyRule(WinRuleSet ruleSet) {}
     }
 }
