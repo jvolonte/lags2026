@@ -1,8 +1,10 @@
 using System.Collections;
 using CardZones;
+using DG.Tweening;
 using Factories;
 using Stickers;
 using UnityEngine;
+using Views;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -14,11 +16,17 @@ public class GameStateManager : MonoBehaviour
     readonly StickerFactory stickerFactory = new();
     DeckFactory deckFactory;
 
+    EvaluationView playerEvaluationView;
+    EvaluationView enemyEvaluationView;
+
     void Awake()
     {
         deckFactory = new DeckFactory(cardFactory);
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
+
+        CombatEventManager.OnEnemyEvaluationReady += v => enemyEvaluationView = v;
+        CombatEventManager.OnPlayerEvaluationReady += v => playerEvaluationView = v;
 
         StartGame();
     }
@@ -143,16 +151,31 @@ public class GameStateManager : MonoBehaviour
         var result = resolver.Resolve(Context);
         resolver.ApplyOutcome(result, Context);
 
+        yield return PlayEvaluationPhase(
+            Context.PlayerCurrentCard.Calculate(Context.EnemyCurrentCard),
+            Context.EnemyCurrentCard.Calculate(Context.PlayerCurrentCard)
+        );
+
+        yield return new WaitForSeconds(2);
+
+        Cleanup();
+        TransitionTo(GameState.Draw);
+    }
+
+    void Cleanup()
+    {
         Context.PlayerCurrentCard = null;
         Context.EnemyCurrentCard = null;
         Context.AvailableStickers.Clear();
         CombatEventManager.ClearTable();
+    }
 
-        yield return new WaitForSeconds(2);
-        // yield return enemyEvaluationView.PlayEvaluationCoroutine(enemyEval);
-        // yield return playerEvaluationView.PlayEvaluationCoroutine(playerEval);
-        
-        TransitionTo(GameState.Draw);
+    IEnumerator PlayEvaluationPhase(EvaluationContext playerEval, EvaluationContext enemyEval)
+    {
+        yield return DOTween.Sequence()
+                            .Join(playerEvaluationView.Play(playerEval))
+                            .Join(enemyEvaluationView.Play(enemyEval))
+                            .WaitForCompletion();
     }
 
     void EnterDraw()

@@ -35,6 +35,8 @@ namespace Presenters
 
             currentView = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
             currentView.SetCard(card);
+            
+            CombatEventManager.PlayerEvaluationReady(currentView.evaluationView);
         }
     }
 }

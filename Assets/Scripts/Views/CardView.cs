@@ -7,8 +7,8 @@ namespace Views
     {
         [SerializeField] Renderer cardRenderer;
         [SerializeField] TextMeshProUGUI valueText;
-        [SerializeField] TextMeshProUGUI valueTextRotated;
-        [SerializeField] EvaluationView evaluationView;
+        [SerializeField] TextMeshProUGUI valueTextRotated; 
+        public EvaluationView evaluationView;
 
         public void SetCard(Card card)
         {

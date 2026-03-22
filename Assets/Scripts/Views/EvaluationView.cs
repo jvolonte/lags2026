@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -13,57 +11,50 @@ namespace Views
 
         [SerializeField] float animationDuration = 0.3f;
 
-        Queue<EvaluationStep> steps = new();
-        
         public void SetValue(int value) => text.text = value.ToString();
 
-        public void Play(EvaluationContext context)
+        public Tween Play(EvaluationContext context)
         {
-            steps.Clear();
+            var sequence = DOTween.Sequence();
 
-            text.text = context.Steps.Count > 0
-                ? context.Steps[0].PreviousValue.ToString()
-                : context.Value.ToString();
+            var currentValue = context.Steps.Count > 0
+                ? context.Steps[0].PreviousValue
+                : context.Value;
+
+            text.text = currentValue.ToString();
 
             foreach (var step in context.Steps)
-                steps.Enqueue(step);
+                sequence.Append(CreateStepTween(step));
 
-            StopAllCoroutines();
-            StartCoroutine(PlaySteps());
+            return sequence;
         }
 
-        IEnumerator PlaySteps()
+        Tween CreateStepTween(EvaluationStep step)
         {
-            while (steps.Count > 0)
-            {
-                var step = steps.Dequeue();
+            var value = step.PreviousValue;
 
-                yield return AnimateStep(step);
-            }
-        }
+            var seq = DOTween.Sequence();
 
-        IEnumerator AnimateStep(EvaluationStep step)
-        {
-            var start = step.PreviousValue;
-            var end = step.NewValue;
+            seq.Append(
+                DOTween.To(
+                    () => value,
+                    x =>
+                    {
+                        value = x;
+                        text.text = x.ToString();
+                    },
+                    step.NewValue,
+                    animationDuration
+                ).SetEase(Ease.OutQuad)
+            );
 
-            yield return DOTween.To(
-                                    () => start,
-                                    x =>
-                                    {
-                                        start = x;
-                                        text.text = x.ToString();
-                                    },
-                                    end,
-                                    animationDuration
-                                )
-                                .SetEase(Ease.OutQuad)
-                                .WaitForCompletion();
+            seq.Join(
+                transform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 5, 0.5f)
+            );
 
-            targetTransform
-                .DOPunchScale(Vector3.one * 0.2f, 0.2f, 5, 0.5f);
+            seq.AppendInterval(0.05f);
 
-            yield return new WaitForSeconds(0.1f);
+            return seq;
         }
     }
 }
