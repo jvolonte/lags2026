@@ -1,6 +1,6 @@
 public class Enemy
-{
-    public int Health;
+{    
+    public int Health { get; private set; }
 
     public Enemy(int health)
     {
