@@ -66,11 +66,10 @@ public class GameStateManager : MonoBehaviour
         var player = new Player(deck, hand, discardPile);
 
         Context.Player = player;
-        Context.Enemy = new Enemy(1, deckFactory.CreateRandom());
+        Context.Enemy = new Enemy(1);
         Context.RuleSet = new WinRuleSet { HigherValueWins = true };
 
         Context.Player.Deck.Shuffle();
-        Context.Enemy.Deck.Shuffle();
 
         player.Draw();
 
@@ -79,8 +78,7 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaysCard()
     {
-        var enemy = Context.Enemy;
-        var card = enemy.Deck.Draw();
+        var card = cardFactory.CreateRandom();
 
         Context.EnemyCurrentCard = card;
         CombatEventManager.EnemyPlayCard(card);
