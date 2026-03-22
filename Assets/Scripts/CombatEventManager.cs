@@ -4,6 +4,8 @@ using Views;
 
 public static class CombatEventManager
 {
+        public static event Action<Card> OnPlayerPlaysCard;
+        
         public static event Action<Card> OnPlayCard;
         public static event Action<Card> OnEnemyPlayCard;
         public static event Action<ISticker, Card> OnAddSticker;
@@ -21,4 +23,6 @@ public static class CombatEventManager
                 OnEnemyEvaluationReady?.Invoke(evaluationView);
         public static void PlayerEvaluationReady(EvaluationView evaluationView) => 
                 OnPlayerEvaluationReady?.Invoke(evaluationView);
+
+        public static void PlayerPlaysCard(Card card) => OnPlayerPlaysCard?.Invoke(card);
 }

@@ -15,7 +15,10 @@ namespace CardZones
         public void Play(Card card)
         {
             if (Cards.Contains(card))
+            {
                 Cards.Remove(card);
+                TriggerCardRemoved(card);
+            }
             
             CombatEventManager.PlayCard(card);
         }

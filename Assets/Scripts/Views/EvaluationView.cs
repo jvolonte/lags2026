@@ -7,8 +7,6 @@ namespace Views
     public class EvaluationView : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI text;
-        [SerializeField] Transform targetTransform;
-
         [SerializeField] float animationDuration = 0.3f;
 
         public void SetValue(int value) => text.text = value.ToString();

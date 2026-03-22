@@ -19,7 +19,9 @@ public class GameStateManager : MonoBehaviour
     EvaluationView playerEvaluationView;
     EvaluationView enemyEvaluationView;
 
-    [Header("Views")] [SerializeField] DeckView deckView;
+    [Header("Views")] 
+    [SerializeField] HandView handView;
+    [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
 
     void Awake()
@@ -30,9 +32,12 @@ public class GameStateManager : MonoBehaviour
 
         CombatEventManager.OnEnemyEvaluationReady += v => enemyEvaluationView = v;
         CombatEventManager.OnPlayerEvaluationReady += v => playerEvaluationView = v;
+        CombatEventManager.OnPlayerPlaysCard += HandlePlayerPlayCard;
 
         StartGame();
     }
+
+    void HandlePlayerPlayCard(Card card) => Context.Player.Play(card);
 
     public void StartGame()
     {
@@ -71,6 +76,7 @@ public class GameStateManager : MonoBehaviour
 
         deckView.Bind(deck);
         discardPileView.Bind(discardPile);
+        handView.Bind(hand);
 
         Context.Player = player;
         Context.Enemy = new Enemy(1);
@@ -200,5 +206,6 @@ public class GameStateManager : MonoBehaviour
     {
         CombatEventManager.OnPlayCard -= HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker -= HandlePlayerSelectedSticker;
+        CombatEventManager.OnPlayerPlaysCard -= HandlePlayerPlayCard;
     }
 }

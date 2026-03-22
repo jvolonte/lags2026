@@ -19,6 +19,8 @@ namespace CardZones
             OnCardAdded?.Invoke(card);
         }
 
+        public void TriggerCardRemoved(Card card) => OnCardRemoved?.Invoke(card);
+        
         public virtual Card Draw()
         {
             if (Cards.Count == 0) return default;
