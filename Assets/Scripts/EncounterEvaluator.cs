@@ -1,8 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 public static class EncounterEvaluator
 {
+
+    // TODO: Contemplar el caso EMPATE
+
     public static Card GetWinner(Card card, Card otherCard)
     {
         WinRuleSet ruleSet = new(); 
@@ -14,12 +19,17 @@ public static class EncounterEvaluator
         card.ApplyStickerRules(ruleSet);
         otherCard.ApplyStickerRules(ruleSet);
 
-        return ruleSet.GreaterValueWins ? cards.MaxBy(x => x.Evaluation) : cards.MinBy(x => x.Evaluation);
+        Func<Card, Card, bool> func = ruleSet.GreaterValueWins ? IsStronger : IsWeaker;
+        return cards.Aggregate((acc, c) => func(c, acc) ? c : acc); 
     }
+
+    private static bool IsStronger(Card card, Card other) => card.Evaluation > other.Evaluation;
+
+    private static bool IsWeaker(Card card, Card other) => card.Evaluation < other.Evaluation;
 }
 
 public class WinRuleSet
 {
-    bool GreaterValueWins {get; set;} = true;
+    public bool GreaterValueWins {get; set;} = true;
 
 }
