@@ -3,6 +3,8 @@ Shader "Vertex Color"
     Properties
     {
         _OverrideColor ("Override Color", Color) = (0,0,0,0)
+        _Add("Color Add", Color) = (0,0,0,0)
+        _Multiply("Color Multiply", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -36,6 +38,8 @@ Shader "Vertex Color"
             };
 
             float4 _OverrideColor;
+            float4 _Add;
+            float4 _Multiply;
 
             v2f vert (appdata v)
             {
@@ -53,7 +57,11 @@ Shader "Vertex Color"
                 // sample the texture
                 fixed4 col = (1,1,1,1);
                 float3 vertCol = GAMMA_CORRECTION(i.col);
+
                 col.xyz = lerp(vertCol, _OverrideColor, _OverrideColor.a);
+                col += _Add;
+                col *= _Multiply;
+
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
