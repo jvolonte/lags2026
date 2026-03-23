@@ -50,6 +50,8 @@ MonoBehaviour:
   hoverDistanceZ: -0.2
   hoverDistanceY: 0.4
   scale: 1.2
+  rotationRadius: 0.3
+  rotationAngleRange: 40
 --- !u!65 &5175786598838111596
 BoxCollider:
   m_ObjectHideFlags: 0

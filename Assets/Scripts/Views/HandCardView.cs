@@ -20,10 +20,17 @@ namespace Views
 
         [SerializeField] float hoverDistanceZ = .2f; 
         [SerializeField] float hoverDistanceY = .2f; 
-        [SerializeField] float scale = 1.2f; 
+        [SerializeField] float scale = 1.2f;
+        [SerializeField] float rotationRadius = 0.3f;
+        [SerializeField] float rotationAngleRange = 20f;
         
 
         void Awake() => baseScale = transform.localScale;
+
+        private void LateUpdate()
+        {
+            UpdateRotation();
+        }
 
         public void SetCard(Card card)
         {
@@ -38,11 +45,13 @@ namespace Views
         public void SetBaseTransform(Vector3 pos, Quaternion rot)
         {
             basePos = pos;
+            baseRot = rot;
 
             transform.DOLocalRotateQuaternion(rot, 0.25f);
 
             UpdatePosition();
         }
+
 
         public void SetHover(bool active)
         {
@@ -75,6 +84,31 @@ namespace Views
 
             transform.DOLocalMove(target, 0.2f)
                      .SetEase(Ease.OutQuad);
+        }
+        void UpdateRotation ()
+        {
+            if (isHovered)
+            {
+                LookMouse();
+            }
+            else
+            {
+                transform.localRotation =
+                    Quaternion.Lerp(transform.localRotation, baseRot, Time.deltaTime * 10f);
+            }
+        }
+        void LookMouse ()
+        {
+            Vector2 cardScreenPosition = Camera.main.WorldToViewportPoint(transform.position);
+            Vector2 mouseScreenPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            Vector2 delta = Vector3.ClampMagnitude(mouseScreenPosition - cardScreenPosition, rotationRadius);
+
+            Quaternion rotation = Quaternion.Euler(
+                (delta.y/rotationRadius) * rotationAngleRange, 
+                (-delta.x/rotationRadius) * rotationAngleRange, 
+                0f);
+
+            transform.localRotation = baseRot * rotation;
         }
     }
 }
