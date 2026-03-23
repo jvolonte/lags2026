@@ -15,6 +15,7 @@ Shader "Card"
     {
         Tags { "RenderType"="Opaque" }
 
+
         Pass
         {
             CGPROGRAM
