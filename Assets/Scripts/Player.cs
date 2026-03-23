@@ -1,5 +1,4 @@
 using CardZones;
-using UnityEngine;
 
 public class Player
 {
@@ -23,9 +22,5 @@ public class Player
         } 
     }
 
-    public void Play(Card card)
-    {
-        Hand.Play(card);
-        Debug.Log($">Cards left in hand: {Hand.Count}");
-    }
+    public void Play(Card card) => Hand.Play(card);
 }

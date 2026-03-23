@@ -19,8 +19,7 @@ public class GameStateManager : MonoBehaviour
     EvaluationView playerEvaluationView;
     EvaluationView enemyEvaluationView;
 
-    [Header("Views")] 
-    [SerializeField] HandView handView;
+    [Header("Views")] [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
 
@@ -37,7 +36,11 @@ public class GameStateManager : MonoBehaviour
         StartGame();
     }
 
-    void HandlePlayerPlayCard(Card card) => Context.Player.Play(card);
+    void HandlePlayerPlayCard(Card card)
+    {
+        if (CurrentState == GameState.PlayerPlaysCard && Context.PlayerCurrentCard == null)
+            Context.Player.Play(card);
+    }
 
     public void StartGame()
     {
