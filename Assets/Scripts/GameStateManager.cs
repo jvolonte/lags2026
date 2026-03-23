@@ -144,7 +144,6 @@ public class GameStateManager : MonoBehaviour
 
         CombatEventManager.RevealStickers(Context.AvailableStickers);
 
-        //TODO: this might need an event from UI to transition once all stickers are shown.
         TransitionTo(GameState.PlayerPlaceSticker);
     }
 

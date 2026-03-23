@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Data;
-using Stickers;
 using Views;
 
 public static class CombatEventManager
