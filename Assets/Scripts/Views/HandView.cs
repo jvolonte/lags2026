@@ -77,6 +77,7 @@ namespace Views
             hovered = null;
 
             Layout();
+            UpdateHoverState();
         }
 
         void RemoveCard(Card card)
@@ -90,6 +91,7 @@ namespace Views
             hovered = null;
             
             Layout();
+            UpdateHoverState();
         }
 
         void Layout()
@@ -99,21 +101,17 @@ namespace Views
 
             var centerOffset = (count - 1) * 0.5f;
 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var view = views[i];
 
                 var x = (i - centerOffset) * spacing;
-
                 var y = Mathf.Abs(i - centerOffset) * -0.01f;
+                var z = -i * 0.001f;
 
-                var targetPos = new Vector3(x, y, 0);
-
-                var targetRot = Quaternion.Euler(
-                    0,
-                    0,
-                    (i - centerOffset) * -3f
-                );
+                var targetPos = new Vector3(x, y, z);
+                
+                var targetRot = Quaternion.Euler(0, 0, (i - centerOffset) * -3f);
 
                 view.SetBaseTransform(targetPos, targetRot);
             }

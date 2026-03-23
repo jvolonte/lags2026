@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Views.HandCardView
   cardView: {fileID: 1400194644845125742}
-  hoverDistance: 0.2
+  hoverDistanceZ: -0.2
+  hoverDistanceY: 0.4
+  scale: 1.2
 --- !u!65 &5175786598838111596
 BoxCollider:
   m_ObjectHideFlags: 0
