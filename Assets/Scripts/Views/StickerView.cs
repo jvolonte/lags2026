@@ -1,3 +1,4 @@
+using Data.Stickers;
 using Stickers;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ namespace Views
 
         StickerInstance instance;
 
+        public bool CanDrag { get; private set; } = true;
         public void Bind(StickerInstance inst)
         {
             instance = inst;
         }
 
         public ISticker GetLogic() => instance.Logic;
+        public StickerData GetData() => instance.Data;
         
         public void SetRenderOnTop(bool enabled)
         {
@@ -33,5 +36,7 @@ namespace Views
                 mat.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
             }
         }
+
+        public void DisableDragging() => CanDrag = false;
     }
 }

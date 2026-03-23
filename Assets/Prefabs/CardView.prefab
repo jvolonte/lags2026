@@ -359,6 +359,7 @@ MonoBehaviour:
   cardAnimation: {fileID: 6600864677430595704}
   valueText: {fileID: 5616083732333694251}
   valueTextRotated: {fileID: 7685197835252315017}
+  stickerContainer: {fileID: 0}
   evaluationView: {fileID: 6923857619931713346}
 --- !u!65 &4762510248691489659
 BoxCollider:
@@ -379,7 +380,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.77, y: 1.15, z: 0.05}
+  m_Size: {x: 0.77, y: 0.05, z: 1.15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3457151443855828120
 GameObject:

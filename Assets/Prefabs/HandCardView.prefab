@@ -129,6 +129,14 @@ PrefabInstance:
       propertyPath: handCardView
       value: 
       objectReference: {fileID: 3818786913521381892}
+    - target: {fileID: 4762510248691489659, guid: b7d69555223fc4bef933436b70756feb, type: 3}
+      propertyPath: m_Size.y
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4762510248691489659, guid: b7d69555223fc4bef933436b70756feb, type: 3}
+      propertyPath: m_Size.z
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 6377016839580118640, guid: b7d69555223fc4bef933436b70756feb, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1

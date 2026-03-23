@@ -13,9 +13,11 @@ namespace Views
         [SerializeField] CardAnimations cardAnimation;
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated;
+        [SerializeField] Transform stickerContainer;
 
         public EvaluationView evaluationView;
-
+        public Transform StickerContainer => stickerContainer;
+        
         Card card;
 
         void OnEnable()
@@ -54,6 +56,30 @@ namespace Views
             card = c;
             var texture = cardTextureDatabase.GetTexture(c.Suit, c.Value);
             cardRenderer.material.SetTexture("_MainTex", texture);
+            
+            RebuildStickers();
+        }
+
+        void RebuildStickers()
+        {
+            foreach (var placement in card.Stickers)
+            {
+                var view = Instantiate(placement.Data.prefab, stickerContainer);
+
+                view.Bind(new StickerInstance
+                {
+                    Logic = placement.Logic,
+                    Data = placement.Data
+                });
+
+                view.transform.localPosition = new Vector3(
+                    placement.LocalPosition.x,
+                    placement.LocalPosition.y,
+                    0
+                );
+
+                view.DisableDragging();
+            }
         }
 
         void OnHoverChange(HandCardView view, bool hover)

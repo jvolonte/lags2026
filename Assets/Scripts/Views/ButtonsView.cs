@@ -1,4 +1,5 @@
 using System.Linq;
+using Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,7 +40,13 @@ namespace Views
                     
                 var sticker = context.AvailableStickers.PickOne();
                 var cards = context.Player.Hand.Cards.Append(context.PlayerCurrentCard);
-                CombatEventManager.AddSticker(sticker.Logic, cards.PickOne());
+                var placement = new StickerPlacement()
+                {
+                    Logic = sticker.Logic,
+                    Data = sticker.Data,
+                    LocalPosition = new Vector2()
+                };
+                CombatEventManager.AddSticker(placement, cards.PickOne());
             });
         }
     }

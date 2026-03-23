@@ -1,3 +1,4 @@
+using Data;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -44,7 +45,7 @@ public class StickerDragHandler : MonoBehaviour
         if (Physics.Raycast(ray, out var hit))
         {
             var view = hit.collider.GetComponentInParent<StickerView>();
-            if (view == null) return;
+            if (view == null || !view.CanDrag) return;
 
             dragging = view;
 
@@ -52,7 +53,7 @@ public class StickerDragHandler : MonoBehaviour
             originalPosition = dragging.transform.position;
             originalRotation = dragging.transform.rotation;
             originalParent = dragging.transform.parent;
-            
+
             offset = dragging.transform.position - hit.point;
 
             dragging.transform.DOScale(0.25f, 0.15f);
@@ -73,8 +74,9 @@ public class StickerDragHandler : MonoBehaviour
         {
             var point = ray.GetPoint(dist);
             dragging.transform.position = point + offset;
-            FaceCameraSmooth(dragging.transform);
         }
+        
+        FaceCameraSmooth(dragging.transform);
     }
 
     void EndDrag(Vector2 screenPos)
@@ -85,6 +87,7 @@ public class StickerDragHandler : MonoBehaviour
         {
             var card = hit.collider.GetComponentInParent<CardView>();
 
+            //TODO: this should check if card is either in hand or in play.
             if (card != null)
             {
                 ApplySticker(card, dragging);
@@ -94,7 +97,6 @@ public class StickerDragHandler : MonoBehaviour
         }
 
         ReturnToOrigin(dragging);
-        // dragging.GetComponent<StickerView>().SetRenderOnTop(false);
         dragging = null;
     }
 
@@ -109,13 +111,21 @@ public class StickerDragHandler : MonoBehaviour
     void ApplySticker(CardView cardView, StickerView stickerView)
     {
         var card = cardView.GetCard();
-        var sticker = stickerView.GetLogic();
+        var localPos = cardView.transform.InverseTransformPoint(stickerView.transform.position);
 
-        card.Stickers.Add(sticker);
+        var placement = new StickerPlacement
+        {
+            Data = stickerView.GetData(),
+            Logic = stickerView.GetLogic(),
+            LocalPosition = new Vector2(localPos.x, localPos.y)
+        };
+        card.Stickers.Add(placement);
 
-        CombatEventManager.AddSticker(sticker, card);
+        stickerView.transform.SetParent(cardView.StickerContainer);
+        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, 0);
+        stickerView.DisableDragging();
 
-        Destroy(stickerView.gameObject);
+        CombatEventManager.AddSticker(placement, card);
     }
 
     void FaceCameraSmooth(Transform t)

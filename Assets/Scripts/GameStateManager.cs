@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using CardZones;
+using Data;
 using Data.Stickers;
 using DG.Tweening;
 using Factories;
@@ -53,7 +54,7 @@ public class GameStateManager : MonoBehaviour
 
     void TransitionTo(GameState newState)
     {
-        Debug.Log($"STATE: {CurrentState} --> {newState}");
+        // Debug.Log($"STATE: {CurrentState} --> {newState}");
         CurrentState = newState;
         EnterState(newState);
     }
@@ -152,12 +153,12 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("Waiting for player input.");
     }
 
-    void HandlePlayerSelectedSticker(ISticker sticker, Card card)
+    void HandlePlayerSelectedSticker(StickerPlacement sticker, Card card)
     {
         if (CurrentState != GameState.PlayerPlaceSticker)
             return;
 
-        Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker).ToList();
+        Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
         card.Stickers.Add(sticker);
         Debug.Log($"Adding {sticker} to {card}");
 
@@ -168,7 +169,14 @@ public class GameStateManager : MonoBehaviour
     {
         //TODO: pick between available stickers!
         var random = Context.AvailableStickers.PickOne();
-        Context.EnemyCurrentCard.Stickers.Add(random.Logic);
+        var placement = new StickerPlacement()
+        {
+            Logic = random.Logic,
+            Data = random.Data,
+            //TODO: implement position selection
+            LocalPosition = new Vector2()
+        };
+        Context.EnemyCurrentCard.Stickers.Add(placement);
         Debug.Log($"Adding {random} to {Context.EnemyCurrentCard}");
 
         Context.AvailableStickers.Clear();
