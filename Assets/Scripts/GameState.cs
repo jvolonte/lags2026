@@ -8,5 +8,6 @@ public enum GameState
     EnemyPlaceSticker,
     ConflictResolution,
     Draw,
-    GameOver
+    GameOver,
+    NextEncounter,
 }

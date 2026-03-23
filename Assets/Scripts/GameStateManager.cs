@@ -19,6 +19,8 @@ public class GameStateManager : MonoBehaviour
     EvaluationView playerEvaluationView;
     EvaluationView enemyEvaluationView;
 
+    [SerializeField] EnemyManager enemyManager;
+
     [Header("Views")] [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
@@ -67,6 +69,7 @@ public class GameStateManager : MonoBehaviour
             case GameState.ConflictResolution: StartCoroutine(EnterConflictResolution()); break;
             case GameState.Draw: EnterDraw(); break;
             case GameState.GameOver: EnterGameOver(); break;
+            case GameState.NextEncounter: EnterNextEncounter(); break;
         }
     }
 
@@ -82,7 +85,9 @@ public class GameStateManager : MonoBehaviour
         handView.Bind(hand);
 
         Context.Player = player;
-        Context.Enemy = new Enemy(1);
+
+        enemyManager.StartNextEnemy();
+        Context.Enemy = enemyManager.CurrentEnemy;
         Context.RuleSet = new WinRuleSet { HigherValueWins = true };
 
         Context.Player.Deck.Shuffle();
@@ -94,6 +99,7 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaysCard()
     {
+        //TODO: use enemies cards?
         var card = cardFactory.CreateRandom();
 
         Context.EnemyCurrentCard = card;
@@ -172,7 +178,7 @@ public class GameStateManager : MonoBehaviour
 
         resolver.ApplyOutcome(result, Context);
 
-        TransitionTo(GameState.Draw);
+        TransitionTo(Context.Enemy.IsDead ? GameState.NextEncounter : GameState.Draw);
     }
 
     IEnumerator PlayEvaluationPhase(EvaluationContext playerEval, EvaluationContext enemyEval)
@@ -203,6 +209,20 @@ public class GameStateManager : MonoBehaviour
     void EnterGameOver()
     {
         Debug.Log("GAME OVER!!!");
+    }
+
+    void EnterNextEncounter()
+    {
+        if (enemyManager.HasMoreEnemies)
+        {
+            enemyManager.StartNextEnemy();
+            Context.Enemy = enemyManager.CurrentEnemy;
+        }
+        else
+        {
+            Debug.Log("GAME WON!");
+        }
+ 
     }
 
     void OnDestroy()
