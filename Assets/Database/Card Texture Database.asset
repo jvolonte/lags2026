@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fd6333b29f4067b32ee47852e3cbbb, type: 3}
+  m_Name: Card Texture Database
+  m_EditorClassIdentifier: Assembly-CSharp::Data.CardTextureDatabase
+  globalDefault: {fileID: 2800000, guid: bd5d6714b7190a44ba201e892e926604, type: 3}
+  suits:
+  - suit: 0
+    defaultTexture: {fileID: 2800000, guid: bd5d6714b7190a44ba201e892e926604, type: 3}
+    values:
+    - value: 1
+      texture: {fileID: 2800000, guid: bd5d6714b7190a44ba201e892e926604, type: 3}
+  - suit: 1
+    defaultTexture: {fileID: 2800000, guid: 855409a856a4fce4a803ca83955eb20c, type: 3}
+    values:
+    - value: 1
+      texture: {fileID: 2800000, guid: 855409a856a4fce4a803ca83955eb20c, type: 3}
+  - suit: 2
+    defaultTexture: {fileID: 2800000, guid: dea808dc61388aa478061097a4b89a11, type: 3}
+    values:
+    - value: 1
+      texture: {fileID: 2800000, guid: dea808dc61388aa478061097a4b89a11, type: 3}
+  - suit: 3
+    defaultTexture: {fileID: 2800000, guid: ca5505cbc10f7824b91d39e41b99667b, type: 3}
+    values:
+    - value: 1
+      texture: {fileID: 2800000, guid: ca5505cbc10f7824b91d39e41b99667b, type: 3}

@@ -74,6 +74,7 @@ namespace Views
             view.OnHoverChanged += HandleHover;
 
             views.Add(view);
+            hovered = null;
 
             Layout();
         }
@@ -86,7 +87,8 @@ namespace Views
 
             views.Remove(view);
             Destroy(view.gameObject);
-
+            hovered = null;
+            
             Layout();
         }
 

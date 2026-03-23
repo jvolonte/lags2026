@@ -1,3 +1,4 @@
+using Data;
 using TMPro;
 using UnityEngine;
 
@@ -5,9 +6,12 @@ namespace Views
 {
     public class CardView : MonoBehaviour
     {
+        [SerializeField] CardTextureDatabase cardTextureDatabase;
+        
         [SerializeField] Renderer cardRenderer;
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated; 
+        
         public EvaluationView evaluationView;
 
         public void SetCard(Card card, bool showEvaluation = true)
@@ -27,17 +31,8 @@ namespace Views
 
         void SetVisual(Card card)
         {
-            cardRenderer.material.color = GetColor(card.Suit);
+            var texture = cardTextureDatabase.GetTexture(card.Suit, card.Value);
+            cardRenderer.material.SetTexture("_MainTex", texture);
         }
-
-        Color GetColor(Suit suit) =>
-            suit switch
-            {
-                Suit.Cups => Color.red,
-                Suit.Swords => Color.gray,
-                Suit.Clubs => Color.green,
-                Suit.Golds => Color.yellow,
-                _ => Color.white
-            };
     }
 }
