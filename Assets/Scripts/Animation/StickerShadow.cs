@@ -33,6 +33,12 @@ public class StickerShadow : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if (stickerShadow.gameObject.activeSelf != stickerView.Dragging)
+            stickerShadow.gameObject.SetActive(stickerView.Dragging);
+
+        if (!stickerView.Dragging)
+            return;
+
         if (worldCards == null || worldCards.Length == 0) return;
 
         float closest = float.MaxValue;

@@ -47,20 +47,26 @@ public class StickerDragHandler : MonoBehaviour
             var view = hit.collider.GetComponentInParent<StickerView>();
             if (view == null || !view.CanDrag) return;
 
-            dragging = view;
-
-            originalScale = dragging.transform.localScale;
-            originalPosition = dragging.transform.position;
-            originalRotation = dragging.transform.rotation;
-            originalParent = dragging.transform.parent;
-            
-            dragging.transform.DOScale(0.25f, 0.15f);
-            dragging.transform.SetParent(null);
-            FaceCameraSmooth(dragging.transform);
-            dragging.GetComponent<StickerView>().SetRenderOnTop(true);
+            StartDrag(view);
         }
     }
 
+    void StartDrag (StickerView view)
+    {
+        dragging = view;
+
+        originalScale = dragging.transform.localScale;
+        originalPosition = dragging.transform.position;
+        originalRotation = dragging.transform.rotation;
+        originalParent = dragging.transform.parent;
+
+        dragging.transform.DOScale(0.25f, 0.15f);
+        dragging.transform.SetParent(null);
+        FaceCameraSmooth(dragging.transform);
+        dragging.GetComponent<StickerView>().SetRenderOnTop(true);
+
+        dragging.Dragging = true;
+    }
     void Drag(Vector2 screenPos)
     {
         var ray = cam.ScreenPointToRay(screenPos);
@@ -73,9 +79,10 @@ public class StickerDragHandler : MonoBehaviour
         
         FaceCameraSmooth(dragging.transform);
     }
-
     void EndDrag(Vector2 screenPos)
     {
+        dragging.Dragging = false;
+
         var ray = cam.ScreenPointToRay(screenPos);
 
         if (Physics.Raycast(ray, out var hit, 100f, cardLayer))

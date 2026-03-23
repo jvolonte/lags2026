@@ -9,9 +9,11 @@ namespace Views
         [SerializeField] MeshRenderer meshRenderer;
 
         StickerInstance instance;
-
         public MeshRenderer MeshRenderer => meshRenderer;
+
+        public bool Dragging { get; set; } = false;
         public bool CanDrag { get; private set; } = true;
+
         public void Bind(StickerInstance inst)
         {
             instance = inst;

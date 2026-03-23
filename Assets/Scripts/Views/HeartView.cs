@@ -8,6 +8,7 @@ namespace Views
         [SerializeField] MeshRenderer meshRenderer;
         [SerializeField] Texture[] fullHearts;
         [SerializeField] Texture emptyHeart;
+        [SerializeField] ParticleSystem particlesOnHurt;
 
         Texture fullHeart;
 
@@ -51,6 +52,9 @@ namespace Views
                 return;
 
             isFilled = filled;
+
+            if (!isFilled )
+                particlesOnHurt.Play();
 
             var texture = filled ? fullHeart : emptyHeart;
             meshRenderer.material.SetTexture("_MainTex", texture);
