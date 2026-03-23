@@ -75,8 +75,7 @@ namespace Views
 
                     for (var i = 0; i < toRemove; i++)
                     {
-                        var index = lastHealth - 1 - i;
-                        hearts[index].SetFilled(false);
+                        hearts[i].SetFilled(false);
                     }
                 }
                 else if (current > lastHealth)

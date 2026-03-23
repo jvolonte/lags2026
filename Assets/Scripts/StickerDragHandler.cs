@@ -55,7 +55,7 @@ public class StickerDragHandler : MonoBehaviour
             
             offset = dragging.transform.position - hit.point;
 
-            dragging.transform.DOScale(0.4f, 0.15f);
+            dragging.transform.DOScale(0.25f, 0.15f);
             dragging.transform.SetParent(null);
             FaceCameraSmooth(dragging.transform);
             dragging.GetComponent<StickerView>().SetRenderOnTop(true);
