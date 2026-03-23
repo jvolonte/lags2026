@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using Stickers;
 using UnityEngine;
 using Views;
 
@@ -9,7 +8,6 @@ namespace Presenters
     public class StickerPresenter : MonoBehaviour
     {
         [SerializeField] Transform container;
-        [SerializeField] StickerView prefab;
         [SerializeField] float spacing = 0.5f;
 
         readonly List<StickerView> views = new();
@@ -34,7 +32,7 @@ namespace Presenters
 
             for (var i = 0; i < stickers.Count; i++)
             {
-                var view = Instantiate(prefab, container);
+                var view = Instantiate(stickers[i].Data.prefab, container);
 
                 var y = (i - centerOffset) * spacing;
                 var z = -i * 0.01f;

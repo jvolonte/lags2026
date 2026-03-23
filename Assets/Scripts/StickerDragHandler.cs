@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Views;
@@ -8,6 +9,13 @@ public class StickerDragHandler : MonoBehaviour
 
     StickerView dragging;
     Vector3 offset;
+
+    Vector3 originalPosition;
+    Vector3 originalScale;
+    Quaternion originalRotation;
+    Transform originalParent;
+
+    [SerializeField] float dragDistance = 2f;
 
     void Awake()
     {
@@ -40,7 +48,17 @@ public class StickerDragHandler : MonoBehaviour
 
             dragging = view;
 
+            originalScale = dragging.transform.localScale;
+            originalPosition = dragging.transform.position;
+            originalRotation = dragging.transform.rotation;
+            originalParent = dragging.transform.parent;
+            
             offset = dragging.transform.position - hit.point;
+
+            dragging.transform.DOScale(0.4f, 0.15f);
+            dragging.transform.SetParent(null);
+            FaceCameraSmooth(dragging.transform);
+            dragging.GetComponent<StickerView>().SetRenderOnTop(true);
         }
     }
 
@@ -48,12 +66,14 @@ public class StickerDragHandler : MonoBehaviour
     {
         var ray = cam.ScreenPointToRay(screenPos);
 
-        var plane = new Plane(Vector3.up, Vector3.zero);
+        var planePos = cam.transform.position + cam.transform.forward * dragDistance;
+        var plane = new Plane(-cam.transform.forward, planePos);
 
         if (plane.Raycast(ray, out var dist))
         {
             var point = ray.GetPoint(dist);
             dragging.transform.position = point + offset;
+            FaceCameraSmooth(dragging.transform);
         }
     }
 
@@ -65,11 +85,25 @@ public class StickerDragHandler : MonoBehaviour
         {
             var card = hit.collider.GetComponentInParent<CardView>();
 
-            if (card != null) 
+            if (card != null)
+            {
                 ApplySticker(card, dragging);
+                dragging = null;
+                return;
+            }
         }
 
+        ReturnToOrigin(dragging);
+        // dragging.GetComponent<StickerView>().SetRenderOnTop(false);
         dragging = null;
+    }
+
+    void ReturnToOrigin(StickerView sticker)
+    {
+        sticker.transform.DOScale(originalScale, 0.2f);
+        sticker.transform.SetParent(originalParent);
+        sticker.transform.DOMove(originalPosition, 0.25f).SetEase(Ease.OutQuad);
+        sticker.transform.DORotateQuaternion(originalRotation, 0.25f);
     }
 
     void ApplySticker(CardView cardView, StickerView stickerView)
@@ -82,5 +116,11 @@ public class StickerDragHandler : MonoBehaviour
         CombatEventManager.AddSticker(sticker, card);
 
         Destroy(stickerView.gameObject);
+    }
+
+    void FaceCameraSmooth(Transform t)
+    {
+        var targetRot = Quaternion.LookRotation(-Helpers.Camera.transform.forward, Vector3.up);
+        t.rotation = Quaternion.Slerp(t.rotation, targetRot, Time.deltaTime * 15f);
     }
 }
