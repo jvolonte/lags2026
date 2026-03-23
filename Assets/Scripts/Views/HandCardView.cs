@@ -12,13 +12,19 @@ namespace Views
         public event Action<HandCardView, bool> OnHoverChanged;
 
         Vector3 basePos;
+        Vector3 baseScale;
         Quaternion baseRot;
         float currentOffsetX;
         float offsetX;
         bool isHovered;
 
-        [Range(0.02f, 0.2f)] [SerializeField] float hoverDistance = .2f; 
+        [SerializeField] float hoverDistanceZ = .2f; 
+        [SerializeField] float hoverDistanceY = .2f; 
+        [SerializeField] float scale = 1.2f; 
         
+
+        void Awake() => baseScale = transform.localScale;
+
         public void SetCard(Card card)
         {
             Card = card;
@@ -45,8 +51,9 @@ namespace Views
             if (active)
                 transform.SetAsLastSibling();
 
-            transform.DOScale(active ? 1.2f : 1f, 0.2f);
-
+            transform
+                .DOScale(active ? baseScale * scale : baseScale, 0.2f);
+            
             UpdatePosition();
         }
 
@@ -58,17 +65,16 @@ namespace Views
 
         void UpdatePosition()
         {
-            transform.DOKill();
             var target = basePos + new Vector3(offsetX, 0, 0);
 
             if (isHovered)
             {
-                var towardCamera = (Helpers.Camera.transform.position - transform.position).normalized;
-                target += towardCamera * hoverDistance;
-                target += Vector3.up * 0.2f;
+                target += Vector3.back * hoverDistanceZ;
+                target += Vector3.up * hoverDistanceY;
             }
 
-            transform.DOLocalMove(target, 0.2f).SetEase(Ease.OutQuad);
+            transform.DOLocalMove(target, 0.2f)
+                     .SetEase(Ease.OutQuad);
         }
 
         void OnMouseDown() => CombatEventManager.PlayCard(Card);
