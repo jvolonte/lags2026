@@ -1,6 +1,7 @@
-using System;
 using System.Collections;
+using System.Linq;
 using CardZones;
+using Data.Stickers;
 using DG.Tweening;
 using Factories;
 using Stickers;
@@ -14,7 +15,7 @@ public class GameStateManager : MonoBehaviour
     public readonly GameContext Context = new();
 
     readonly CardFactory cardFactory = new();
-    readonly StickerFactory stickerFactory = new();
+    StickerFactory stickerFactory;
     DeckFactory deckFactory;
 
     EvaluationView playerEvaluationView;
@@ -22,12 +23,17 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] EnemyManager enemyManager;
 
-    [Header("Views")] [SerializeField] HandView handView;
+    [Header("Views")] 
+    [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
 
+    [Header("Stickers")]
+    [SerializeField] StickerData[] stickers;
+
     void Awake()
     {
+        stickerFactory = new StickerFactory(stickers.ToList());
         deckFactory = new DeckFactory(cardFactory);
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
@@ -125,9 +131,17 @@ public class GameStateManager : MonoBehaviour
         Context.AvailableStickers.Clear();
 
         for (var i = 0; i < 3; i++)
-            Context.AvailableStickers.Add(stickerFactory.GetRandom());
+        {
+            var (logic, data) = stickerFactory.GetRandom();
 
-        Debug.Log($"Available stickers: {string.Join(",", Context.AvailableStickers)}");
+            Context.AvailableStickers.Add(new StickerInstance
+            {
+                Logic = logic,
+                Data = data
+            });
+        }
+
+        CombatEventManager.RevealStickers(Context.AvailableStickers);
 
         //TODO: this might need an event from UI to transition once all stickers are shown.
         TransitionTo(GameState.PlayerPlaceSticker);
@@ -143,7 +157,7 @@ public class GameStateManager : MonoBehaviour
         if (CurrentState != GameState.PlayerPlaceSticker)
             return;
 
-        Context.AvailableStickers.Remove(sticker);
+        Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker).ToList();
         card.Stickers.Add(sticker);
         Debug.Log($"Adding {sticker} to {card}");
 
@@ -154,10 +168,12 @@ public class GameStateManager : MonoBehaviour
     {
         //TODO: pick between available stickers!
         var random = Context.AvailableStickers.PickOne();
-        Context.EnemyCurrentCard.Stickers.Add(random);
+        Context.EnemyCurrentCard.Stickers.Add(random.Logic);
         Debug.Log($"Adding {random} to {Context.EnemyCurrentCard}");
 
         Context.AvailableStickers.Clear();
+        CombatEventManager.ClearStickers();
+
         TransitionTo(GameState.ConflictResolution);
     }
 
@@ -213,7 +229,7 @@ public class GameStateManager : MonoBehaviour
         {
             enemyManager.StartNextEnemy();
             Context.Enemy = enemyManager.CurrentEnemy;
-            
+
             TransitionTo(GameState.EnemyPlaysCard);
         }
         else
