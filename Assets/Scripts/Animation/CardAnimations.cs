@@ -38,7 +38,7 @@ public class CardAnimations : MonoBehaviour
         if (highlightedTime > 0f) 
         {
             meshSelection.gameObject.SetActive(true);
-            meshSelection.SetBlendShapeWeight(0, curveSelection.Evaluate(highlightedTime * 100f));
+            meshSelection.SetBlendShapeWeight(0, curveSelection.Evaluate(highlightedTime) * 100f);
         }
         else
         {
@@ -61,7 +61,7 @@ public class CardAnimations : MonoBehaviour
         while (t < 1f)
         {
             t = Mathf.Clamp01(t + Time.deltaTime / duration);
-            meshCard.material.SetFloat("_ReflectionValue", curveReflection.Evaluate(t));
+            meshCard.material.SetFloat("_ReflectionValue", 1-curveReflection.Evaluate(t));
             yield return null;
         }
 

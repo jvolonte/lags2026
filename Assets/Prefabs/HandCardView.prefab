@@ -123,6 +123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardView
       objectReference: {fileID: 0}
+    - target: {fileID: 4329143455819833247, guid: b7d69555223fc4bef933436b70756feb, type: 3}
+      propertyPath: handCardView
+      value: 
+      objectReference: {fileID: 3818786913521381892}
     - target: {fileID: 6377016839580118640, guid: b7d69555223fc4bef933436b70756feb, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
