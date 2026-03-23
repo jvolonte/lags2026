@@ -4,6 +4,7 @@ using Views;
 public class StickerShadow : MonoBehaviour
 {
     [SerializeField] Transform stickerShadow;
+    [SerializeField] Vector3 shadowOffset;
     
     StickerView stickerView;
     MeshRenderer shadowMesh;
@@ -68,6 +69,7 @@ public class StickerShadow : MonoBehaviour
             shadowPlane.Raycast(shadowRay, out distance);
 
             stickerShadow.position = shadowRay.GetPoint(distance);
+            stickerShadow.position += closestCard.transform.TransformDirection(shadowOffset);
             stickerShadow.rotation = Quaternion.LookRotation(-closestCard.transform.forward, transform.up);
         }
     }

@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StickerShadow
   stickerShadow: {fileID: 3193211813064757555}
+  shadowOffset: {x: 0.02, y: -0.05, z: 0}
 --- !u!65 &5873892646683364616
 BoxCollider:
   m_ObjectHideFlags: 0
