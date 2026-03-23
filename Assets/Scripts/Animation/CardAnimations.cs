@@ -5,6 +5,7 @@ public class CardAnimations : MonoBehaviour
 {
     public MeshRenderer meshCard;
     public SkinnedMeshRenderer meshSelection;
+    public GameObject shadowReciever;
 
     [Header("Animation Parameters")]
     public float reflectionDuration;

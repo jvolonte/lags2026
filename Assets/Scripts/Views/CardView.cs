@@ -17,7 +17,8 @@ namespace Views
 
         public EvaluationView evaluationView;
         public Transform StickerContainer => stickerContainer;
-        
+        public CardAnimations CardAnimations => cardAnimation;
+
         Card card;
 
         void OnEnable()

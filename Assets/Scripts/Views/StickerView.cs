@@ -10,6 +10,7 @@ namespace Views
 
         StickerInstance instance;
 
+        public MeshRenderer MeshRenderer => meshRenderer;
         public bool CanDrag { get; private set; } = true;
         public void Bind(StickerInstance inst)
         {

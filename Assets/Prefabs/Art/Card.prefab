@@ -328,6 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardAnimations
   meshCard: {fileID: 6121483806951413793}
   meshSelection: {fileID: 8019947564840147622}
+  shadowReciever: {fileID: 5982645536845870954}
   reflectionDuration: 0.4
   highlightOnDuration: 0.2
   highlightOffDuration: 0.2
@@ -406,7 +407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3659372219195093042
 Transform:
   m_ObjectHideFlags: 0
