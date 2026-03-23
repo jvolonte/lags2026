@@ -329,7 +329,7 @@ MonoBehaviour:
   meshSelection: {fileID: 8019947564840147622}
   reflectionDuration: 0.4
   highlightOnDuration: 0.2
-  highlightOffDuration: 0.4
+  highlightOffDuration: 0.2
   curveReflection:
     serializedVersion: 2
     m_Curve:
@@ -387,3 +387,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  colorHighlighted: {r: 0.9528302, g: 0.80321366, b: 0.22022964, a: 1}

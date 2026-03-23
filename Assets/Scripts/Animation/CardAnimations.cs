@@ -12,6 +12,7 @@ public class CardAnimations : MonoBehaviour
     public float highlightOffDuration;
     public AnimationCurve curveReflection;
     public AnimationCurve curveSelection;
+    public Color colorHighlighted;
 
     private bool highlighted;
     private float highlightedTime;
@@ -23,6 +24,7 @@ public class CardAnimations : MonoBehaviour
         meshCard.material.SetFloat("_ReflectionValue", 0);
         meshSelection.SetBlendShapeWeight(0, 0);
         meshSelection.gameObject.SetActive(false);
+        meshSelection.material.SetColor("_OverrideColor", Color.black);
 
         highlighted = false;
         highlightedTime = 0f;
@@ -39,6 +41,7 @@ public class CardAnimations : MonoBehaviour
         {
             meshSelection.gameObject.SetActive(true);
             meshSelection.SetBlendShapeWeight(0, curveSelection.Evaluate(highlightedTime) * 100f);
+            meshSelection.material.SetColor("_OverrideColor", colorHighlighted);
         }
         else
         {
