@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using CardZones;
 using DG.Tweening;
@@ -34,19 +35,14 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnEnemyEvaluationReady += v => enemyEvaluationView = v;
         CombatEventManager.OnPlayerEvaluationReady += v => playerEvaluationView = v;
         CombatEventManager.OnPlayerPlaysCard += HandlePlayerPlayCard;
-
-        StartGame();
     }
+
+    void Start() => TransitionTo(GameState.Setup);
 
     void HandlePlayerPlayCard(Card card)
     {
         if (CurrentState == GameState.PlayerPlaysCard && Context.PlayerCurrentCard == null)
             Context.Player.Play(card);
-    }
-
-    public void StartGame()
-    {
-        TransitionTo(GameState.Setup);
     }
 
     void TransitionTo(GameState newState)
@@ -217,12 +213,13 @@ public class GameStateManager : MonoBehaviour
         {
             enemyManager.StartNextEnemy();
             Context.Enemy = enemyManager.CurrentEnemy;
+            
+            TransitionTo(GameState.EnemyPlaysCard);
         }
         else
         {
             Debug.Log("GAME WON!");
         }
- 
     }
 
     void OnDestroy()

@@ -10,9 +10,11 @@ public static class CombatEventManager
         public static event Action<Card> OnEnemyPlayCard;
         public static event Action<ISticker, Card> OnAddSticker;
         public static event Action OnClearTable;
+        public static event Action<int, int> OnEnemyHealthChanged;
         
         public static event Action<EvaluationView> OnEnemyEvaluationReady;
         public static event Action<EvaluationView> OnPlayerEvaluationReady;
+        public static event Action<Enemy> OnEnemySet;
         
         public static void PlayCard(Card card) => OnPlayCard?.Invoke(card);
         public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
@@ -25,4 +27,6 @@ public static class CombatEventManager
                 OnPlayerEvaluationReady?.Invoke(evaluationView);
 
         public static void PlayerPlaysCard(Card card) => OnPlayerPlaysCard?.Invoke(card);
+        public static void EnemyHealthChanged(int current, int max) => OnEnemyHealthChanged?.Invoke(current, max);
+        public static void SetEnemy(Enemy enemy) => OnEnemySet?.Invoke(enemy);
 }

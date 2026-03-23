@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Data;
 using Factories;
@@ -10,8 +9,6 @@ public class EnemyManager : MonoBehaviour
 
     int currentIndex = -1;
     public Enemy CurrentEnemy { get; private set; }
-    
-    public event Action<Enemy> OnEnemySpawned;
 
     public void StartNextEnemy()
     {
@@ -26,8 +23,7 @@ public class EnemyManager : MonoBehaviour
         var data = enemies[currentIndex];
 
         CurrentEnemy = EnemyFactory.Create(data);
-
-        OnEnemySpawned?.Invoke(CurrentEnemy);
+        CombatEventManager.SetEnemy(CurrentEnemy);
     }
 
     public bool HasMoreEnemies => currentIndex < enemies.Count - 1;

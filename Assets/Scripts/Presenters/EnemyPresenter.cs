@@ -5,19 +5,17 @@ namespace Presenters
     public class EnemyPresenter : MonoBehaviour
     {
         [SerializeField] Transform spawnPoint;
-        [SerializeField] EnemyManager enemyManager;
-
         GameObject current;
 
         void Awake()
         {
-            enemyManager.OnEnemySpawned += Spawn;
+            CombatEventManager.OnEnemySet += Spawn;
         }
 
         void Spawn(Enemy enemy)
         {
             spawnPoint.DeleteChildren();
-            
+
             if (current != null)
                 Destroy(current);
 
