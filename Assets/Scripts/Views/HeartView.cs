@@ -24,6 +24,7 @@ namespace Views
             // meshRenderer.material = Instantiate(meshRenderer.material);
             meshRenderer.material.SetTexture("_MainTex", fullHeart);
             baseLocalPos = transform.localPosition;
+            isFilled = true;
         }
 
         void Start()
