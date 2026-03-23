@@ -317,6 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2846081195836229321}
   - component: {fileID: 4329143455819833247}
+  - component: {fileID: 4762510248691489659}
   m_Layer: 0
   m_Name: CardView
   m_TagString: Untagged
@@ -359,6 +360,27 @@ MonoBehaviour:
   valueText: {fileID: 5616083732333694251}
   valueTextRotated: {fileID: 7685197835252315017}
   evaluationView: {fileID: 6923857619931713346}
+--- !u!65 &4762510248691489659
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978092054104808833}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.77, y: 1.15, z: 0.05}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3457151443855828120
 GameObject:
   m_ObjectHideFlags: 0

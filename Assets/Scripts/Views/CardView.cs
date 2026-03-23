@@ -12,19 +12,21 @@ namespace Views
         [SerializeField] Renderer cardRenderer;
         [SerializeField] CardAnimations cardAnimation;
         [SerializeField] TextMeshProUGUI valueText;
-        [SerializeField] TextMeshProUGUI valueTextRotated; 
-        
+        [SerializeField] TextMeshProUGUI valueTextRotated;
+
         public EvaluationView evaluationView;
 
+        Card card;
 
-        private void OnEnable()
+        void OnEnable()
         {
             if (handCardView != null)
             {
                 handCardView.OnHoverChanged += OnHoverChange;
             }
         }
-        private void OnDisable()
+
+        void OnDisable()
         {
             if (handCardView != null)
             {
@@ -36,7 +38,7 @@ namespace Views
         {
             SetValue(card.Value);
             SetVisual(card);
-            
+
             evaluationView.gameObject.SetActive(showEvaluation);
         }
 
@@ -47,15 +49,18 @@ namespace Views
             evaluationView.SetValue(value);
         }
 
-        void SetVisual(Card card)
+        void SetVisual(Card c)
         {
-            var texture = cardTextureDatabase.GetTexture(card.Suit, card.Value);
+            card = c;
+            var texture = cardTextureDatabase.GetTexture(c.Suit, c.Value);
             cardRenderer.material.SetTexture("_MainTex", texture);
         }
 
-        void OnHoverChange(HandCardView card, bool hover)
+        void OnHoverChange(HandCardView view, bool hover)
         {
             cardAnimation.Highlight(hover);
         }
+
+        public Card GetCard() => card;
     }
 }

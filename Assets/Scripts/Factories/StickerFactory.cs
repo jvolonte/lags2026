@@ -1,19 +1,26 @@
-using System;
-using System.Collections.Generic;
+using Data.Stickers;
 using Stickers;
 
 namespace Factories
 {
+    using System.Collections.Generic;
+
     public class StickerFactory
     {
-        readonly List<Func<ISticker>> pool = new()
-        {
-            () => new AdditiveSticker(UnityEngine.Random.Range(1, 10)),
-            () => new AdditiveSticker(UnityEngine.Random.Range(1, 10)),
-            () => new MultiplierSticker(1.5f),
-            () => new MultiplierSticker(2f),
-        };
+        readonly List<StickerData> pool;
 
-        public ISticker GetRandom() => pool.PickOne()();
+        public StickerFactory(List<StickerData> pool)
+        {
+            this.pool = pool;
+        }
+
+        public (ISticker logic, StickerData data) GetRandom()
+        {
+            var data = pool.PickOne();
+            var logic = data.Create();
+
+            return (logic, data);
+        }
+        
     }
 }

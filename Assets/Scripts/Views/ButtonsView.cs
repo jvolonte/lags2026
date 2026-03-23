@@ -39,7 +39,7 @@ namespace Views
                     
                 var sticker = context.AvailableStickers.PickOne();
                 var cards = context.Player.Hand.Cards.Append(context.PlayerCurrentCard);
-                CombatEventManager.AddSticker(sticker, cards.PickOne());
+                CombatEventManager.AddSticker(sticker.Logic, cards.PickOne());
             });
         }
     }
