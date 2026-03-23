@@ -53,9 +53,7 @@ namespace Presenters
 
         void Clear()
         {
-            foreach (var v in views)
-                Destroy(v.gameObject);
-
+            container.DeleteChildren();
             views.Clear();
         }
     }

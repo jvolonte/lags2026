@@ -76,11 +76,6 @@ namespace Views
                         hearts[i].SetFilled(false);
                     }
                 }
-                else if (current > lastHealth)
-                {
-                    for (var i = lastHealth; i < current; i++)
-                        hearts[i].SetFilled(true);
-                }
             }
 
             lastHealth = current;

@@ -107,7 +107,8 @@ public class StickerDragHandler : MonoBehaviour
     void ApplySticker(CardView cardView, StickerView stickerView)
     {
         var card = cardView.GetCard();
-        var localPos = cardView.transform.InverseTransformPoint(stickerView.transform.position);
+        var container = cardView.StickerContainer;
+        var localPos = container.InverseTransformPoint(stickerView.transform.position);
 
         var placement = new StickerPlacement
         {
@@ -117,8 +118,11 @@ public class StickerDragHandler : MonoBehaviour
         };
         card.Stickers.Add(placement);
 
-        stickerView.transform.SetParent(cardView.StickerContainer);
-        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, 0);
+        stickerView.transform.SetParent(container);
+        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, 0.02f);
+        stickerView.transform.rotation = cardView.transform.rotation;
+        
+        stickerView.SetRenderOnTop(false);
         stickerView.DisableDragging();
 
         CombatEventManager.AddSticker(placement, card);
