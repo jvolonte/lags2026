@@ -76,7 +76,5 @@ namespace Views
             transform.DOLocalMove(target, 0.2f)
                      .SetEase(Ease.OutQuad);
         }
-
-        void OnMouseDown() => CombatEventManager.PlayCard(Card);
     }
 }

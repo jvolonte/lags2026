@@ -1,11 +1,21 @@
+using Data;
+
 public class Enemy
 {
-    public int Health;
+    public EnemyData Data { get; }
 
-    public Enemy(int health)
+    public int Health { get; private set; }
+
+    public Enemy(EnemyData data)
     {
-        Health = health;
+        Data = data;
+        Health = data.health;
     }
 
-    public void Damage(int damage = 1) => Health -= damage;
+    public void Damage(int amount = 1)
+    {
+        Health -= amount;
+    }
+
+    public bool IsDead => Health <= 0;
 }
