@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Views.CardView
   cardTextureDatabase: {fileID: 11400000, guid: f431acdb79bad431fb63f059edf92484, type: 2}
-  cardRenderer: {fileID: 8728990490298108403}
+  cardRenderer: {fileID: 8985048338406270641}
   valueText: {fileID: 5616083732333694251}
   valueTextRotated: {fileID: 7685197835252315017}
   evaluationView: {fileID: 6923857619931713346}
@@ -747,8 +747,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 85688274455304414, guid: 66eccc9ca5474f74190268e27b900d43, type: 3}
   m_PrefabInstance: {fileID: 2901071106579267216}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &8728990490298108403 stripped
+--- !u!23 &8985048338406270641 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5864027938348152675, guid: 66eccc9ca5474f74190268e27b900d43, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6121483806951413793, guid: 66eccc9ca5474f74190268e27b900d43, type: 3}
   m_PrefabInstance: {fileID: 2901071106579267216}
   m_PrefabAsset: {fileID: 0}
