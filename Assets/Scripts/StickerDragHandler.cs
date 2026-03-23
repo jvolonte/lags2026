@@ -9,7 +9,6 @@ public class StickerDragHandler : MonoBehaviour
     Camera cam;
 
     StickerView dragging;
-    Vector3 offset;
 
     Vector3 originalPosition;
     Vector3 originalScale;
@@ -17,6 +16,7 @@ public class StickerDragHandler : MonoBehaviour
     Transform originalParent;
 
     [SerializeField] float dragDistance = 2f;
+    [SerializeField] LayerMask cardLayer;
 
     void Awake()
     {
@@ -53,9 +53,7 @@ public class StickerDragHandler : MonoBehaviour
             originalPosition = dragging.transform.position;
             originalRotation = dragging.transform.rotation;
             originalParent = dragging.transform.parent;
-
-            offset = dragging.transform.position - hit.point;
-
+            
             dragging.transform.DOScale(0.25f, 0.15f);
             dragging.transform.SetParent(null);
             FaceCameraSmooth(dragging.transform);
@@ -70,11 +68,8 @@ public class StickerDragHandler : MonoBehaviour
         var planePos = cam.transform.position + cam.transform.forward * dragDistance;
         var plane = new Plane(-cam.transform.forward, planePos);
 
-        if (plane.Raycast(ray, out var dist))
-        {
-            var point = ray.GetPoint(dist);
-            dragging.transform.position = point + offset;
-        }
+        if (plane.Raycast(ray, out var dist)) 
+            dragging.transform.position = ray.GetPoint(dist);
         
         FaceCameraSmooth(dragging.transform);
     }
@@ -83,9 +78,10 @@ public class StickerDragHandler : MonoBehaviour
     {
         var ray = cam.ScreenPointToRay(screenPos);
 
-        if (Physics.Raycast(ray, out var hit))
+        if (Physics.Raycast(ray, out var hit, 100f, cardLayer))
         {
-            var card = hit.collider.GetComponentInParent<CardView>();
+            var card = hit.collider.GetComponent<CardView>() 
+                       ?? hit.collider.GetComponentInChildren<CardView>();
 
             //TODO: this should check if card is either in hand or in play.
             if (card != null)

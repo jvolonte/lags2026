@@ -60,8 +60,6 @@ namespace Views
 
         void UpdateHearts(int current, int max)
         {
-            Debug.Log($"HEALTH: {current}/{max}");
-            
             if (lastHealth == -1)
             {
                 for (var i = 0; i < hearts.Count; i++)

@@ -114,7 +114,7 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaysCard()
     {
-        Debug.Log("Waiting for player input...");
+        Debug.Log("Waiting for player to play a card...");
     }
 
     void HandlePlayerSelectedCard(Card card)
@@ -150,7 +150,7 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaceSticker()
     {
-        Debug.Log("Waiting for player input.");
+        Debug.Log("Waiting for player to place a sticker...");
     }
 
     void HandlePlayerSelectedSticker(StickerPlacement sticker, Card card)
@@ -177,7 +177,7 @@ public class GameStateManager : MonoBehaviour
             LocalPosition = new Vector2()
         };
         Context.EnemyCurrentCard.Stickers.Add(placement);
-        Debug.Log($"Adding {random} to {Context.EnemyCurrentCard}");
+        Debug.Log($"Adding {placement} to {Context.EnemyCurrentCard}");
 
         Context.AvailableStickers.Clear();
         CombatEventManager.ClearStickers();

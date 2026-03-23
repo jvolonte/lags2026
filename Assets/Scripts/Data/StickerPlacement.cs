@@ -9,5 +9,7 @@ namespace Data
         public ISticker Logic;
         public StickerData Data;
         public Vector2 LocalPosition;
+
+        public override string ToString() => $"{Logic} at {LocalPosition}";
     }
 }
