@@ -16,7 +16,10 @@ public class EnemyView : MonoBehaviour
     {   
         Initialize();
     }
-
+    private void OnDestroy()
+    {
+        CombatEventManager.OnEnemyHealthChanged -= OnHealthChanged;
+    }
     private void LateUpdate()
     {
         if (currentCardsAmount > 0)
@@ -42,7 +45,9 @@ public class EnemyView : MonoBehaviour
             cards[i] = Instantiate(cardDummy, cardDummy.transform.parent).transform;
         }
         cardDummy.SetActive(false);
-        SetCardsAmount(0);
+        SetCardsAmount(3);
+
+        CombatEventManager.OnEnemyHealthChanged += OnHealthChanged;
     }
     public void SetCardsAmount (int amount)
     {
@@ -51,6 +56,11 @@ public class EnemyView : MonoBehaviour
             cards[i].gameObject.SetActive(i < amount);
         }
         currentCardsAmount = amount;
+    }
+    private void OnHealthChanged (int current, int max)
+    {
+        if (current == max) return;
+        GetHurt();
     }
     public void GetHurt ()
     {
