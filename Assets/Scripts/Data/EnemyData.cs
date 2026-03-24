@@ -9,6 +9,7 @@ namespace Data
 
         [Header("Stats")]
         public int health = 3;
+        public int stickersInCards = 0;
         
         [Header("Presentation")]
         public GameObject prefab;

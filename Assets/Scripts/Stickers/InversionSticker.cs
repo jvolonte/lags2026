@@ -1,6 +1,6 @@
 namespace Stickers
 {
-    public class ReverseSticker : ISticker
+    public class InversionSticker : ISticker
     {
         public int Priority => 200;
 

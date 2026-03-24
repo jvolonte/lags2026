@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.EnemyData
   id: Old Man
   health: 2
+  stickersInCards: 0
   prefab: {fileID: 8301369170142595094, guid: 9ff5bf59985c94f4480748e7342a4ff4, type: 3}

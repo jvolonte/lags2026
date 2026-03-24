@@ -1,6 +1,9 @@
+using System.Numerics;
+using Data;
 using Data.Stickers;
 using Stickers;
 using Utils;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Factories
 {
@@ -22,6 +25,18 @@ namespace Factories
 
             return (logic, data);
         }
-        
+
+        public StickerPlacement CreateRandomPlacement()
+        {
+            var data = pool.PickOne();
+            var logic = data.Create();
+
+            return new StickerPlacement
+            {
+                Logic = logic,
+                Data = data,
+                LocalPosition = Vector2.zero
+            };
+        }
     }
 }

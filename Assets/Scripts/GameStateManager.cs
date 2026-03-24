@@ -1,11 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using CardZones;
 using Data;
 using Data.Stickers;
 using DG.Tweening;
 using Factories;
+using NUnit.Framework;
 using Presenters;
+using Stickers;
 using UnityEngine;
 using Utils;
 using Views;
@@ -16,7 +19,7 @@ public class GameStateManager : MonoBehaviour
 
     public readonly GameContext Context = new();
 
-    readonly CardFactory cardFactory = new();
+    CardFactory cardFactory;
     StickerFactory stickerFactory;
     DeckFactory deckFactory;
 
@@ -29,14 +32,16 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
 
-    [Header("Presenters")] 
-    [SerializeField] EnemyCardPresenter enemyCardPresenter;
+    [Header("Presenters")]
+    [SerializeField]
+    EnemyCardPresenter enemyCardPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
 
     void Awake()
     {
         stickerFactory = new StickerFactory(stickers.ToList());
+        cardFactory = new CardFactory(stickerFactory);
         deckFactory = new DeckFactory(cardFactory);
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
@@ -105,11 +110,11 @@ public class GameStateManager : MonoBehaviour
     void EnterEnemyPlaysCard()
     {
         //TODO: use enemies cards?
-        var card = cardFactory.CreateRandom();
+        var stickerCount = Context.Enemy.Data.stickersInCards;
+        var card = cardFactory.CreateRandom(stickerCount);
 
         Context.EnemyCurrentCard = card;
         CombatEventManager.EnemyPlayCard(card);
-
         TransitionTo(GameState.PlayerPlaysCard);
     }
 
