@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2559bf132484acfbcece946510ff397, type: 3}
-  m_Name: Swords Killer
+  m_Name: Golds Hunter
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.SuitKillerStickerData
-  id: Swords Killer
-  prefab: {fileID: 3218893417315888488, guid: 45a49a8556a4b45c3bbe26896803f372, type: 3}
+  id: Golds Hunter
+  descriptionTemplate: x{value} vs {suit}
+  prefab: {fileID: 3218893417315888488, guid: 26f5a9dfcd63f4352b0856ca1df5ec60, type: 3}
   value: 2
-  suit: 3
+  suit: 0

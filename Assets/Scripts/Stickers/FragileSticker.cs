@@ -5,7 +5,7 @@ namespace Stickers
 {
     public class FragileSticker : ISticker
     {
-        public int Priority =>  StickerPriority.Multiplicative;
+        public int Priority => StickerPriority.Multiplicative;
         public float Value;
         public float BreakChance = 0.25f;
 
@@ -18,7 +18,7 @@ namespace Stickers
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
             var newValue = Mathf.FloorToInt(context.Value * Value);
-            context.AddStep(newValue, $"x{Value}", StepType.Multiply);
+            context.AddStep(newValue, $"x{Value} (Fragile)", StepType.Multiply);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)
@@ -27,10 +27,11 @@ namespace Stickers
 
         public void AfterResolution(ResolutionContext context, Card source, Card other)
         {
-            var value = Random.value;
-            Debug.Log($"Rolling {value} for fragile sticker. Should destroy: {value <= BreakChance}");
-            if (value <= BreakChance)
+            if (Random.value <= BreakChance)
+            {
                 context.Get(source).Destroy = true;
+                Debug.Log($"Fragile destroyed card");
+            }
         }
     }
 }

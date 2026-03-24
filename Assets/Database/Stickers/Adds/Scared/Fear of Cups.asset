@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ac426344c2d4afc93f926050bdde769, type: 3}
-  m_Name: Scared of Golds
+  m_Name: Fear of Cups
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.ScaredOfSuitStickerData
-  id: Scared of Golds
-  prefab: {fileID: 3218893417315888488, guid: 423a8a928c50146fe842010a9caaa287, type: 3}
+  id: Fear of Cups
+  descriptionTemplate: -{value} vs {suit}
+  prefab: {fileID: 3218893417315888488, guid: 344d549f72c1f4601909574dd3928d88, type: 3}
   value: 3
-  suit: 0
+  suit: 1

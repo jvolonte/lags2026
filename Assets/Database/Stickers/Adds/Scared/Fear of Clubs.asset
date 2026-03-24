@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ac426344c2d4afc93f926050bdde769, type: 3}
-  m_Name: Scared of Swords
+  m_Name: Fear of Clubs
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.ScaredOfSuitStickerData
-  id: Scared of Swords
-  prefab: {fileID: 3218893417315888488, guid: dcf40dd6d6fc04a4fac296cf90f68eb2, type: 3}
+  id: Fear of Clubs
+  descriptionTemplate: -{value} vs {suit}
+  prefab: {fileID: 3218893417315888488, guid: aa803cdbd292c4d3f9aebd771ea1a915, type: 3}
   value: 3
-  suit: 3
+  suit: 2

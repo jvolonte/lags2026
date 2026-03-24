@@ -19,10 +19,10 @@ namespace Stickers
                 return;
 
             var chosen = candidates[Random.Range(0, candidates.Count)];
-
             Debug.Log($"Mimic copying {chosen.GetType().Name}");
-
             chosen.Resolve(context, source, other);
+
+            context.AddStep(context.Value, $"Mimic → {chosen.GetType().Name}", StepType.Conditional);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

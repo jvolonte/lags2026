@@ -9,5 +9,9 @@ namespace Data.Stickers
         public float value;
 
         public override ISticker Create() => new MultiplierSticker(value);
+
+        public override string GetDescription() =>
+            descriptionTemplate
+                .Replace("{value}", value.ToString());
     }
 }

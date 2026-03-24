@@ -9,9 +9,13 @@ namespace Stickers
         public float TriggerChance;
         public GraceSticker(float triggerChance) => TriggerChance = triggerChance;
 
-        public void Resolve(EvaluationContext context, Card source, Card other) { }
+        public void Resolve(EvaluationContext context, Card source, Card other)
+        {
+        }
 
-        public void ApplyRule(WinRuleSet ruleSet) { }
+        public void ApplyRule(WinRuleSet ruleSet)
+        {
+        }
 
         public void AfterResolution(ResolutionContext ctx, Card source, Card other)
         {
@@ -20,11 +24,11 @@ namespace Stickers
             if (!outcome.WillBeLost)
                 return;
 
-            var value = Random.value;
-            Debug.Log($"Rolling {value} for Grace sticker. Should trigger: {value <= TriggerChance}");
-            
-            if (value <= TriggerChance) 
+            if (Random.value <= TriggerChance)
+            {
                 outcome.WillBeLost = false;
+                Debug.Log("Grace saved card");
+            }
         }
     }
 }

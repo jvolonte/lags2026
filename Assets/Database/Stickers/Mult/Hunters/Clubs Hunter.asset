@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2559bf132484acfbcece946510ff397, type: 3}
-  m_Name: Cups Killer
+  m_Name: Clubs Hunter
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.SuitKillerStickerData
-  id: Cups Killer
-  prefab: {fileID: 3218893417315888488, guid: 2d701375739f241dc9add36e65f21d70, type: 3}
+  id: Clubs Hunter
+  descriptionTemplate: x{value} vs {suit}
+  prefab: {fileID: 3218893417315888488, guid: 3be49b7622da94120a3dbf232ce95115, type: 3}
   value: 2
-  suit: 1
+  suit: 2

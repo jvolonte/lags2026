@@ -3,14 +3,14 @@ using Utils;
 
 namespace Stickers
 {
-    public class ScaredOfSuitSticker : ISticker
+    public class SuitFearSticker : ISticker
     {
         public int Priority => StickerPriority.Additive;
 
         public Suit Suit;
         public int Value;
 
-        public ScaredOfSuitSticker(Suit suit, int value)
+        public SuitFearSticker(Suit suit, int value)
         {
             Suit = suit;
             Value = value;

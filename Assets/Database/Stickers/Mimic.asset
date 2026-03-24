@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Mimic
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.MimicStickerData
   id: Mimic
+  descriptionTemplate: Copies a random other sticker
   prefab: {fileID: 3218893417315888488, guid: a1ad97e3f72e144aa9d8163efc818557, type: 3}

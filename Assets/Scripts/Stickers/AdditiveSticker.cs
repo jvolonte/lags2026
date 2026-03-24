@@ -13,11 +13,16 @@ namespace Stickers
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
             var newValue = context.Value + Value;
-            context.AddStep(newValue, $"+{Value}", StepType.Add);
+            context.AddStep(newValue, $"+{Value} (Add)", StepType.Add);
         }
 
-        public void ApplyRule(WinRuleSet ruleSet) {}
-        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+        public void ApplyRule(WinRuleSet ruleSet)
+        {
+        }
+
+        public void AfterResolution(ResolutionContext context, Card source, Card other)
+        {
+        }
 
         public override string ToString() => $"Additive: {Value}";
     }

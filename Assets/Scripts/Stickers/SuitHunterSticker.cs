@@ -3,13 +3,13 @@ using Utils;
 
 namespace Stickers
 {
-    public class SuitKillerSticker : ISticker
+    public class SuitHunterSticker : ISticker
     {
         public int Priority => StickerPriority.Multiplicative;
         public float Value;
         public Suit Suit;
 
-        public SuitKillerSticker(Suit suit, float value)
+        public SuitHunterSticker(Suit suit, float value)
         {
             Suit = suit;
             Value = value;
@@ -29,6 +29,6 @@ namespace Stickers
         {
         }
 
-        public override string ToString() => $"Suit Killer of {Suit}. Applies x{Value}";
+        public override string ToString() => $"{Suit} Hunter. Applies x{Value}";
     }
 }

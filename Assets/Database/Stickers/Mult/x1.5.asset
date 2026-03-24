@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: x1.5
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.MultiplierStickerData
   id: x1.5
+  descriptionTemplate: x{value}
   prefab: {fileID: 3218893417315888488, guid: 4e7e32866d24b4d12a66376ea3787dbe, type: 3}
   value: 1.5

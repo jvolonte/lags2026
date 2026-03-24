@@ -8,8 +8,11 @@ namespace Data.Stickers
     public abstract class StickerData : ScriptableObject
     {
         public string id;
+        [TextArea] public string descriptionTemplate;
+        
         public StickerView prefab;
         
         public abstract ISticker Create();
+        public abstract string GetDescription();
     }
 }

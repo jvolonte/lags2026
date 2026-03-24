@@ -8,20 +8,25 @@ namespace Stickers
         public int Priority => StickerPriority.Additive;
 
         public int Value;
+        public float Chance;
 
-        public ChaosSticker(int value)
+        public ChaosSticker(int value, float chance)
         {
             Value = value;
+            Chance = chance;
         }
 
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
             var roll = Random.value;
-            var delta = roll <= 0.5f ? Value : -Value;
+            var delta = roll <= Chance ? Value : -Value;
 
             var newValue = Mathf.Max(0, context.Value + delta);
 
-            context.AddStep(newValue, delta > 0 ? $"+{Value}" : $"-{Value}", StepType.Conditional);
+            context.AddStep(newValue, delta > 0
+                    ? $"+{Value} (Chaos)"
+                    : $"-{Value} (Chaos)",
+                StepType.Conditional);
         }
 
         public void ApplyRule(WinRuleSet ruleSet) { }

@@ -7,5 +7,7 @@ namespace Data.Stickers
     public class MimicStickerData : StickerData
     {
         public override ISticker Create() => new MimicSticker();
+
+        public override string GetDescription() => descriptionTemplate;
     }
 }
