@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data.Stickers
 {
-    [CreateAssetMenu(menuName = "Game/Sticker")]
+    [CreateAssetMenu(menuName = "Game/Multiplier")]
     public class MultiplierStickerData : StickerData
     {
         public float value;

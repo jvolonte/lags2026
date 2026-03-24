@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data.Stickers
 {
-    [CreateAssetMenu(menuName = "Game/Sticker")]
+    [CreateAssetMenu(menuName = "Game/Additive")]
     public class AdditiveStickerData : StickerData
     {
         public int value;
