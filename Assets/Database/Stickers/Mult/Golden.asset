@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.GoldenStickerData
   id: Golden
   descriptionTemplate: '{chance}% chance to x{value}'
+  rarity: 1
   prefab: {fileID: 0}
   value: 3
   chance: 0.2

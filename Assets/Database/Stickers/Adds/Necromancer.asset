@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.NecromancerStickerData
   id: Necromancer
   descriptionTemplate: +value of top discard card
+  rarity: 1
   prefab: {fileID: 0}

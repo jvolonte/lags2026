@@ -6,9 +6,7 @@ using Data;
 using Data.Stickers;
 using DG.Tweening;
 using Factories;
-using NUnit.Framework;
 using Presenters;
-using Stickers;
 using UnityEngine;
 using Utils;
 using Views;
@@ -135,16 +133,13 @@ public class GameStateManager : MonoBehaviour
     void EnterRevealStickers()
     {
         Context.AvailableStickers.Clear();
+        var availablePool = new List<StickerData>(stickerFactory.Pool);
 
         for (var i = 0; i < 3; i++)
         {
-            var (logic, data) = stickerFactory.GetRandom();
-
-            Context.AvailableStickers.Add(new StickerInstance
-            {
-                Logic = logic,
-                Data = data
-            });
+            var (logic, data) = StickerFactory.GetRandomWeighted(availablePool);
+            Context.AvailableStickers.Add(new StickerInstance { Logic = logic, Data = data });
+            availablePool.Remove(data);
         }
 
         CombatEventManager.RevealStickers(Context.AvailableStickers);

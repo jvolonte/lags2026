@@ -9,10 +9,17 @@ namespace Data.Stickers
     {
         public string id;
         [TextArea] public string descriptionTemplate;
-        
+        public StickerRarity rarity;
         public StickerView prefab;
         
         public abstract ISticker Create();
         public abstract string GetDescription();
+    }
+    
+    public enum StickerRarity
+    {
+        Common,
+        Rare,
+        Epic
     }
 }

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.UnderdogStickerData
   id: Underdog
   descriptionTemplate: x{value} if opponent base is higher
+  rarity: 1
   prefab: {fileID: 0}
   value: 2

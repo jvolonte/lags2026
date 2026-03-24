@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.FibonacciStickerData
   id: Spiral
   descriptionTemplate: Gains increasing value per copy
+  rarity: 2
   prefab: {fileID: 0}

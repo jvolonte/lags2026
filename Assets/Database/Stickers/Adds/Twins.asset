@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.TwinsStickerData
   id: Twins
   descriptionTemplate: +{value} if another identical sticker exists
+  rarity: 1
   prefab: {fileID: 0}
   value: 4

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.InversionStickerData
   id: Inversion
   descriptionTemplate: Lowest value wins
+  rarity: 1
   prefab: {fileID: 0}

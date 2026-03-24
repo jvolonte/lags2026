@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.LoneWolfStickerData
   id: Lone Wolf
   descriptionTemplate: +{value} if this is the only sticker
+  rarity: 1
   prefab: {fileID: 0}
   value: 5

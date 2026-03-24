@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.PurityStickerData
   id: Purity
   descriptionTemplate: x{value} if all stickers are different
+  rarity: 1
   prefab: {fileID: 0}
   value: 2
