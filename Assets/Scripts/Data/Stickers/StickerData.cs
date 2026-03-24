@@ -4,7 +4,7 @@ using Views;
 
 namespace Data.Stickers
 {
-    [CreateAssetMenu(menuName = "Game/Sticker")]
+    [CreateAssetMenu(menuName = "Stickers/Sticker")]
     public abstract class StickerData : ScriptableObject
     {
         public string id;

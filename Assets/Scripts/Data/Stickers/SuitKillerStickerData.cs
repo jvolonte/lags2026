@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data.Stickers
 {
-    [CreateAssetMenu(menuName = "Game/SuitKiller")]
+    [CreateAssetMenu(menuName = "Stickers/SuitKiller")]
     public class SuitKillerStickerData : StickerData
     {
         public float value;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data.Stickers
 {
-    [CreateAssetMenu(menuName = "Game/Grace")]
+    [CreateAssetMenu(menuName = "Stickers/Grace")]
     public class GraceStickerData : StickerData
     {
         [Range(0f,1f)] public float chance = 0.5f;

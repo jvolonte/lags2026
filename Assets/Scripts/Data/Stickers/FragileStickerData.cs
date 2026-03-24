@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data.Stickers
 {
-    [CreateAssetMenu(menuName = "Game/Fragile")]
+    [CreateAssetMenu(menuName = "Stickers/Fragile")]
     public class FragileStickerData : StickerData
     {
         public float value;

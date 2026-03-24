@@ -975,8 +975,7 @@ MonoBehaviour:
   discardPileView: {fileID: 503038278}
   enemyCardPresenter: {fileID: 268042610}
   stickers:
-  - {fileID: 11400000, guid: e1f6fc0c34f72496a81c8b1249a73436, type: 2}
-  - {fileID: 11400000, guid: f2881576b090d4305a9c91d61a3e9192, type: 2}
+  - {fileID: 11400000, guid: 6932da540d0404d88a007c8638694447, type: 2}
 --- !u!4 &832192446
 Transform:
   m_ObjectHideFlags: 0
