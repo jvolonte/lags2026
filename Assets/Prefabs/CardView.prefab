@@ -361,6 +361,7 @@ MonoBehaviour:
   valueText: {fileID: 5616083732333694251}
   valueTextRotated: {fileID: 7685197835252315017}
   stickerContainer: {fileID: 5377790039478276568}
+  stickerScaleMultiplier: 0.52
   evaluationView: {fileID: 6923857619931713346}
 --- !u!65 &4762510248691489659
 BoxCollider:

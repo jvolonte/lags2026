@@ -66,10 +66,15 @@ namespace Presenters
             var padding = 0.1f;
             var minDistance = 0.3f;
 
+            float RandomCentered() => (Random.value + Random.value) * 0.5f;
+
             for (var i = 0; i < 10; i++)
             {
-                var x = Random.Range(minLocal.x + padding, maxLocal.x - padding);
-                var y = Random.Range(minLocal.y + padding, maxLocal.y - padding);
+                var tx = RandomCentered();
+                var ty = RandomCentered();
+
+                var x = Mathf.Lerp(minLocal.x + padding, maxLocal.x - padding, tx);
+                var y = Mathf.Lerp(minLocal.y + padding, maxLocal.y - padding, ty);
 
                 var candidate = new Vector2(x, y);
 
@@ -81,7 +86,7 @@ namespace Presenters
                     return candidate;
             }
 
-            return Vector2.zero;
+            return (minLocal + maxLocal) * 0.5f;
         }
     }
 }
