@@ -62,9 +62,9 @@ namespace Factories
     {
         public static float GetWeight(StickerRarity rarity) => rarity switch
         {
-            StickerRarity.Common => 70f,
+            StickerRarity.Common => 65f,
             StickerRarity.Rare => 25f,
-            StickerRarity.Epic => 5f,
+            StickerRarity.Epic => 10f,
             _ => 1f
         };
     }
