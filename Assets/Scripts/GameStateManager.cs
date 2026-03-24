@@ -197,6 +197,9 @@ public class GameStateManager : MonoBehaviour
 
         resolver.ApplyOutcome(result, Context);
 
+        if(Context.Enemy.IsDead)
+            yield return new WaitForSeconds(1);
+        
         TransitionTo(Context.Enemy.IsDead ? GameState.NextEncounter : GameState.Draw);
     }
 

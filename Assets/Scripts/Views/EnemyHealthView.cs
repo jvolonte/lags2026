@@ -45,7 +45,7 @@ namespace Views
                 var x = (i - centerOffset) * spacing;
                 var y = Mathf.Abs(i - centerOffset) * 0.05f;
                 heart.transform.localPosition = new Vector3(x, -y, 0);
-                
+
                 var scale = heart.transform.localScale;
                 heart.transform.localScale = Vector3.zero;
                 heart.transform.DOScale(scale, 0.25f)
@@ -54,8 +54,6 @@ namespace Views
 
                 hearts.Add(heart);
             }
-            
-            lastHealth = maxHealth;
         }
 
         void UpdateHearts(int current, int max)
@@ -69,12 +67,11 @@ namespace Views
             {
                 if (current < lastHealth)
                 {
-                    var toRemove = lastHealth - current;
-
-                    for (var i = 0; i < toRemove; i++)
+                    for (var i = lastHealth - 1; i >= current; i--)
                     {
+                        Debug.Log($"Setting off for index: {i}");
                         hearts[i].SetFilled(false);
-                    }
+                    } 
                 }
             }
 
