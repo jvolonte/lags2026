@@ -43,11 +43,14 @@ public class EnemyView : MonoBehaviour
         for (int i = 0; i < cards.Length; i++)
         {
             cards[i] = Instantiate(cardDummy, cardDummy.transform.parent).transform;
+            cards[i].transform.GetChild(0).transform.localPosition = Vector3.up * 0.3f;
         }
         cardDummy.SetActive(false);
         SetCardsAmount(3);
 
         CombatEventManager.OnEnemyHealthChanged += OnHealthChanged;
+
+        initialized = true;
     }
     public void SetCardsAmount (int amount)
     {
