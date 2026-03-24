@@ -1,3 +1,4 @@
+using Data;
 using UnityEngine;
 using Views;
 
@@ -14,6 +15,7 @@ namespace Presenters
         {
             CombatEventManager.OnEnemyPlayCard += HandleEnemyCardPlayed;
             CombatEventManager.OnClearTable += HandleClearTable;
+            CombatEventManager.OnEnemyPlaceStickerPreview += HandleEnemyPlaceStickerPreview;
         }
 
         void HandleClearTable()
@@ -26,6 +28,7 @@ namespace Presenters
         {
             CombatEventManager.OnEnemyPlayCard -= HandleEnemyCardPlayed;
             CombatEventManager.OnClearTable -= HandleClearTable;
+            CombatEventManager.OnEnemyPlaceStickerPreview -= HandleEnemyPlaceStickerPreview;
         }
 
         void HandleEnemyCardPlayed(Card card)
@@ -37,6 +40,14 @@ namespace Presenters
             currentView.SetCard(card);
 
             CombatEventManager.EnemyEvaluationReady(currentView.evaluationView);
+        }
+
+        void HandleEnemyPlaceStickerPreview(Card card, StickerPlacement placement)
+        {
+            if (currentView == null)
+                return;
+
+            currentView.SetCard(card);
         }
     }
 }

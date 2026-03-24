@@ -5,7 +5,6 @@ using Data;
 using Data.Stickers;
 using DG.Tweening;
 using Factories;
-using Stickers;
 using UnityEngine;
 using Views;
 
@@ -24,13 +23,11 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] EnemyManager enemyManager;
 
-    [Header("Views")] 
-    [SerializeField] HandView handView;
+    [Header("Views")] [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
 
-    [Header("Stickers")]
-    [SerializeField] StickerData[] stickers;
+    [Header("Stickers")] [SerializeField] StickerData[] stickers;
 
     void Awake()
     {
@@ -68,9 +65,9 @@ public class GameStateManager : MonoBehaviour
             case GameState.PlayerPlaysCard: EnterPlayerPlaysCard(); break;
             case GameState.RevealStickers: EnterRevealStickers(); break;
             case GameState.PlayerPlaceSticker: EnterPlayerPlaceSticker(); break;
-            case GameState.EnemyPlaceSticker: EnterEnemyPlaceSticker(); break;
+            case GameState.EnemyPlaceSticker: StartCoroutine(EnterEnemyPlaceSticker()); break;
             case GameState.ConflictResolution: StartCoroutine(EnterConflictResolution()); break;
-            case GameState.Draw: EnterDraw(); break;
+            case GameState.Draw: StartCoroutine(EnterDraw()); break;
             case GameState.GameOver: EnterGameOver(); break;
             case GameState.NextEncounter: EnterNextEncounter(); break;
         }
@@ -164,23 +161,28 @@ public class GameStateManager : MonoBehaviour
         TransitionTo(GameState.EnemyPlaceSticker);
     }
 
-    void EnterEnemyPlaceSticker()
+    IEnumerator EnterEnemyPlaceSticker()
     {
+        //TODO: show a thinking dialogue here
+        yield return new WaitForSeconds(1);
+
         //TODO: pick between available stickers!
         var random = Context.AvailableStickers.PickOne();
-        var placement = new StickerPlacement()
+        var placement = new StickerPlacement
         {
             Logic = random.Logic,
             Data = random.Data,
             //TODO: implement position selection
             LocalPosition = new Vector2()
         };
+
         Context.EnemyCurrentCard.Stickers.Add(placement);
-        Debug.Log($"Adding {placement} to {Context.EnemyCurrentCard}");
+        CombatEventManager.OnEnemyPlaceStickerPreview?.Invoke(Context.EnemyCurrentCard, placement);
+
+        yield return new WaitForSeconds(0.5f);
 
         Context.AvailableStickers.Clear();
         CombatEventManager.ClearStickers();
-
         TransitionTo(GameState.ConflictResolution);
     }
 
@@ -197,10 +199,7 @@ public class GameStateManager : MonoBehaviour
 
         resolver.ApplyOutcome(result, Context);
 
-        if(Context.Enemy.IsDead)
-            yield return new WaitForSeconds(1);
-        
-        TransitionTo(Context.Enemy.IsDead ? GameState.NextEncounter : GameState.Draw);
+        TransitionTo(GameState.Draw);
     }
 
     IEnumerator PlayEvaluationPhase(EvaluationContext playerEval, EvaluationContext enemyEval)
@@ -211,16 +210,20 @@ public class GameStateManager : MonoBehaviour
                             .WaitForCompletion();
     }
 
-    void EnterDraw()
+    IEnumerator EnterDraw()
     {
         if (OutOfCards())
         {
             TransitionTo(GameState.GameOver);
-            return;
+            yield break;
         }
 
         Context.Player.Draw();
-        TransitionTo(GameState.EnemyPlaysCard);
+
+        if (Context.Enemy.IsDead)
+            yield return new WaitForSeconds(1);
+
+        TransitionTo(Context.Enemy.IsDead ? GameState.NextEncounter : GameState.EnemyPlaysCard);
     }
 
     bool OutOfCards() =>

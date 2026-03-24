@@ -8,6 +8,8 @@ public static class CombatEventManager
         public static event Action<Card> OnPlayerPlaysCard;
         public static event Action<Card> OnPlayCard;
         public static event Action<Card> OnEnemyPlayCard;
+        
+        public static Action<Card, StickerPlacement> OnEnemyPlaceStickerPreview;
         public static event Action<StickerPlacement, Card> OnAddSticker;
         public static event Action OnClearTable;
         public static event Action<int, int> OnEnemyHealthChanged;
