@@ -976,6 +976,7 @@ MonoBehaviour:
   enemyCardPresenter: {fileID: 268042610}
   stickers:
   - {fileID: 11400000, guid: 6932da540d0404d88a007c8638694447, type: 2}
+  - {fileID: 11400000, guid: 999f948c0a56a470988170575f80feaf, type: 2}
 --- !u!4 &832192446
 Transform:
   m_ObjectHideFlags: 0

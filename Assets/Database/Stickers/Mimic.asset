@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b680985cb7dd43228014794a8b850898, type: 3}
+  m_Name: Mimic
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.MimicStickerData
+  id: Mimic
+  prefab: {fileID: 3218893417315888488, guid: a1ad97e3f72e144aa9d8163efc818557, type: 3}
