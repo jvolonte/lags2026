@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2021c1bcf8ad429f8031ae11332a33d7, type: 3}
+  m_Name: s.cups.w.clubs
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.AffinityStickerData
+  id: Affinity Cups
+  descriptionTemplate: x{strongMultiplier} vs {strongSuit}, -{weakValue} vs {weakSuit}
+  rarity: 0
+  prefab: {fileID: 3218893417315888488, guid: 0c7db81889686406d8f0e55bf636fdb6, type: 3}
+  strongSuit: 1
+  strongMultiplier: 2
+  weakSuit: 2
+  weakValue: 3

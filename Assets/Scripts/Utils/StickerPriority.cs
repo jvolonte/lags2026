@@ -6,6 +6,7 @@ namespace Utils
 
         public const int Multiplicative = 100;
         public const int Rule = 200;
+        public const int Affinity = 300;
 
         public const int Mimic = 1000;
         public const int Repeat = 1100;

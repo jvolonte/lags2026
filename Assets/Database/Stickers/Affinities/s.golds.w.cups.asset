@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2021c1bcf8ad429f8031ae11332a33d7, type: 3}
+  m_Name: s.golds.w.cups
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.AffinityStickerData
+  id: Affinity Golds
+  descriptionTemplate: x{strongMultiplier} vs {strongSuit}, -{weakValue} vs {weakSuit}
+  rarity: 0
+  prefab: {fileID: 3218893417315888488, guid: ea1d7fb58fde045e8ab73ff85c604b0e, type: 3}
+  strongSuit: 0
+  strongMultiplier: 2
+  weakSuit: 1
+  weakValue: 3
