@@ -9,6 +9,7 @@ namespace Views
     {
         [SerializeField] Button playRandomCardButton;
         [SerializeField] Button addRandomStickerButton;
+        [SerializeField] Button nextEnemyButton;
 
         [SerializeField] GameStateManager gameStateManager;
 
@@ -48,6 +49,8 @@ namespace Views
                 };
                 CombatEventManager.AddSticker(placement, cards.PickOne());
             });
+            
+            nextEnemyButton.onClick.AddListener(() => gameStateManager.Debug_KillEnemyAndAdvance());
         }
     }
 }

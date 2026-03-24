@@ -257,4 +257,10 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnAddSticker -= HandlePlayerSelectedSticker;
         CombatEventManager.OnPlayerPlaysCard -= HandlePlayerPlayCard;
     }
+    
+    public void Debug_KillEnemyAndAdvance()
+    {
+        Context.Enemy.Damage(Context.Enemy.Health);
+        TransitionTo(GameState.NextEncounter);
+    }
 }
