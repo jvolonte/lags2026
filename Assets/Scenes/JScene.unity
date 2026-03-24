@@ -975,8 +975,21 @@ MonoBehaviour:
   discardPileView: {fileID: 503038278}
   enemyCardPresenter: {fileID: 268042610}
   stickers:
+  - {fileID: 11400000, guid: 4f08524f02cec4a8abdf097defe6d047, type: 2}
+  - {fileID: 11400000, guid: 4da13d9d120c2436e95da20f17665c94, type: 2}
   - {fileID: 11400000, guid: 6932da540d0404d88a007c8638694447, type: 2}
+  - {fileID: 11400000, guid: 666ec1cbac0274da8991d40fb0a35578, type: 2}
+  - {fileID: 11400000, guid: 04ee3fd0807c14966807d4881d8d4213, type: 2}
+  - {fileID: 11400000, guid: f19269f745f40424f96e76a823bedb3c, type: 2}
+  - {fileID: 11400000, guid: b70a7a4456e5c4b5c8ee5e117eeb16bb, type: 2}
+  - {fileID: 11400000, guid: e1f6fc0c34f72496a81c8b1249a73436, type: 2}
   - {fileID: 11400000, guid: 999f948c0a56a470988170575f80feaf, type: 2}
+  - {fileID: 11400000, guid: f2881576b090d4305a9c91d61a3e9192, type: 2}
+  - {fileID: 11400000, guid: bd0a4c98b6b404feeac96811df1bdfda, type: 2}
+  - {fileID: 11400000, guid: b7d9d595957844b40a7ff71057cf97bc, type: 2}
+  - {fileID: 11400000, guid: 876bc528609444f34a1b78e54bf0d46c, type: 2}
+  - {fileID: 11400000, guid: 3e0dc5e99350b4bc29c96f978216a0cb, type: 2}
+  - {fileID: 11400000, guid: a9b050e0b630647fda82cc56856e30fa, type: 2}
 --- !u!4 &832192446
 Transform:
   m_ObjectHideFlags: 0
