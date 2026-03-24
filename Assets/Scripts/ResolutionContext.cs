@@ -18,5 +18,6 @@ public class ResolutionContext
 
 public class CardOutcome
 {
+    public bool WillBeLost;
     public bool Destroy;
 }

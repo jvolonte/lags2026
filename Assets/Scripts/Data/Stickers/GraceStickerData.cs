@@ -1,0 +1,13 @@
+using Stickers;
+using UnityEngine;
+
+namespace Data.Stickers
+{
+    [CreateAssetMenu(menuName = "Game/Grace")]
+    public class GraceStickerData : StickerData
+    {
+        [Range(0f,1f)] public float chance = 0.5f;
+
+        public override ISticker Create() => new GraceSticker(chance);
+    }
+}

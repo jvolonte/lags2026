@@ -37,6 +37,9 @@ public class ConflictResolver
         resolution.Get(playerCard);
         resolution.Get(enemyCard);
 
+        if (result.Outcome is ConflictOutcome.EnemyWin)
+            resolution.Get(playerCard).WillBeLost = true;
+
         RunPostEffects(playerCard, enemyCard, resolution);
         RunPostEffects(enemyCard, playerCard, resolution);
 
@@ -71,12 +74,17 @@ public class ConflictResolver
         if (outcome.Destroy)
             return;
 
+        if (outcome.WillBeLost)
+            return;
+
         context.Player.Discard.Add(card);
     }
 
     void ResolveEnemyWin(GameContext game, ResolutionContext resolution)
     {
         Debug.Log("---ENEMY WON---");
+
+        HandleCardAfterCombat(game.PlayerCurrentCard, game, resolution);
         Cleanup(game);
     }
 
