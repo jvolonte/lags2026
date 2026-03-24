@@ -56,12 +56,12 @@ public class StickerDragHandler : MonoBehaviour
     {
         dragging = view;
 
+        originalParent = dragging.transform.parent;
         dragging.transform.SetParent(null, true);
 
         originalScale = dragging.transform.localScale;
         originalPosition = dragging.transform.position;
         originalRotation = dragging.transform.rotation;
-        originalParent = dragging.transform.parent;
 
         dragging.transform.DOScale(stickerScaleMultiplier, 0.15f);
         FaceCameraSmooth(dragging.transform);
