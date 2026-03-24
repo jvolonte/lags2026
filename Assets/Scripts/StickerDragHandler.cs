@@ -131,7 +131,6 @@ public class StickerDragHandler : MonoBehaviour
             Logic = stickerView.GetLogic(),
             LocalPosition = new Vector2(localPos.x, localPos.y)
         };
-        card.Stickers.Add(placement);
 
         stickerView.transform.SetParent(container);
         stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, -0.02f);
