@@ -14,6 +14,8 @@ namespace Views
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated;
         [SerializeField] Transform stickerContainer;
+        
+        [SerializeField] float stickerScaleMultiplier = 0.5f;
 
         public EvaluationView evaluationView;
         public Transform StickerContainer => stickerContainer;
@@ -65,7 +67,7 @@ namespace Views
         {
             foreach (var placement in card.Stickers)
             {
-                var view = Instantiate(placement.Data.prefab, stickerContainer);
+                var view = Instantiate(placement.Data.prefab, stickerContainer, false);
 
                 view.Bind(new StickerInstance
                 {
@@ -73,6 +75,8 @@ namespace Views
                     Data = placement.Data
                 });
 
+                view.transform.localScale = Vector3.one * stickerScaleMultiplier;
+                view.transform.localRotation = Quaternion.identity;
                 view.transform.localPosition = new Vector3(
                     placement.LocalPosition.x,
                     placement.LocalPosition.y,

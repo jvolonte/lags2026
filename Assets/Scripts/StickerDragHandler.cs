@@ -17,6 +17,7 @@ public class StickerDragHandler : MonoBehaviour
 
     [SerializeField] float dragDistance = 2f;
     [SerializeField] LayerMask cardLayer;
+    [SerializeField] float stickerScaleMultiplier = 0.5f;
 
     void Awake()
     {
@@ -55,13 +56,14 @@ public class StickerDragHandler : MonoBehaviour
     {
         dragging = view;
 
+        dragging.transform.SetParent(null, true);
+
         originalScale = dragging.transform.localScale;
         originalPosition = dragging.transform.position;
         originalRotation = dragging.transform.rotation;
         originalParent = dragging.transform.parent;
 
-        dragging.transform.DOScale(0.25f, 0.15f);
-        dragging.transform.SetParent(null);
+        dragging.transform.DOScale(stickerScaleMultiplier, 0.15f);
         FaceCameraSmooth(dragging.transform);
         dragging.GetComponent<StickerView>().SetRenderOnTop(true);
 
@@ -132,9 +134,10 @@ public class StickerDragHandler : MonoBehaviour
             LocalPosition = new Vector2(localPos.x, localPos.y)
         };
 
-        stickerView.transform.SetParent(container);
+        stickerView.transform.SetParent(container, false);
         stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, -0.02f);
-        stickerView.transform.rotation = cardView.transform.rotation;
+        stickerView.transform.localScale = Vector3.one * stickerScaleMultiplier;
+        stickerView.transform.localRotation = Quaternion.identity;
 
         stickerView.SetRenderOnTop(false);
         stickerView.DisableDragging();
