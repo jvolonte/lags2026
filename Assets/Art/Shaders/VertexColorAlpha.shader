@@ -24,12 +24,12 @@ Shader "Vertex Color Alpha"
             struct appdata
             {
                 float4 vertex : POSITION;
-                float3 col : COLOR;
+                float4 col : COLOR;
             };
 
             struct v2f
             {
-                float3 col : COLOR;
+                float4 col : COLOR;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
@@ -53,7 +53,7 @@ Shader "Vertex Color Alpha"
                 fixed4 col = (1,1,1,1);
                 float3 vertCol = GAMMA_CORRECTION(i.col);
                 col.xyz = vertCol;
-                col.a = _Alpha;
+                col.a = _Alpha * i.col.a;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
