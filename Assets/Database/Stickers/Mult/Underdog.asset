@@ -15,5 +15,5 @@ MonoBehaviour:
   id: Underdog
   descriptionTemplate: x{value} if opponent base is higher
   rarity: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 3218893417315888488, guid: 759b4f2af910d4194b3c492b696eae60, type: 3}
   value: 2

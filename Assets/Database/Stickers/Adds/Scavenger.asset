@@ -15,5 +15,5 @@ MonoBehaviour:
   id: Scavenger
   descriptionTemplate: +{value} per card in discard
   rarity: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 3218893417315888488, guid: 7e33c06267ab34b20bd449b9bf8e75b6, type: 3}
   value: 1

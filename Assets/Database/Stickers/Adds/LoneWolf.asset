@@ -15,5 +15,5 @@ MonoBehaviour:
   id: Lone Wolf
   descriptionTemplate: +{value} if this is the only sticker
   rarity: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 3218893417315888488, guid: 4e80bf2b6d647433b8a52ab13ef539af, type: 3}
   value: 5
