@@ -76,7 +76,7 @@ namespace Views
                 view.transform.localPosition = new Vector3(
                     placement.LocalPosition.x,
                     placement.LocalPosition.y,
-                    0
+                    -0.02f
                 );
 
                 view.DisableDragging();

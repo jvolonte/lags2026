@@ -76,7 +76,7 @@ public class StickerShadow : MonoBehaviour
 
             stickerShadow.position = shadowRay.GetPoint(distance);
             stickerShadow.position += closestCard.transform.TransformDirection(shadowOffset);
-            stickerShadow.rotation = Quaternion.LookRotation(-closestCard.transform.forward, transform.up);
+            stickerShadow.rotation = Quaternion.LookRotation(closestCard.transform.forward, transform.up);
         }
     }
     public void GetWorldCards()

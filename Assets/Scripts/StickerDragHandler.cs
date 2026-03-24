@@ -126,7 +126,7 @@ public class StickerDragHandler : MonoBehaviour
         card.Stickers.Add(placement);
 
         stickerView.transform.SetParent(container);
-        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, 0.02f);
+        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, -0.02f);
         stickerView.transform.rotation = cardView.transform.rotation;
         
         stickerView.SetRenderOnTop(false);
@@ -137,7 +137,7 @@ public class StickerDragHandler : MonoBehaviour
 
     void FaceCameraSmooth(Transform t)
     {
-        var targetRot = Quaternion.LookRotation(-Helpers.Camera.transform.forward, Vector3.up);
+        var targetRot = Quaternion.LookRotation(Helpers.Camera.transform.forward, Vector3.up);
         t.rotation = Quaternion.Slerp(t.rotation, targetRot, Time.deltaTime * 15f);
     }
 }

@@ -36,7 +36,7 @@ namespace Presenters
 
                 var y = (i - centerOffset) * spacing;
                 var z = -i * 0.01f;
-                view.transform.localPosition = new Vector3(0, -y, z);
+                view.transform.localPosition = new Vector3(0, y, z);
                 view.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(-5f, 5f));
                 
                 var scale = view.transform.localScale;

@@ -843,7 +843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48d9ce0305c4361b4757e0a7dd61f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StickerDragHandler
-  dragDistance: 4
+  dragDistance: 6
   cardLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -886,13 +886,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780951946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.022557573, y: -0.25783414, z: -0.084186025, w: 0.9622502}
+  m_LocalRotation: {x: 0.084186025, y: 0.9622502, z: 0.02255758, w: 0.25783423}
   m_LocalPosition: {x: 2.5, y: 6.5, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -30, z: -10}
+  m_LocalEulerAnglesHint: {x: 0, y: 150, z: 10}
 --- !u!1 &819761395
 GameObject:
   m_ObjectHideFlags: 0
