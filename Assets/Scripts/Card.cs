@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
-using UnityEngine;
 
 public class Card
 {
@@ -20,8 +19,6 @@ public class Card
 
     public EvaluationContext Calculate(Card other)
     {
-        Debug.Log($"Calculating card {this} with {Stickers.Count} stickers. Stickers: {string.Join(",", Stickers)}");
-        
         var context = new EvaluationContext { Value = Value };
         context.AddStep(Value, "Base", StepType.Base);
 

@@ -47,7 +47,6 @@ namespace Views
 
         public void SetFilled(bool filled)
         {
-            Debug.Log($"SETTING FILLED of {gameObject.name}: {filled}");
             if (isFilled == filled)
                 return;
 

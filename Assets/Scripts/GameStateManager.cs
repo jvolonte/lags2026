@@ -104,7 +104,6 @@ public class GameStateManager : MonoBehaviour
 
         Context.EnemyCurrentCard = card;
         CombatEventManager.EnemyPlayCard(card);
-        Debug.Log($"Enemy plays: {card}");
 
         TransitionTo(GameState.PlayerPlaysCard);
     }
@@ -119,7 +118,6 @@ public class GameStateManager : MonoBehaviour
         if (CurrentState != GameState.PlayerPlaysCard)
             return;
 
-        Debug.Log($"Player plays {card}");
         Context.PlayerCurrentCard = card;
         TransitionTo(GameState.RevealStickers);
     }
@@ -156,7 +154,6 @@ public class GameStateManager : MonoBehaviour
 
         Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
         card.Stickers.Add(sticker);
-        Debug.Log($"Adding {sticker} to {card}");
 
         TransitionTo(GameState.EnemyPlaceSticker);
     }
