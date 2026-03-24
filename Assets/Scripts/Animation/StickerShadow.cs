@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Views;
 
@@ -5,7 +6,7 @@ public class StickerShadow : MonoBehaviour
 {
     [SerializeField] Transform stickerShadow;
     [SerializeField] Vector3 shadowOffset;
-    
+
     StickerView stickerView;
     MeshRenderer shadowMesh;
 
@@ -26,8 +27,8 @@ public class StickerShadow : MonoBehaviour
     {
         stickerView = GetComponent<StickerView>();
         shadowMesh = stickerShadow.GetComponent<MeshRenderer>();
-        shadowMesh.material.SetTexture("_MainTex", 
-            stickerView.MeshRenderer.material.GetTexture("_MainTex"));
+
+        UpdateShadowTexture();
 
         GetWorldCards();
     }
@@ -66,7 +67,7 @@ public class StickerShadow : MonoBehaviour
         if (closestCard)
         {
             shadowPlane.SetNormalAndPosition(
-                closestCard.transform.forward, 
+                closestCard.transform.forward,
                 closestCard.shadowReciever.transform.position);
 
             shadowRay.origin = transform.position;
@@ -78,6 +79,11 @@ public class StickerShadow : MonoBehaviour
             stickerShadow.position += closestCard.transform.TransformDirection(shadowOffset);
             stickerShadow.rotation = Quaternion.LookRotation(closestCard.transform.forward, transform.up);
         }
+    }
+    public void UpdateShadowTexture ()
+    {       
+        Texture texSticker = stickerView.MeshRenderer.material.GetTexture("_MainTex");
+        shadowMesh.material.SetTexture("_ShadowTex", texSticker );
     }
     public void GetWorldCards()
     {
