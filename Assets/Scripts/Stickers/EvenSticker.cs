@@ -1,27 +1,26 @@
-using UnityEngine;
 using Utils;
 
 namespace Stickers
 {
-    public class ChaosSticker : ISticker
+    public class EvenSticker : ISticker
     {
         public int Priority => StickerPriority.Additive;
 
-        public int Value;
+        public int Value = 2;
 
-        public ChaosSticker(int value)
+        public EvenSticker(int value)
         {
             Value = value;
         }
 
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
-            var roll = Random.value;
-            var delta = roll <= 0.5f ? Value : -Value;
+            if (source.Value % 2 != 0)
+                return;
 
-            var newValue = Mathf.Max(0, context.Value + delta);
+            var newValue = context.Value + Value;
 
-            context.AddStep(newValue, delta > 0 ? $"+{Value}" : $"-{Value}", StepType.Conditional);
+            context.AddStep(newValue, $"+{Value} (Even)", StepType.Conditional);
         }
 
         public void ApplyRule(WinRuleSet ruleSet) { }

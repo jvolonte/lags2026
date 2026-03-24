@@ -2,21 +2,25 @@ using Utils;
 
 namespace Stickers
 {
-    public class NecroSticker : ISticker
+    public class LoneWolfSticker : ISticker
     {
         public int Priority => StickerPriority.Additive;
 
+        public int Value;
+
+        public LoneWolfSticker(int value = 5)
+        {
+            Value = value;
+        }
+
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
-            if (context.Discard == null || context.Discard.Count == 0)
+            if (source.Stickers.Count != 1)
                 return;
 
-            var topCard = context.Discard.Peek();
-            var value = topCard.Value;
+            var newValue = context.Value + Value;
 
-            var newValue = context.Value + value;
-
-            context.AddStep(newValue, $"+{value} (Necro)", StepType.Add);
+            context.AddStep(newValue, $"+{Value} (Lone Wolf)", StepType.Conditional);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

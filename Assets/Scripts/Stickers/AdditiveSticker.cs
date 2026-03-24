@@ -1,8 +1,10 @@
+using Utils;
+
 namespace Stickers
 {
     public class AdditiveSticker : ISticker
     {
-        public int Priority => 0;
+        public int Priority => StickerPriority.Additive;
 
         public int Value;
 

@@ -1,11 +1,12 @@
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 namespace Stickers
 {
     public class MimicSticker : ISticker
     {
-        public int Priority => 1000;
+        public int Priority => StickerPriority.Mimic;
 
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
@@ -24,8 +25,12 @@ namespace Stickers
             chosen.Resolve(context, source, other);
         }
 
-        public void ApplyRule(WinRuleSet ruleSet) { }
+        public void ApplyRule(WinRuleSet ruleSet)
+        {
+        }
 
-        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+        public void AfterResolution(ResolutionContext context, Card source, Card other)
+        {
+        }
     }
 }

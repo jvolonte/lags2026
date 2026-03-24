@@ -2,21 +2,25 @@ using Utils;
 
 namespace Stickers
 {
-    public class NecroSticker : ISticker
+    public class OddSticker : ISticker
     {
         public int Priority => StickerPriority.Additive;
 
+        public int Value = 3;
+
+        public OddSticker(int value)
+        {
+            Value = value;
+        }
+
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
-            if (context.Discard == null || context.Discard.Count == 0)
+            if (source.Value % 2 == 0)
                 return;
 
-            var topCard = context.Discard.Peek();
-            var value = topCard.Value;
+            var newValue = context.Value + Value;
 
-            var newValue = context.Value + value;
-
-            context.AddStep(newValue, $"+{value} (Necro)", StepType.Add);
+            context.AddStep(newValue, $"+{Value} (Odd)", StepType.Conditional);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

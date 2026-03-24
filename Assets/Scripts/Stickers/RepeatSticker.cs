@@ -1,11 +1,12 @@
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 namespace Stickers
 {
     public class RepeatSticker : ISticker
     {
-        public int Priority => 1000;
+        public int Priority => StickerPriority.Repeat;
 
         public float Multiplier;
 
@@ -29,8 +30,12 @@ namespace Stickers
             context.AddStep(newValue, $"+{bonus} (Repeat)", StepType.Conditional);
         }
 
-        public void ApplyRule(WinRuleSet ruleSet) { }
+        public void ApplyRule(WinRuleSet ruleSet)
+        {
+        }
 
-        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+        public void AfterResolution(ResolutionContext context, Card source, Card other)
+        {
+        }
     }
 }

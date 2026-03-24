@@ -1,10 +1,11 @@
 using UnityEngine;
+using Utils;
 
 namespace Stickers
 {
     public class FragileSticker : ISticker
     {
-        public int Priority => 100;
+        public int Priority =>  StickerPriority.Multiplicative;
         public float Value;
         public float BreakChance = 0.25f;
 

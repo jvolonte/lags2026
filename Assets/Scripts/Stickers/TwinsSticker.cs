@@ -1,30 +1,30 @@
-using UnityEngine;
+using System.Linq;
 using Utils;
 
 namespace Stickers
 {
-    public class ScaredOfSuitSticker : ISticker
+    public class TwinsSticker : ISticker
     {
         public int Priority => StickerPriority.Additive;
 
-        public Suit Suit;
         public int Value;
 
-        public ScaredOfSuitSticker(Suit suit, int value)
+        public TwinsSticker(int value = 4)
         {
-            Suit = suit;
             Value = value;
         }
 
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
-            var newValue = other.Suit == Suit
-                ? Mathf.FloorToInt(context.Value - Value)
-                : context.Value;
+            var myType = GetType();
+            var count = source.Stickers.Count(s => s.Logic.GetType() == myType);
 
-            newValue = Mathf.Max(0, newValue);
+            if (count < 2)
+                return;
 
-            context.AddStep(newValue, $"-{Value}", StepType.Conditional);
+            var newValue = context.Value + Value;
+
+            context.AddStep(newValue, $"+{Value} (Twins)", StepType.Conditional);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

@@ -1,10 +1,11 @@
 using UnityEngine;
+using Utils;
 
 namespace Stickers
 {
     public class MultiplierSticker : ISticker
     {
-        public int Priority => 100;
+        public int Priority => StickerPriority.Multiplicative;
 
         public float Value;
 
@@ -20,7 +21,9 @@ namespace Stickers
         {
         }
 
-        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+        public void AfterResolution(ResolutionContext context, Card source, Card other)
+        {
+        }
 
         public override string ToString() => $"Multiplier: {Value}";
     }
