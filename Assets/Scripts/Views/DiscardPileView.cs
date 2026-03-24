@@ -70,7 +70,10 @@ namespace Views
             if (card == null)
                 return;
 
-            currentTopView = Instantiate(cardPrefab, cardAnchor.position, cardAnchor.rotation);
+            currentTopView = Instantiate(cardPrefab, cardAnchor);
+            currentTopView.transform.localPosition = Vector3.zero;
+            currentTopView.transform.localRotation = Quaternion.identity;
+            
             currentTopView.SetCard(card, false);
         }
     }

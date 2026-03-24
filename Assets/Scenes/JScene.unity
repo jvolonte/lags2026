@@ -990,6 +990,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 876bc528609444f34a1b78e54bf0d46c, type: 2}
   - {fileID: 11400000, guid: 3e0dc5e99350b4bc29c96f978216a0cb, type: 2}
   - {fileID: 11400000, guid: a9b050e0b630647fda82cc56856e30fa, type: 2}
+  - {fileID: 11400000, guid: e21ec2265866c43aaa7afadee864e8a2, type: 2}
+  - {fileID: 11400000, guid: e21ec2265866c43aaa7afadee864e8a2, type: 2}
+  - {fileID: 11400000, guid: e21ec2265866c43aaa7afadee864e8a2, type: 2}
+  - {fileID: 11400000, guid: e21ec2265866c43aaa7afadee864e8a2, type: 2}
+  - {fileID: 11400000, guid: e21ec2265866c43aaa7afadee864e8a2, type: 2}
+  - {fileID: 11400000, guid: e21ec2265866c43aaa7afadee864e8a2, type: 2}
 --- !u!4 &832192446
 Transform:
   m_ObjectHideFlags: 0

@@ -8,8 +8,8 @@ public class ConflictResolver
         var playerCard = context.PlayerCurrentCard;
         var enemyCard = context.EnemyCurrentCard;
 
-        var playerEvaluationContext = playerCard.Calculate(enemyCard);
-        var enemyEvaluationContext = enemyCard.Calculate(playerCard);
+        var playerEvaluationContext = playerCard.Calculate(enemyCard, context);
+        var enemyEvaluationContext = enemyCard.Calculate(playerCard, context);
 
         var outcome = EncounterEvaluator.DetermineOutcome(
             playerEvaluationContext.Value,

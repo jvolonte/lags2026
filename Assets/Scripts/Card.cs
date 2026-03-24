@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using Stickers;
 
 public class Card
 {
@@ -17,15 +18,31 @@ public class Card
         Evaluation = Value;
     }
 
-    public EvaluationContext Calculate(Card other)
+    public EvaluationContext Calculate(Card other, GameContext game)
     {
-        var context = new EvaluationContext { Value = Value };
+        var context = new EvaluationContext
+        {
+            Value = Value,
+            Discard = game.Player.Discard
+        };
         context.AddStep(Value, "Base", StepType.Base);
 
         foreach (var sticker in Stickers.Select(s => s.Logic).OrderBy(s => s.Priority))
             sticker.Resolve(context, this, other);
 
         return context;
+    }
+
+    public int CalculateWith(IEnumerable<ISticker> stickers, Card other, EvaluationContext baseContext)
+    {
+        var context = baseContext.CloneBase();
+        context.Value = Value;
+        context.AddStep(Value, "Base", StepType.Base);
+
+        foreach (var sticker in stickers.OrderBy(s => s.Priority))
+            sticker.Resolve(context, this, other);
+
+        return context.Value;
     }
 
     public void ApplyStickerRules(WinRuleSet ruleSet)

@@ -192,8 +192,8 @@ public class GameStateManager : MonoBehaviour
         var result = resolver.Resolve(Context);
 
         yield return PlayEvaluationPhase(
-            Context.PlayerCurrentCard.Calculate(Context.EnemyCurrentCard),
-            Context.EnemyCurrentCard.Calculate(Context.PlayerCurrentCard)
+            Context.PlayerCurrentCard.Calculate(Context.EnemyCurrentCard, Context),
+            Context.EnemyCurrentCard.Calculate(Context.PlayerCurrentCard, Context)
         );
         yield return new WaitForSeconds(2);
 
