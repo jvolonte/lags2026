@@ -65,8 +65,13 @@ namespace Views
 
         void RebuildStickers()
         {
-            foreach (var placement in card.Stickers)
+            var baseZ = -0.02f;
+            var zStep = -0.01f;
+
+            for (var i = 0; i < card.Stickers.Count; i++)
             {
+                var placement = card.Stickers[i];
+
                 var view = Instantiate(placement.Data.prefab, stickerContainer, false);
 
                 view.Bind(new StickerInstance
@@ -77,10 +82,13 @@ namespace Views
 
                 view.transform.localScale = Vector3.one * stickerScaleMultiplier;
                 view.transform.localRotation = Quaternion.identity;
+
+                var z = baseZ + (i * zStep);
+
                 view.transform.localPosition = new Vector3(
                     placement.LocalPosition.x,
                     placement.LocalPosition.y,
-                    -0.02f
+                    z
                 );
 
                 view.DisableDragging();

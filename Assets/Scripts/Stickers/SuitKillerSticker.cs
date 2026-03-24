@@ -25,6 +25,6 @@ namespace Stickers
         {
         }
 
-        public override string ToString() => $"Multiplier: {Value}";
+        public override string ToString() => $"Suit Killer of {Suit}. Applies x{Value}";
     }
 }
