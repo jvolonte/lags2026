@@ -8,8 +8,15 @@ namespace Presenters
 {
     public class StickerPresenter : MonoBehaviour
     {
-        [SerializeField] Transform container;
-        [SerializeField] float spacing = 0.5f;
+        [Header("References")]
+        [SerializeField]
+        Transform container;
+
+        [SerializeField] MeshRenderer surface;
+
+        [Header("Layout")] [SerializeField] float spacing = 0.5f;
+        [SerializeField] float surfaceOffset = 0.02f;
+        [SerializeField] float depthStep = 0.01f;
 
         readonly List<StickerView> views = new();
 
@@ -29,25 +36,48 @@ namespace Presenters
         {
             Clear();
 
+            if (surface == null)
+            {
+                Debug.LogError("StickerPresenter: Missing MeshRenderer reference.");
+                return;
+            }
+
+            var bounds = surface.bounds;
+
+            var center = bounds.center;
+            var up = surface.transform.up;
+            var right = surface.transform.right;
+            var normal = surface.transform.forward;
+
             var centerOffset = (stickers.Count - 1) * 0.5f;
 
             for (var i = 0; i < stickers.Count; i++)
             {
                 var view = Instantiate(stickers[i].Data.prefab, container);
+                var offset = (i - centerOffset) * spacing;
 
-                var y = (i - centerOffset) * spacing;
-                var z = -i * 0.01f;
-                view.transform.localPosition = new Vector3(0, y, z);
-                view.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(-5f, 5f));
-                
-                var scale = view.transform.localScale;
+                var worldPos =
+                    center +
+                    right * 0f +
+                    up * offset +
+                    normal * surfaceOffset +
+                    normal * (-i * depthStep);
+
+                view.transform.position = worldPos;
+                var baseRotation = Quaternion.LookRotation(-normal, up);
+
+                var randomTilt = Quaternion.Euler(0, 0, Random.Range(-5f, 5f));
+                view.transform.rotation = baseRotation * randomTilt;
+
+                var targetScale = view.transform.localScale;
                 view.transform.localScale = Vector3.zero;
-                view.transform.DOScale(scale, 0.25f)
+
+                view.transform
+                    .DOScale(targetScale, 0.25f)
                     .SetEase(Ease.OutBack)
                     .SetDelay(i * 0.05f);
 
                 view.Bind(stickers[i]);
-                
                 views.Add(view);
             }
         }
