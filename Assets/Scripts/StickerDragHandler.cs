@@ -51,7 +51,7 @@ public class StickerDragHandler : MonoBehaviour
         }
     }
 
-    void StartDrag (StickerView view)
+    void StartDrag(StickerView view)
     {
         dragging = view;
 
@@ -67,6 +67,7 @@ public class StickerDragHandler : MonoBehaviour
 
         dragging.Dragging = true;
     }
+
     void Drag(Vector2 screenPos)
     {
         var ray = cam.ScreenPointToRay(screenPos);
@@ -74,11 +75,18 @@ public class StickerDragHandler : MonoBehaviour
         var planePos = cam.transform.position + cam.transform.forward * dragDistance;
         var plane = new Plane(-cam.transform.forward, planePos);
 
-        if (plane.Raycast(ray, out var dist)) 
+        if (Physics.Raycast(ray, out var hit, 100f, cardLayer))
+        {
+            plane.SetNormalAndPosition(hit.normal, hit.point + hit.normal * 0.05f);
+            RotateTowards(dragging.transform, hit.transform.rotation);
+        }
+        else
+            FaceCameraSmooth(dragging.transform);
+
+        if (plane.Raycast(ray, out var dist))
             dragging.transform.position = ray.GetPoint(dist);
-        
-        FaceCameraSmooth(dragging.transform);
     }
+
     void EndDrag(Vector2 screenPos)
     {
         dragging.Dragging = false;
@@ -87,7 +95,7 @@ public class StickerDragHandler : MonoBehaviour
 
         if (Physics.Raycast(ray, out var hit, 100f, cardLayer))
         {
-            var card = hit.collider.GetComponent<CardView>() 
+            var card = hit.collider.GetComponent<CardView>()
                        ?? hit.collider.GetComponentInChildren<CardView>();
 
             //TODO: this should check if card is either in hand or in play.
@@ -123,12 +131,11 @@ public class StickerDragHandler : MonoBehaviour
             Logic = stickerView.GetLogic(),
             LocalPosition = new Vector2(localPos.x, localPos.y)
         };
-        card.Stickers.Add(placement);
 
         stickerView.transform.SetParent(container);
-        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, 0.02f);
+        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, -0.02f);
         stickerView.transform.rotation = cardView.transform.rotation;
-        
+
         stickerView.SetRenderOnTop(false);
         stickerView.DisableDragging();
 
@@ -137,7 +144,10 @@ public class StickerDragHandler : MonoBehaviour
 
     void FaceCameraSmooth(Transform t)
     {
-        var targetRot = Quaternion.LookRotation(-Helpers.Camera.transform.forward, Vector3.up);
-        t.rotation = Quaternion.Slerp(t.rotation, targetRot, Time.deltaTime * 15f);
+        var targetRot = Quaternion.LookRotation(Helpers.Camera.transform.forward, Vector3.up);
+        RotateTowards(t, targetRot);
     }
+
+    void RotateTowards(Transform t, Quaternion targetRot, float speed = 15f) =>
+        t.rotation = Quaternion.Slerp(t.rotation, targetRot, Time.deltaTime * speed);
 }
