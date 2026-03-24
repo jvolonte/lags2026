@@ -15,7 +15,8 @@ namespace Stickers
         }
 
         public void ApplyRule(WinRuleSet ruleSet) {}
-        
+        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+
         public override string ToString() => $"Additive: {Value}";
     }
 }

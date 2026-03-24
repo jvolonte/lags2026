@@ -10,7 +10,9 @@ namespace Stickers
         {
             ruleSet.HigherValueWins = !ruleSet.HigherValueWins;
         }
-        
+
+        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+
         public override string ToString() => $"Reverse";
     }
 }

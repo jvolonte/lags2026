@@ -7,5 +7,7 @@ namespace Stickers
         void Resolve(EvaluationContext context, Card source, Card other);
 
         void ApplyRule(WinRuleSet ruleSet);
+        
+        void AfterResolution(ResolutionContext context, Card source, Card other);
     }
 }

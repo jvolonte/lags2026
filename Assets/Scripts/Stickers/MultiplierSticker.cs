@@ -20,6 +20,8 @@ namespace Stickers
         {
         }
 
+        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
+
         public override string ToString() => $"Multiplier: {Value}";
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class ConflictResolver
@@ -26,37 +27,65 @@ public class ConflictResolver
         };
     }
 
-    public void ApplyOutcome(ConflictResult result, GameContext context)
+    public void ApplyOutcome(ConflictResult result, GameContext game)
     {
+        var resolution = new ResolutionContext();
+
+        var playerCard = game.PlayerCurrentCard;
+        var enemyCard = game.EnemyCurrentCard;
+
+        resolution.Get(playerCard);
+        resolution.Get(enemyCard);
+
+        RunPostEffects(playerCard, enemyCard, resolution);
+        RunPostEffects(enemyCard, playerCard, resolution);
+
         switch (result.Outcome)
         {
-            case ConflictOutcome.PlayerWin: ResolvePlayerWin(result, context); break;
-            case ConflictOutcome.EnemyWin: ResolveEnemyWin(result, context); break;
-            case ConflictOutcome.Tie: ResolveTie(result, context); break;
+            case ConflictOutcome.PlayerWin: ResolvePlayerWin(game, resolution); break;
+            case ConflictOutcome.EnemyWin: ResolveEnemyWin(game, resolution); break;
+            case ConflictOutcome.Tie: ResolveTie(game, resolution); break;
         }
     }
 
-    void ResolvePlayerWin(ConflictResult result, GameContext context)
+    void RunPostEffects(Card source, Card other, ResolutionContext ctx)
     {
-        Debug.Log("---PLAYER WON---");
-        context.Enemy.Damage();
-
-        context.Player.Discard.Add(context.PlayerCurrentCard);
-        context.Player.Discard.Add(context.EnemyCurrentCard);
-        Cleanup(context);
+        foreach (var sticker in source.Stickers.Select(s => s.Logic))
+            sticker.AfterResolution(ctx, source, other);
     }
 
-    void ResolveEnemyWin(ConflictResult result, GameContext context)
+    void ResolvePlayerWin(GameContext game, ResolutionContext resolution)
+    {
+        game.Enemy.Damage();
+
+        HandleCardAfterCombat(game.PlayerCurrentCard, game, resolution);
+        HandleCardAfterCombat(game.EnemyCurrentCard, game, resolution);
+
+        Cleanup(game);
+    }
+
+    void HandleCardAfterCombat(Card card, GameContext context, ResolutionContext resolution)
+    {
+        var outcome = resolution.Get(card);
+
+        if (outcome.Destroy)
+            return;
+
+        context.Player.Discard.Add(card);
+    }
+
+    void ResolveEnemyWin(GameContext game, ResolutionContext resolution)
     {
         Debug.Log("---ENEMY WON---");
-        Cleanup(context);
+        Cleanup(game);
     }
 
-    void ResolveTie(ConflictResult result, GameContext context)
+    void ResolveTie(GameContext game, ResolutionContext resolution)
     {
         Debug.Log("---TIE---");
-        context.Player.Discard.Add(context.PlayerCurrentCard);
-        Cleanup(context);
+        HandleCardAfterCombat(game.PlayerCurrentCard, game, resolution);
+
+        Cleanup(game);
     }
 
     void Cleanup(GameContext context)

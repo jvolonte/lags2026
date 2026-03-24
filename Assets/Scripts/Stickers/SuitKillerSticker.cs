@@ -5,9 +5,7 @@ namespace Stickers
     public class SuitKillerSticker : ISticker
     {
         public int Priority => 150;
-
         public float Value;
-
         public Suit Suit;
 
         public SuitKillerSticker(Suit suit, float value) {
@@ -21,9 +19,9 @@ namespace Stickers
             context.AddStep(newValue, $"*{Value}", StepType.Conditional);
         }
 
-        public void ApplyRule(WinRuleSet ruleSet)
-        {
-        }
+        public void ApplyRule(WinRuleSet ruleSet) { }
+
+        public void AfterResolution(ResolutionContext context, Card source, Card other) { }
 
         public override string ToString() => $"Suit Killer of {Suit}. Applies x{Value}";
     }
