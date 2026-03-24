@@ -439,6 +439,17 @@ Transform:
   - {fileID: 1781841519}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 18.327, y: -180, z: 0}
+--- !u!114 &268042610 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 955165979893390285, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4bec55928b945f0ac818bb6f5eafa43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCardPresenter
 --- !u!1001 &378414641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -958,6 +969,7 @@ MonoBehaviour:
   handView: {fileID: 1781841520}
   deckView: {fileID: 503038279}
   discardPileView: {fileID: 503038278}
+  enemyCardPresenter: {fileID: 268042610}
   stickers:
   - {fileID: 11400000, guid: 4f08524f02cec4a8abdf097defe6d047, type: 2}
   - {fileID: 11400000, guid: 4da13d9d120c2436e95da20f17665c94, type: 2}

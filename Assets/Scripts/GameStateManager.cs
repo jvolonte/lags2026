@@ -5,6 +5,7 @@ using Data;
 using Data.Stickers;
 using DG.Tweening;
 using Factories;
+using Presenters;
 using UnityEngine;
 using Views;
 
@@ -26,6 +27,9 @@ public class GameStateManager : MonoBehaviour
     [Header("Views")] [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
+
+    [Header("Presenters")] 
+    [SerializeField] EnemyCardPresenter enemyCardPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
 
@@ -169,8 +173,7 @@ public class GameStateManager : MonoBehaviour
         {
             Logic = random.Logic,
             Data = random.Data,
-            //TODO: implement position selection
-            LocalPosition = new Vector2()
+            LocalPosition = enemyCardPresenter.GetRandomStickerPosition()
         };
 
         Context.EnemyCurrentCard.Stickers.Add(placement);
@@ -254,7 +257,7 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnAddSticker -= HandlePlayerSelectedSticker;
         CombatEventManager.OnPlayerPlaysCard -= HandlePlayerPlayCard;
     }
-    
+
     public void Debug_KillEnemyAndAdvance()
     {
         Context.Enemy.Damage(Context.Enemy.Health);
