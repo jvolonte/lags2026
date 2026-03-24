@@ -101,8 +101,7 @@ public class StickerDragHandler : MonoBehaviour
             var card = hit.collider.GetComponent<CardView>()
                        ?? hit.collider.GetComponentInChildren<CardView>();
 
-            //TODO: this should check if card is either in hand or in play.
-            if (card != null)
+            if (card != null && card.canReceiveStickers)
             {
                 ApplySticker(card, dragging);
                 dragging = null;

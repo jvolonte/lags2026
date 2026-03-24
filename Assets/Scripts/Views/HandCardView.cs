@@ -36,6 +36,7 @@ namespace Views
         {
             Card = card;
             cardView.SetCard(card, false);
+            cardView.AllowStickers();
         }
         
         public void SetHovered(bool hovered) => OnHoverChanged?.Invoke(this, hovered);

@@ -20,7 +20,9 @@ namespace Views
         public EvaluationView evaluationView;
         public Transform StickerContainer => stickerContainer;
         public CardAnimations CardAnimations => cardAnimation;
-
+        
+        public bool canReceiveStickers = false;
+        
         Card card;
 
         void OnEnable()
@@ -101,5 +103,7 @@ namespace Views
         }
 
         public Card GetCard() => card;
+
+        public void AllowStickers() => canReceiveStickers = true;
     }
 }
