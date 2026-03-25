@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Data;
+using Data.Stickers;
+using UnityEngine;
 using Views;
 
 public static class CombatEventManager
@@ -20,6 +22,9 @@ public static class CombatEventManager
         public static event Action OnClearStickers;
         public static event Action<string> OnPlayDialogue;
         
+        public static event Action<StickerData, Vector3> OnStickerHoverEnter;
+        public static event Action OnStickerHoverExit;
+        
         public static void PlayCard(Card card) => OnPlayCard?.Invoke(card);
         public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
         public static void AddSticker(StickerPlacement sticker, Card card) => OnAddSticker?.Invoke(sticker, card);
@@ -38,4 +43,7 @@ public static class CombatEventManager
         public static void ClearStickers() => OnClearStickers?.Invoke();
 
         public static void PlayDialogue(string message) => OnPlayDialogue?.Invoke(message);
+
+        public static void StickerHoverEnter(StickerData data, Vector3 pos) => OnStickerHoverEnter?.Invoke(data, pos);
+        public static void StickerHoverExit() => OnStickerHoverExit?.Invoke();
 }

@@ -26,9 +26,11 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] EnemyManager enemyManager;
 
-    [Header("Views")] [SerializeField] HandView handView;
+    [Header("Views")] 
+    [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
+    [SerializeField] TooltipView tooltipView;
 
     [Header("Presenters")]
     [SerializeField]
@@ -52,7 +54,12 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnEnemyEvaluationReady += v => enemyEvaluationView = v;
         CombatEventManager.OnPlayerEvaluationReady += v => playerEvaluationView = v;
         CombatEventManager.OnPlayerPlaysCard += HandlePlayerPlayCard;
+        CombatEventManager.OnStickerHoverEnter += ShowTooltip;
+        CombatEventManager.OnStickerHoverExit += HideTooltip;
     }
+
+    void ShowTooltip(StickerData data, Vector3 pos) => tooltipView.Show(data.GetDescription(), pos);
+    void HideTooltip() => tooltipView.Hide();
 
     void Start() => TransitionTo(GameState.Setup);
 
@@ -287,6 +294,8 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnPlayCard -= HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker -= HandlePlayerSelectedSticker;
         CombatEventManager.OnPlayerPlaysCard -= HandlePlayerPlayCard;
+        CombatEventManager.OnStickerHoverEnter -= ShowTooltip;
+        CombatEventManager.OnStickerHoverExit -= HideTooltip;
     }
 
     public void Debug_KillEnemyAndAdvance()

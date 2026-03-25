@@ -67,7 +67,7 @@ public class StickerDragHandler : MonoBehaviour
         dragging.transform.DOScale(stickerScaleMultiplier, 0.15f);
         FaceCameraSmooth(dragging.transform);
         dragging.GetComponent<StickerView>().SetRenderOnTop(true);
-
+        
         dragging.Dragging = true;
     }
 
