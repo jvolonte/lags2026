@@ -13,6 +13,8 @@ namespace Views
         DiscardPile pile;
         CardView currentTopView;
 
+        public Transform GetAnchor() => cardAnchor;
+
         public void Bind(DiscardPile d)
         {
             pile = d;

@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using Services;
 using UnityEngine;
 using Views;
 
@@ -10,14 +12,59 @@ namespace Presenters
     {
         [SerializeField] Transform spawnPoint;
         [SerializeField] CardView prefab;
+        [SerializeField] ViewTransitionService transitionService;
+        [SerializeField] DiscardPileView discardPileView;
 
         CardView currentView;
 
         void Awake()
         {
             CombatEventManager.OnEnemyPlayCard += HandleEnemyCardPlayed;
-            CombatEventManager.OnClearTable += HandleClearTable;
             CombatEventManager.OnEnemyPlaceStickerPreview += HandleEnemyPlaceStickerPreview;
+            CombatEventManager.OnResolveCardsVisual += HandleResolutionVisual;
+        }
+
+        void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
+        {
+            if (currentView == null)
+                return;
+
+            var card = currentView.GetCard();
+            var fate = GetFinalFate(conflictOutcome, resolution.Get(card));
+            StartCoroutine(AnimateResolution(fate));
+        }
+
+        CardFate GetFinalFate(ConflictOutcome round, CardOutcome effect) =>
+            effect.Destroy || effect.WillBeLost
+                ? CardFate.Destroy
+                : round switch
+                {
+                    ConflictOutcome.PlayerWin => CardFate.Discard,
+                    ConflictOutcome.EnemyWin => CardFate.Destroy,
+                    ConflictOutcome.Tie => CardFate.Destroy,
+                    _ => CardFate.Destroy
+                };
+
+        IEnumerator AnimateResolution(CardFate fate)
+        {
+            if (fate is CardFate.Discard)
+            {
+                var target = discardPileView.GetAnchor();
+
+                yield return transitionService.MoveAndSwap(
+                    source: currentView.transform,
+                    target: target,
+                    proxyPrefab: currentView.gameObject,
+                    onArrive: () => CombatEventManager.Discard(currentView.GetCard())
+                );
+            }
+            else
+            {
+                //TODO: trigger card lost effect!
+                Debug.Log("Disappear enemy card effect");
+            }
+
+            HandleClearTable();
         }
 
         void HandleClearTable()
@@ -29,8 +76,8 @@ namespace Presenters
         void OnDestroy()
         {
             CombatEventManager.OnEnemyPlayCard -= HandleEnemyCardPlayed;
-            CombatEventManager.OnClearTable -= HandleClearTable;
             CombatEventManager.OnEnemyPlaceStickerPreview -= HandleEnemyPlaceStickerPreview;
+            CombatEventManager.OnResolveCardsVisual -= HandleResolutionVisual;
         }
 
         void HandleEnemyCardPlayed(Card card)
@@ -88,5 +135,11 @@ namespace Presenters
 
             return (minLocal + maxLocal) * 0.5f;
         }
+    }
+
+    public enum CardFate
+    {
+        Discard,
+        Destroy,
     }
 }

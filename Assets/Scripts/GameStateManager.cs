@@ -57,7 +57,10 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnPlayerPlaysCard += HandlePlayerPlayCard;
         CombatEventManager.OnStickerHoverEnter += ShowTooltip;
         CombatEventManager.OnStickerHoverExit += HideTooltip;
+        CombatEventManager.OnDiscard += HandleDiscard;
     }
+
+    void HandleDiscard(Card card) => Context.Player.Discard.Add(card);
 
     void ShowTooltip(StickerData data, Vector3 pos, Quaternion rot) =>
         tooltipView.Show(data.GetDescription(), pos, rot);
@@ -250,6 +253,7 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnPlayerPlaysCard -= HandlePlayerPlayCard;
         CombatEventManager.OnStickerHoverEnter -= ShowTooltip;
         CombatEventManager.OnStickerHoverExit -= HideTooltip;
+        CombatEventManager.OnDiscard -= HandleDiscard;
     }
 
     public void Debug_KillEnemyAndAdvance()

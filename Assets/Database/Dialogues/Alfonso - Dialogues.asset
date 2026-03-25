@@ -20,7 +20,7 @@ MonoBehaviour:
   - Ha! That's how it's done.
   loseRound:
   - Hah... okay, you got me there.
-  - Ugh,
+  - Ugh.
   onLoseGame: "Well... fair\u2019s fair, I suppose"
   stickerPhase: "Pick a sticker. Use it on your cards. I\u2019ll take from what you
     leave."

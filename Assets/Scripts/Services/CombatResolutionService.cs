@@ -21,13 +21,14 @@ namespace Services
 
         public IEnumerator Resolve(GameContext context)
         {
-            var resolver = new ConflictResolver();
-            var result = resolver.Resolve(context);
+            var result = ConflictResolver.Resolve(context);
 
             yield return PlayEvaluation(context);
             yield return new WaitForSeconds(2);
-
-            resolver.ApplyOutcome(result, context);
+            ConflictResolver.ApplyOutcome(result, context);
+            
+            //TODO: check if this is needed
+            yield return new WaitForSeconds(2);
         }
 
         IEnumerator PlayEvaluation(GameContext context)
