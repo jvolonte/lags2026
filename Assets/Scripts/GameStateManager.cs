@@ -168,12 +168,17 @@ public class GameStateManager : MonoBehaviour
         //TODO: show a thinking dialogue here
         yield return new WaitForSeconds(1);
 
-        //TODO: pick between available stickers!
-        var random = Context.AvailableStickers.PickOne();
+        var bestSticker = StickerEvaluationService.PickBestSticker(
+            Context.EnemyCurrentCard,
+            Context.PlayerCurrentCard,
+            Context.AvailableStickers.Select(s => s.Data).ToList()
+        );
+        var sticker = Context.AvailableStickers.First(s => s.Data == bestSticker);
+
         var placement = new StickerPlacement
         {
-            Logic = random.Logic,
-            Data = random.Data,
+            Logic = sticker.Logic,
+            Data = sticker.Data,
             LocalPosition = enemyCardPresenter.GetRandomStickerPosition()
         };
 
