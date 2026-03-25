@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using CardZones;
 using Data;
@@ -35,17 +34,17 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] GameResultView gameResultView;
 
     [Header("Presenters")]
-    [SerializeField]
-    EnemyCardPresenter enemyCardPresenter;
-
+    [SerializeField] EnemyCardPresenter enemyCardPresenter;
     [SerializeField] StickerPresenter stickerPresenter;
 
-    [Header("Stickers")] [SerializeField] StickerData[] stickers;
+    [Header("Stickers")] 
+    [SerializeField] StickerData[] stickers;
 
     bool stickerTutorial;
     bool winnerTutorial;
 
     EnemyTurnService enemyTurnService;
+    StickerDraftService stickerDraftService;
     
     void Awake()
     {
@@ -54,6 +53,7 @@ public class GameStateManager : MonoBehaviour
         deckFactory = new DeckFactory(cardFactory);
 
         enemyTurnService = new EnemyTurnService(enemyCardPresenter);
+        stickerDraftService = new StickerDraftService(stickerFactory);
         
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
@@ -151,16 +151,7 @@ public class GameStateManager : MonoBehaviour
     void EnterRevealStickers()
     {
         Context.AvailableStickers.Clear();
-
-        var availablePool = new List<StickerData>(stickerFactory.Pool);
-
-        for (var i = 0; i < 3; i++)
-        {
-            var (logic, data) = StickerFactory.GetRandomWeighted(availablePool);
-            Context.AvailableStickers.Add(new StickerInstance { Logic = logic, Data = data });
-            availablePool.Remove(data);
-        }
-
+        Context.AvailableStickers = stickerDraftService.Draft(3);
         CombatEventManager.RevealStickers(Context.AvailableStickers);
 
         TransitionTo(GameState.PlayerPlaceSticker);
