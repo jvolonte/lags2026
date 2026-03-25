@@ -7,6 +7,7 @@ using Data.Stickers;
 using DG.Tweening;
 using Factories;
 using Presenters;
+using Services;
 using UnityEngine;
 using Utils;
 using Views;
@@ -44,11 +45,16 @@ public class GameStateManager : MonoBehaviour
     bool stickerTutorial;
     bool winnerTutorial;
 
+    EnemyTurnService enemyTurnService;
+    
     void Awake()
     {
         stickerFactory = new StickerFactory(stickers.ToList());
         cardFactory = new CardFactory(stickerFactory);
         deckFactory = new DeckFactory(cardFactory);
+
+        enemyTurnService = new EnemyTurnService(enemyCardPresenter);
+        
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
 
@@ -192,24 +198,7 @@ public class GameStateManager : MonoBehaviour
         else
             CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne());
 
-        yield return new WaitForSeconds(2);
-
-        var bestSticker = StickerEvaluationService.PickBestSticker(
-            Context.EnemyCurrentCard,
-            Context.PlayerCurrentCard,
-            Context.AvailableStickers.Select(s => s.Data).ToList()
-        );
-        var sticker = Context.AvailableStickers.First(s => s.Data == bestSticker);
-
-        var placement = new StickerPlacement
-        {
-            Logic = sticker.Logic,
-            Data = sticker.Data,
-            LocalPosition = enemyCardPresenter.GetRandomStickerPosition()
-        };
-
-        Context.EnemyCurrentCard.Stickers.Add(placement);
-        CombatEventManager.OnEnemyPlaceStickerPreview?.Invoke(Context.EnemyCurrentCard, placement);
+        yield return enemyTurnService.PlaceSticker(Context);
 
         yield return new WaitForSeconds(0.5f);
 
