@@ -12,6 +12,6 @@ namespace Data.Stickers
 
         public override string GetDescription() =>
             descriptionTemplate
-                .Replace("{value}", multiplier.ToString());
+                .Replace("{value}", $"{multiplier * 100}");
     }
 }

@@ -58,7 +58,7 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnStickerHoverExit += HideTooltip;
     }
 
-    void ShowTooltip(StickerData data, Vector3 pos) => tooltipView.Show(data.GetDescription(), pos);
+    void ShowTooltip(StickerData data, Vector3 pos, Quaternion rot) => tooltipView.Show(data.GetDescription(), pos, rot);
     void HideTooltip() => tooltipView.Hide();
 
     void Start() => TransitionTo(GameState.Setup);

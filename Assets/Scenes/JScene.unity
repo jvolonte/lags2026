@@ -1251,6 +1251,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 385f52edce0234c0abcbdc51678ec8e6, type: 2}
   - {fileID: 11400000, guid: 0a011354ee4da4f1ca24c25c7eb0f3b5, type: 2}
   - {fileID: 11400000, guid: ddaa5bb54e6fe4fcdac3610e4598dfe2, type: 2}
+  - {fileID: 11400000, guid: ec8f42f668d0343d8a9ca3e1c6e77ee9, type: 2}
 --- !u!4 &832192446
 Transform:
   m_ObjectHideFlags: 0
@@ -2653,7 +2654,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2046237192}
-  - component: {fileID: 2046237191}
   - component: {fileID: 2046237190}
   m_Layer: 0
   m_Name: TooltipView
@@ -2680,18 +2680,6 @@ MonoBehaviour:
   offset: {x: -1, y: 0.05, z: 0}
   paddingX: 0.3
   paddingY: 0.3
---- !u!114 &2046237191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046237189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f454a895ab94b25b20b5d5f4bded3ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Views.BillboardView
 --- !u!4 &2046237192
 Transform:
   m_ObjectHideFlags: 0

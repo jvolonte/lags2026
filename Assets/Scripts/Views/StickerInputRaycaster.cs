@@ -7,7 +7,7 @@ namespace Views
     public class StickerInputRaycaster : MonoBehaviour
     {
         [SerializeField] LayerMask stickerLayer;
-        
+
         Camera cam;
         StickerView currentHovered;
 
@@ -32,8 +32,12 @@ namespace Views
                 {
                     var bounds = hit.collider.bounds;
                     var pos = bounds.center + Vector3.up * bounds.extents.y;
-                    
-                    CombatEventManager.StickerHoverEnter(sticker.GetData(), pos);
+
+                    var forwardToCamera = (cam.transform.position - pos).normalized;
+                    var projectedForward = Vector3.ProjectOnPlane(forwardToCamera, sticker.transform.up);
+                    var rot = Quaternion.LookRotation(-projectedForward, sticker.transform.up);
+
+                    CombatEventManager.StickerHoverEnter(sticker.GetData(), pos, rot);
                     currentHovered = sticker;
                 }
             }

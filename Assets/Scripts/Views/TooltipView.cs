@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Utils;
 
 namespace Views
 {
@@ -15,14 +16,16 @@ namespace Views
         [SerializeField] float paddingX = 0.1f;
         [SerializeField] float paddingY = 0.05f;
 
-        public void Show(string message, Vector3 worldPosition)
+        public void Show(string message, Vector3 worldPosition, Quaternion worldRotation)
         {
             textMesh.text = message;
             transform.position = worldPosition + offset;
 
             transform.localScale = Vector3.zero;
             Show();
+
             transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+            transform.DORotateQuaternion(worldRotation, 0.2f).SetEase(Ease.OutQuad);
 
             StartCoroutine(UpdateNextFrame());
         }

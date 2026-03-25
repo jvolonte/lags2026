@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Necromancer
   descriptionTemplate: +value of top discard card
   rarity: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 3218893417315888488, guid: c04c20b66446848518283cdb6c759a94, type: 3}

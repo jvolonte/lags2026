@@ -22,7 +22,7 @@ public static class CombatEventManager
         public static event Action OnClearStickers;
         public static event Action<string> OnPlayDialogue;
         
-        public static event Action<StickerData, Vector3> OnStickerHoverEnter;
+        public static event Action<StickerData, Vector3, Quaternion> OnStickerHoverEnter;
         public static event Action OnStickerHoverExit;
         
         public static void PlayCard(Card card) => OnPlayCard?.Invoke(card);
@@ -44,6 +44,7 @@ public static class CombatEventManager
 
         public static void PlayDialogue(string message) => OnPlayDialogue?.Invoke(message);
 
-        public static void StickerHoverEnter(StickerData data, Vector3 pos) => OnStickerHoverEnter?.Invoke(data, pos);
+        public static void StickerHoverEnter(StickerData data, Vector3 pos, Quaternion rot) => 
+                OnStickerHoverEnter?.Invoke(data, pos, rot);
         public static void StickerHoverExit() => OnStickerHoverExit?.Invoke();
 }

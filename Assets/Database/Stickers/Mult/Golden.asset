@@ -15,6 +15,6 @@ MonoBehaviour:
   id: Golden
   descriptionTemplate: '{chance}% chance to x{value}'
   rarity: 1
-  prefab: {fileID: 0}
+  prefab: {fileID: 3218893417315888488, guid: 279ae144370304bdbb5ba6263a361a63, type: 3}
   value: 3
   chance: 0.2
