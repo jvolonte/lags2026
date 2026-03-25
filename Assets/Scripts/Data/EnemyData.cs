@@ -6,6 +6,7 @@ namespace Data
     public class EnemyData : ScriptableObject
     {
         public string id;
+        public DialogueData dialogue;
 
         [Header("Stats")]
         public int health = 3;

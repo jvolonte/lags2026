@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using Utils;
 
 public class ConflictResolver
 {
@@ -60,6 +61,7 @@ public class ConflictResolver
     void ResolvePlayerWin(GameContext game, ResolutionContext resolution)
     {
         game.Enemy.Damage();
+        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.loseRound.PickOne());
 
         HandleCardAfterCombat(game.PlayerCurrentCard, game, resolution);
         HandleCardAfterCombat(game.EnemyCurrentCard, game, resolution);
@@ -83,6 +85,7 @@ public class ConflictResolver
     void ResolveEnemyWin(GameContext game, ResolutionContext resolution)
     {
         Debug.Log("---ENEMY WON---");
+        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.winRound.PickOne());
 
         HandleCardAfterCombat(game.PlayerCurrentCard, game, resolution);
         Cleanup(game);

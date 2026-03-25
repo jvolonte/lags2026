@@ -8,6 +8,7 @@ using DG.Tweening;
 using Factories;
 using Presenters;
 using UnityEngine;
+using Utils;
 using Views;
 
 public class GameStateManager : MonoBehaviour
@@ -36,6 +37,9 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] StickerPresenter stickerPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
+
+    bool stickerTutorial;
+    bool winnerTutorial;
 
     void Awake()
     {
@@ -151,6 +155,12 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaceSticker()
     {
+        if (!stickerTutorial)
+        {
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.stickerPhase);
+            stickerTutorial = true;
+        }
+
         Debug.Log("Waiting for player to place a sticker...");
     }
 
@@ -167,8 +177,15 @@ public class GameStateManager : MonoBehaviour
 
     IEnumerator EnterEnemyPlaceSticker()
     {
-        //TODO: show a thinking dialogue here
-        yield return new WaitForSeconds(1);
+        if (!winnerTutorial)
+        {
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.encounterPhase);
+            winnerTutorial = true;
+        }
+        else
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne());
+
+        yield return new WaitForSeconds(2);
 
         var bestSticker = StickerEvaluationService.PickBestSticker(
             Context.EnemyCurrentCard,
@@ -192,7 +209,7 @@ public class GameStateManager : MonoBehaviour
         Context.AvailableStickers.Clear();
         CombatEventManager.ClearStickers();
         stickerPresenter.HideSheet();
-        
+
         TransitionTo(GameState.ConflictResolution);
     }
 
@@ -231,7 +248,11 @@ public class GameStateManager : MonoBehaviour
         Context.Player.Draw();
 
         if (Context.Enemy.IsDead)
-            yield return new WaitForSeconds(1);
+        {
+            yield return new WaitForSeconds(2f);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.onLoseGame);
+            yield return new WaitForSeconds(3f);
+        }
 
         TransitionTo(Context.Enemy.IsDead ? GameState.NextEncounter : GameState.EnemyPlaysCard);
     }

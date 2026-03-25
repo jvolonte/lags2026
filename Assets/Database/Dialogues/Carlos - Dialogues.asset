@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf555bfe9da9488cbab3dac7e1bcc86c, type: 3}
+  m_Name: Carlos - Dialogues
+  m_EditorClassIdentifier: Assembly-CSharp::Data.DialogueData
+  onGameStart: 'Alright... I''ll throw down a card first, then it''s your move. '
+  thinking:
+  - 'Can''t go wrong... or can I? '
+  - What to do? ...
+  winRound:
+  - Ha! That's how it's done.
+  loseRound:
+  - Hah... okay, you got me there.
+  - Ugh,
+  onLoseGame: "Well... fair\u2019s fair, I suppose"
+  stickerPhase: "Pick a sticker. Use it on your card or one in hand. I\u2019ll take
+    what you leave."
+  encounterPhase: Highest card wins. Take mine if you beat me, or hand yours over
+    if I win. Simple, right?

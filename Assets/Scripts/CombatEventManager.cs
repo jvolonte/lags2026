@@ -18,6 +18,7 @@ public static class CombatEventManager
         public static event Action<Enemy> OnEnemySet;
         public static event Action<List<StickerInstance>> OnRevealStickers;
         public static event Action OnClearStickers;
+        public static event Action<string> OnPlayDialogue;
         
         public static void PlayCard(Card card) => OnPlayCard?.Invoke(card);
         public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
@@ -35,4 +36,6 @@ public static class CombatEventManager
 
         public static void RevealStickers(List<StickerInstance> stickers) => OnRevealStickers?.Invoke(stickers);
         public static void ClearStickers() => OnClearStickers?.Invoke();
+
+        public static void PlayDialogue(string message) => OnPlayDialogue?.Invoke(message);
 }
