@@ -41,7 +41,7 @@ namespace Views
         
         public void SetHovered(bool hovered) => OnHoverChanged?.Invoke(this, hovered);
 
-        public void OnClicked() => CombatEventManager.PlayerPlaysCard(Card);
+        public void OnClicked() => CombatEventManager.PlayerPlaysCard(cardView);
 
         public void SetBaseTransform(Vector3 pos, Quaternion rot)
         {

@@ -66,10 +66,10 @@ public class GameStateManager : MonoBehaviour
 
     void Start() => TransitionTo(GameState.Setup);
 
-    void HandlePlayerPlayCard(Card card)
+    void HandlePlayerPlayCard(CardView view)
     {
         if (CurrentState == GameState.PlayerPlaysCard && Context.PlayerCurrentCard == null)
-            Context.Player.Play(card);
+            Context.Player.Play(view);
     }
 
     void TransitionTo(GameState newState)
@@ -134,12 +134,12 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("Waiting for player to play a card...");
     }
 
-    void HandlePlayerSelectedCard(Card card)
+    void HandlePlayerSelectedCard(CardView view)
     {
         if (CurrentState != GameState.PlayerPlaysCard)
             return;
 
-        Context.PlayerCurrentCard = card;
+        Context.PlayerCurrentCard = view.GetCard();
         TransitionTo(GameState.RevealStickers);
     }
 

@@ -1,4 +1,5 @@
 using CardZones;
+using Views;
 
 public class Player
 {
@@ -22,5 +23,5 @@ public class Player
         } 
     }
 
-    public void Play(Card card) => Hand.Play(card);
+    public void Play(CardView view) => Hand.Play(view);
 }

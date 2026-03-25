@@ -8,7 +8,6 @@ namespace Views
 {
     public class ButtonsView : MonoBehaviour
     {
-        [SerializeField] Button playRandomCardButton;
         [SerializeField] Button addRandomStickerButton;
         [SerializeField] Button nextEnemyButton;
 
@@ -17,20 +16,6 @@ namespace Views
         void Start()
         {
             var context = gameStateManager.Context;
-
-            playRandomCardButton.onClick.AddListener(() =>
-            {
-                if (gameStateManager.CurrentState != GameState.PlayerPlaysCard)
-                {
-                    Debug.Log("It's not the time to play a card!");
-                    return;
-                }
-                
-                var player = context.Player;
-                var hand = player.Hand;
-                var card = hand.Cards.PickOne();
-                player.Play(card);
-            });
 
             addRandomStickerButton.onClick.AddListener(() =>
             {

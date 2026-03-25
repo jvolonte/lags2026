@@ -1,3 +1,5 @@
+using Views;
+
 namespace CardZones
 {
     public class Hand : CardZone
@@ -12,15 +14,17 @@ namespace CardZones
             base.Add(card);
         }
 
-        public void Play(Card card)
+        public void Play(CardView view)
         {
+            var card = view.GetCard();
+            
             if (Cards.Contains(card))
             {
                 Cards.Remove(card);
                 TriggerCardRemoved(card);
             }
             
-            CombatEventManager.PlayCard(card);
+            CombatEventManager.PlayCard(view);
         }
     }
 }

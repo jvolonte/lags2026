@@ -20,6 +20,8 @@ public class StickerDragHandler : MonoBehaviour
     [SerializeField] LayerMask cardLayer;
     [SerializeField] float stickerScaleMultiplier = 0.5f;
 
+    [SerializeField] GameStateManager gameStateManager;
+
     void Awake()
     {
         cam = Camera.main;
@@ -27,6 +29,9 @@ public class StickerDragHandler : MonoBehaviour
 
     void Update()
     {
+        if (gameStateManager.CurrentState != GameState.PlayerPlaceSticker)
+            return;
+
         var mouse = Mouse.current;
         if (mouse == null) return;
 
@@ -67,7 +72,7 @@ public class StickerDragHandler : MonoBehaviour
         dragging.transform.DOScale(stickerScaleMultiplier, 0.15f);
         FaceCameraSmooth(dragging.transform);
         dragging.GetComponent<StickerView>().SetRenderOnTop(true);
-        
+
         dragging.Dragging = true;
     }
 

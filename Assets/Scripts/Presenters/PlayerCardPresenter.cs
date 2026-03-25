@@ -1,3 +1,5 @@
+using System.Collections;
+using Services;
 using UnityEngine;
 using Views;
 
@@ -7,6 +9,7 @@ namespace Presenters
     {
         [SerializeField] Transform spawnPoint;
         [SerializeField] CardView prefab;
+        [SerializeField] ViewTransitionService transitionService;
 
         CardView currentView;
 
@@ -18,7 +21,7 @@ namespace Presenters
 
         void HandleClearTable()
         {
-            if (currentView != null)
+            if (currentView != null) 
                 Destroy(currentView.gameObject);
         }
 
@@ -28,16 +31,35 @@ namespace Presenters
             CombatEventManager.OnClearTable -= HandleClearTable;
         }
 
-        void HandlePlayerCardPlayed(Card card)
+        void HandlePlayerCardPlayed(CardView source)
         {
-            if (currentView != null)
-                Destroy(currentView.gameObject);
+            StartCoroutine(PlayCardTransition(source.GetCard(), source));
+        }
 
-            currentView = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
-            currentView.SetCard(card);
-            currentView.AllowStickers();
-            
-            CombatEventManager.PlayerEvaluationReady(currentView.evaluationView);
+        IEnumerator PlayCardTransition(Card card, CardView sourceView)
+        {
+            var targetPosition = spawnPoint.position;
+            var targetRotation = spawnPoint.rotation;
+            var targetScale = spawnPoint.localScale;
+
+            yield return transitionService.MoveAndSwap(
+                source: sourceView.transform,
+                target: spawnPoint,
+                proxyPrefab: sourceView.gameObject,
+                onArrive: () =>
+                {
+                    if (currentView != null) 
+                        Destroy(currentView.gameObject);
+
+                    currentView = Instantiate(prefab, targetPosition, targetRotation, spawnPoint);
+                    currentView.transform.localScale = targetScale;
+
+                    currentView.SetCard(card);
+                    currentView.AllowStickers();
+
+                    CombatEventManager.PlayerEvaluationReady(currentView.evaluationView);
+                }
+            );
         }
     }
 }
