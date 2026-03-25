@@ -10,8 +10,13 @@ namespace Data.Stickers
 
         public override ISticker Create() => new EvenSticker(value);
 
-        public override string GetDescription() =>
-            descriptionTemplate
-                .Replace("{value}", value.ToString());
+        public override string GetDescription()
+        {
+            var parity = "even";
+            var coloredParity = RichText.Colorize(parity, ColorService.Even);
+            return descriptionTemplate
+                   .Replace($"{parity}", coloredParity)
+                   .Replace("{value}", value.ToString());
+        }
     }
 }

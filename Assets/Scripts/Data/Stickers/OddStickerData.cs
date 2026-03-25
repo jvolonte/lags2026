@@ -10,8 +10,13 @@ namespace Data.Stickers
 
         public override ISticker Create() => new OddSticker(value);
 
-        public override string GetDescription() =>
-            descriptionTemplate
-                .Replace("{value}", value.ToString());
+        public override string GetDescription()
+        {
+            var parity = "odd";
+            var coloredParity = RichText.Colorize(parity, ColorService.Odd);
+            return descriptionTemplate
+                   .Replace($"{parity}", coloredParity)
+                   .Replace("{value}", value.ToString());
+        }
     }
 }
