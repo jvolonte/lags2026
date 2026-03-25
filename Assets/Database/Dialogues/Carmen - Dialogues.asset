@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf555bfe9da9488cbab3dac7e1bcc86c, type: 3}
-  m_Name: Agnes - Dialogues
+  m_Name: Carmen - Dialogues
   m_EditorClassIdentifier: Assembly-CSharp::Data.DialogueData
   onGameStart: "tsk tsk Let\u2019s begin."
   thinking:
