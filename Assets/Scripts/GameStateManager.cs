@@ -3,7 +3,6 @@ using System.Linq;
 using CardZones;
 using Data;
 using Data.Stickers;
-using DG.Tweening;
 using Factories;
 using Presenters;
 using Services;
@@ -20,10 +19,7 @@ public class GameStateManager : MonoBehaviour
     CardFactory cardFactory;
     StickerFactory stickerFactory;
     DeckFactory deckFactory;
-
-    EvaluationView playerEvaluationView;
-    EvaluationView enemyEvaluationView;
-
+    
     [SerializeField] EnemyManager enemyManager;
 
     [Header("Views")] 
@@ -33,19 +29,19 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] TooltipView tooltipView;
     [SerializeField] GameResultView gameResultView;
 
-    [Header("Presenters")]
+    [Header("Presenters")] 
     [SerializeField] EnemyCardPresenter enemyCardPresenter;
     [SerializeField] StickerPresenter stickerPresenter;
 
-    [Header("Stickers")] 
-    [SerializeField] StickerData[] stickers;
+    [Header("Stickers")] [SerializeField] StickerData[] stickers;
 
     bool stickerTutorial;
     bool winnerTutorial;
 
     EnemyTurnService enemyTurnService;
     StickerDraftService stickerDraftService;
-    
+    CombatResolutionService combatResolutionService;
+
     void Awake()
     {
         stickerFactory = new StickerFactory(stickers.ToList());
@@ -54,18 +50,18 @@ public class GameStateManager : MonoBehaviour
 
         enemyTurnService = new EnemyTurnService(enemyCardPresenter);
         stickerDraftService = new StickerDraftService(stickerFactory);
-        
+        combatResolutionService = new CombatResolutionService();
+
         CombatEventManager.OnPlayCard += HandlePlayerSelectedCard;
         CombatEventManager.OnAddSticker += HandlePlayerSelectedSticker;
-
-        CombatEventManager.OnEnemyEvaluationReady += v => enemyEvaluationView = v;
-        CombatEventManager.OnPlayerEvaluationReady += v => playerEvaluationView = v;
         CombatEventManager.OnPlayerPlaysCard += HandlePlayerPlayCard;
         CombatEventManager.OnStickerHoverEnter += ShowTooltip;
         CombatEventManager.OnStickerHoverExit += HideTooltip;
     }
 
-    void ShowTooltip(StickerData data, Vector3 pos, Quaternion rot) => tooltipView.Show(data.GetDescription(), pos, rot);
+    void ShowTooltip(StickerData data, Vector3 pos, Quaternion rot) =>
+        tooltipView.Show(data.GetDescription(), pos, rot);
+
     void HideTooltip() => tooltipView.Hide();
 
     void Start() => TransitionTo(GameState.Setup);
@@ -78,7 +74,6 @@ public class GameStateManager : MonoBehaviour
 
     void TransitionTo(GameState newState)
     {
-        // Debug.Log($"STATE: {CurrentState} --> {newState}");
         CurrentState = newState;
         EnterState(newState);
     }
@@ -202,26 +197,8 @@ public class GameStateManager : MonoBehaviour
 
     IEnumerator EnterConflictResolution()
     {
-        var resolver = new ConflictResolver();
-        var result = resolver.Resolve(Context);
-
-        yield return PlayEvaluationPhase(
-            Context.PlayerCurrentCard.Calculate(Context.EnemyCurrentCard, Context),
-            Context.EnemyCurrentCard.Calculate(Context.PlayerCurrentCard, Context)
-        );
-        yield return new WaitForSeconds(2);
-
-        resolver.ApplyOutcome(result, Context);
-
+        yield return combatResolutionService.Resolve(Context);
         TransitionTo(GameState.Draw);
-    }
-
-    IEnumerator PlayEvaluationPhase(EvaluationContext playerEval, EvaluationContext enemyEval)
-    {
-        yield return DOTween.Sequence()
-                            .Join(playerEvaluationView.Play(playerEval))
-                            .Join(enemyEvaluationView.Play(enemyEval))
-                            .WaitForCompletion();
     }
 
     IEnumerator EnterDraw()
