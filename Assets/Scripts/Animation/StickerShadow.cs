@@ -1,92 +1,101 @@
-using System.Collections;
 using UnityEngine;
 using Views;
 
-public class StickerShadow : MonoBehaviour
+namespace Animation
 {
-    [SerializeField] Transform stickerShadow;
-    [SerializeField] Vector3 shadowOffset;
-
-    StickerView stickerView;
-    MeshRenderer shadowMesh;
-
-    CardView[] worldCards;
-    CardAnimations closestCard;
-    Plane shadowPlane;
-    Ray shadowRay;
-
-    private void OnDestroy()
+    public class StickerShadow : MonoBehaviour
     {
-        closestCard?.shadowReciever.SetActive(false);
-    }
-    private void OnDisable()
-    {
-        closestCard?.shadowReciever.SetActive(false);
-    }
-    private void OnEnable()
-    {
-        stickerView = GetComponent<StickerView>();
-        shadowMesh = stickerShadow.GetComponent<MeshRenderer>();
+        [SerializeField] Transform stickerShadow;
+        [SerializeField] Vector3 shadowOffset;
 
-        UpdateShadowTexture();
+        StickerView stickerView;
+        MeshRenderer shadowMesh;
 
-        GetWorldCards();
-    }
-    private void LateUpdate()
-    {
-        if (stickerShadow.gameObject.activeSelf != stickerView.Dragging)
-            stickerShadow.gameObject.SetActive(stickerView.Dragging);
+        CardView[] worldCards;
+        CardAnimations closestCard;
+        Plane shadowPlane;
+        Ray shadowRay;
 
-        if (!stickerView.Dragging)
-            return;
-
-        if (worldCards == null || worldCards.Length == 0) return;
-
-        float closest = float.MaxValue;
-        CardView newClosest = null;
-
-        for (int i = 0; i < worldCards.Length; i++)
+        void OnDestroy()
         {
-            if (worldCards[i] == null) continue;
+            if (closestCard != null && closestCard.shadowReciever != null)
+                closestCard?.shadowReciever.SetActive(false);
+        }
 
-            float d = (worldCards[i].transform.position - transform.position).sqrMagnitude;
-            if (d < closest)
+        void OnDisable()
+        {
+            if (closestCard != null && closestCard.shadowReciever != null)
+                closestCard?.shadowReciever.SetActive(false);
+        }
+
+        void OnEnable()
+        {
+            stickerView = GetComponent<StickerView>();
+            shadowMesh = stickerShadow.GetComponent<MeshRenderer>();
+
+            UpdateShadowTexture();
+
+            GetWorldCards();
+        }
+
+        void LateUpdate()
+        {
+            if (stickerShadow.gameObject.activeSelf != stickerView.Dragging)
+                stickerShadow.gameObject.SetActive(stickerView.Dragging);
+
+            if (!stickerView.Dragging)
+                return;
+
+            if (worldCards == null || worldCards.Length == 0) return;
+
+            float closest = float.MaxValue;
+            CardView newClosest = null;
+
+            for (int i = 0; i < worldCards.Length; i++)
             {
-                closest = d;
-                newClosest = worldCards[i];
+                if (worldCards[i] == null) continue;
+
+                float d = (worldCards[i].transform.position - transform.position).sqrMagnitude;
+                if (d < closest)
+                {
+                    closest = d;
+                    newClosest = worldCards[i];
+                }
+            }
+
+            if (newClosest != closestCard)
+            {
+                closestCard?.shadowReciever.SetActive(false);
+                newClosest?.CardAnimations.shadowReciever.SetActive(true);
+                closestCard = newClosest.CardAnimations;
+            }
+
+            if (closestCard)
+            {
+                shadowPlane.SetNormalAndPosition(
+                    closestCard.transform.forward,
+                    closestCard.shadowReciever.transform.position);
+
+                shadowRay.origin = transform.position;
+                shadowRay.direction = -closestCard.transform.forward;
+                float distance = 0;
+                shadowPlane.Raycast(shadowRay, out distance);
+
+                stickerShadow.position = shadowRay.GetPoint(distance);
+                stickerShadow.position += closestCard.transform.TransformDirection(shadowOffset);
+                stickerShadow.rotation = Quaternion.LookRotation(closestCard.transform.forward, transform.up);
             }
         }
 
-        if (newClosest != closestCard)
+        public void UpdateShadowTexture()
         {
-            closestCard?.shadowReciever.SetActive(false);
-            newClosest?.CardAnimations.shadowReciever.SetActive(true);
-            closestCard = newClosest.CardAnimations;
+            Texture texSticker = stickerView.MeshRenderer.material.GetTexture("_MainTex");
+            shadowMesh.material.SetTexture("_ShadowTex", texSticker);
         }
 
-        if (closestCard)
+        public void GetWorldCards()
         {
-            shadowPlane.SetNormalAndPosition(
-                closestCard.transform.forward,
-                closestCard.shadowReciever.transform.position);
-
-            shadowRay.origin = transform.position;
-            shadowRay.direction = -closestCard.transform.forward;
-            float distance = 0;
-            shadowPlane.Raycast(shadowRay, out distance);
-
-            stickerShadow.position = shadowRay.GetPoint(distance);
-            stickerShadow.position += closestCard.transform.TransformDirection(shadowOffset);
-            stickerShadow.rotation = Quaternion.LookRotation(closestCard.transform.forward, transform.up);
+            worldCards = FindObjectsByType<CardView>(FindObjectsSortMode.InstanceID);
         }
-    }
-    public void UpdateShadowTexture ()
-    {       
-        Texture texSticker = stickerView.MeshRenderer.material.GetTexture("_MainTex");
-        shadowMesh.material.SetTexture("_ShadowTex", texSticker );
-    }
-    public void GetWorldCards()
-    {
-        worldCards = FindObjectsByType<CardView>(FindObjectsSortMode.InstanceID);
     }
 }

@@ -9,9 +9,7 @@ namespace Presenters
     public class StickerPresenter : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField]
-        Transform container;
-
+        [SerializeField] Transform container;
         [SerializeField] MeshRenderer surface;
 
         [Header("Layout")] [SerializeField] float spacing = 0.5f;
@@ -22,13 +20,15 @@ namespace Presenters
 
         void Awake()
         {
-            CombatEventManager.OnRevealStickers += Show;
+            surface.transform.localScale = Vector3.zero;
+
+            CombatEventManager.OnRevealStickers += ShowSheet;
             CombatEventManager.OnClearStickers += Clear;
         }
 
         void OnDestroy()
         {
-            CombatEventManager.OnRevealStickers -= Show;
+            CombatEventManager.OnRevealStickers -= ShowSheet;
             CombatEventManager.OnClearStickers -= Clear;
         }
 
@@ -87,5 +87,18 @@ namespace Presenters
             container.DeleteChildren();
             views.Clear();
         }
+
+        public void ShowSheet(List<StickerInstance> stickers)
+        {
+            surface.transform.gameObject.SetActive(true);
+            surface.transform.DOScale(1f, 0.35f)
+                     .SetEase(Ease.OutBack)
+                     .OnComplete(() => Show(stickers));
+        }
+
+        public void HideSheet() =>
+            surface.transform.DOScale(0f, 0.35f)
+                     .SetEase(Ease.InBack)
+                     .OnComplete(() => surface.transform.gameObject.SetActive(false));
     }
 }

@@ -8,7 +8,6 @@ using DG.Tweening;
 using Factories;
 using Presenters;
 using UnityEngine;
-using Utils;
 using Views;
 
 public class GameStateManager : MonoBehaviour
@@ -33,6 +32,8 @@ public class GameStateManager : MonoBehaviour
     [Header("Presenters")]
     [SerializeField]
     EnemyCardPresenter enemyCardPresenter;
+
+    [SerializeField] StickerPresenter stickerPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
 
@@ -133,6 +134,7 @@ public class GameStateManager : MonoBehaviour
     void EnterRevealStickers()
     {
         Context.AvailableStickers.Clear();
+
         var availablePool = new List<StickerData>(stickerFactory.Pool);
 
         for (var i = 0; i < 3; i++)
@@ -189,6 +191,8 @@ public class GameStateManager : MonoBehaviour
 
         Context.AvailableStickers.Clear();
         CombatEventManager.ClearStickers();
+        stickerPresenter.HideSheet();
+        
         TransitionTo(GameState.ConflictResolution);
     }
 

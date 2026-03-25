@@ -1020,6 +1020,7 @@ MonoBehaviour:
   deckView: {fileID: 503038279}
   discardPileView: {fileID: 503038278}
   enemyCardPresenter: {fileID: 268042610}
+  stickerPresenter: {fileID: 780951947}
   stickers:
   - {fileID: 11400000, guid: 4f08524f02cec4a8abdf097defe6d047, type: 2}
   - {fileID: 11400000, guid: 4da13d9d120c2436e95da20f17665c94, type: 2}
