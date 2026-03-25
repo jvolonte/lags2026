@@ -119,7 +119,6 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaysCard()
     {
-        //TODO: use enemies cards?
         var stickerCount = Context.Enemy.Data.stickersInCards;
         var card = cardFactory.CreateRandom(Random.Range(stickerCount.x, stickerCount.y + 1));
 
