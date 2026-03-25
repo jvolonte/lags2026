@@ -31,6 +31,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
     [SerializeField] TooltipView tooltipView;
+    [SerializeField] GameResultView gameResultView;
 
     [Header("Presenters")]
     [SerializeField]
@@ -268,10 +269,7 @@ public class GameStateManager : MonoBehaviour
         Context.Player.Deck.Count <= 0 &&
         Context.Player.Discard.Count <= 0;
 
-    void EnterGameOver()
-    {
-        Debug.Log("GAME OVER!!!");
-    }
+    void EnterGameOver() => gameResultView.ShowLose();
 
     void EnterNextEncounter()
     {
@@ -284,7 +282,7 @@ public class GameStateManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("GAME WON!");
+            gameResultView.ShowWin();
         }
     }
 
