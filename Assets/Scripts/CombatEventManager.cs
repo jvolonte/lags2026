@@ -25,6 +25,7 @@ public static class CombatEventManager
     public static event Action OnStickerHoverExit;
     public static event Action<GameContext, ResolutionContext, ConflictOutcome> OnResolveCardsVisual;
     public static event Action<Card> OnDiscard;
+    public static event Action<StickerView> OnStickerDestroyed;
 
     public static void PlayCard(CardView view) => OnPlayCard?.Invoke(view);
     public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
@@ -54,4 +55,5 @@ public static class CombatEventManager
         OnResolveCardsVisual?.Invoke(game, resolution, outcome);
 
     public static void Discard(Card card) => OnDiscard?.Invoke(card);
+    public static void StickerDestroyed(StickerView view) => OnStickerDestroyed?.Invoke(view);
 }

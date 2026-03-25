@@ -41,5 +41,7 @@ namespace Views
         }
 
         public void DisableDragging() => CanDrag = false;
+
+        void OnDestroy() => CombatEventManager.StickerDestroyed(this);
     }
 }
