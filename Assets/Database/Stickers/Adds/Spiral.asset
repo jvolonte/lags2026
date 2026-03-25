@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Spiral
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.FibonacciStickerData
   id: Spiral
-  descriptionTemplate: Gains increasing value per copy
+  descriptionTemplate: Each Spiral gives +X, where X is the number of Spirals.
   rarity: 1
   prefab: {fileID: 3218893417315888488, guid: 85639fa69c5054014b2b9dfaf07e86e6, type: 3}

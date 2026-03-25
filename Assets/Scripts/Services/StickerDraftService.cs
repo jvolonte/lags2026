@@ -22,7 +22,7 @@ namespace Services
             {
                 var (logic, data) = StickerFactory.GetRandomWeighted(pool);
                 result.Add(new StickerInstance { Logic = logic, Data = data });
-                pool.Remove(data);
+                pool.RemoveAll(s => s.GetType() == data.GetType());
             }
 
             return result;

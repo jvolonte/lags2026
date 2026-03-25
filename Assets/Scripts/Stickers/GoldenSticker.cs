@@ -20,8 +20,6 @@ namespace Stickers
         {
             var roll = Random.value;
 
-            Debug.Log($"Golden roll: {roll} (trigger <= {TriggerChance})");
-
             if (roll > TriggerChance)
                 return;
 
