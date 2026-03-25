@@ -726,6 +726,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 11400000, guid: 06845e7388e064962ad4f133e267128c, type: 2}
   - {fileID: 11400000, guid: b188ff945fc8d4428870808f94197b5a, type: 2}
+  - {fileID: 11400000, guid: 72290228935588d42a1bdd04b9e2dfc7, type: 2}
 --- !u!1001 &503038277
 PrefabInstance:
   m_ObjectHideFlags: 0
