@@ -19,7 +19,8 @@ namespace Services
         {
             var duration = durationOverride ?? defaultDuration;
             var proxy = Instantiate(proxyPrefab, source.position, source.rotation);
-
+            DisableInteractiveLayers(proxy);
+            SetLayerRecursively(proxy, LayerMask.NameToLayer("Ignore Raycast"));
             CopyVisual(source, proxy.transform);
             source.gameObject.SetActive(false);
 
@@ -31,6 +32,23 @@ namespace Services
 
             onArrive?.Invoke();
             Destroy(proxy);
+        }
+
+        void DisableInteractiveLayers(GameObject obj)
+        {
+            var colliders = obj.GetComponentsInChildren<Collider>(true);
+            foreach (var col in colliders) col.enabled = false;
+
+            var colliders2D = obj.GetComponentsInChildren<Collider2D>(true);
+            foreach (var col in colliders2D) col.enabled = false;
+        }
+
+        void SetLayerRecursively(GameObject obj, int layer)
+        {
+            obj.layer = layer;
+
+            foreach (Transform child in obj.transform)
+                SetLayerRecursively(child.gameObject, layer);
         }
 
         void CopyVisual(Transform source, Transform proxy)
