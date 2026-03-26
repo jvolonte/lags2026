@@ -33,8 +33,14 @@ namespace Services
             onArrive?.Invoke();
             Destroy(proxy);
         }
+        
+        public Tween Move(Transform obj, Vector3 pos, Quaternion rot, float duration) =>
+            DOTween.Sequence()
+                   .Join(obj.DOMove(pos, duration))
+                   .Join(obj.DORotateQuaternion(rot, duration))
+                   .SetEase(Ease.OutCubic);
 
-        void DisableInteractiveLayers(GameObject obj)
+        public void DisableInteractiveLayers(GameObject obj)
         {
             var colliders = obj.GetComponentsInChildren<Collider>(true);
             foreach (var col in colliders) col.enabled = false;

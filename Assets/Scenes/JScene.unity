@@ -424,6 +424,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117376427}
   m_CullTransparentMesh: 1
+--- !u!4 &139515496 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2121115330533410744, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &160780881
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +796,17 @@ MeshRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &189680142 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9019273266478554123, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68ba50e40a374605aa336f8699af603c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Services.ViewTransitionService
 --- !u!4 &212586202 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6909687705405827225, guid: 67a820648be81f0438c2c418a09563a3, type: 3}
@@ -2892,6 +2908,8 @@ MonoBehaviour:
   container: {fileID: 819761396}
   cardPrefab: {fileID: 3818786913521381892, guid: 4fe4cba8061894ae89253d1f69106682, type: 3}
   spacing: 0.8
+  transitionService: {fileID: 189680142}
+  deckAnchor: {fileID: 139515496}
 --- !u!1 &1866773974
 GameObject:
   m_ObjectHideFlags: 0

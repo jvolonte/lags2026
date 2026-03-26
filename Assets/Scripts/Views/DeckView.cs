@@ -22,6 +22,8 @@ namespace Views
             Initialize();
         }
 
+        public Transform GetDrawAnchor() => deckUI;
+
         void Initialize()
         {
             if (initialized) return;
