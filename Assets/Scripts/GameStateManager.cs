@@ -209,7 +209,12 @@ public class GameStateManager : MonoBehaviour
 
     IEnumerator EnterConflictResolution()
     {
+        yield return enemyCardPresenter.MoveInPosition();
+        
+        //TODO: show both values here? 
+        
         yield return combatResolutionService.Resolve(Context);
+        
         TransitionTo(GameState.Draw);
     }
 

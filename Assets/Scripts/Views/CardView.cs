@@ -14,15 +14,18 @@ namespace Views
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated;
         [SerializeField] Transform stickerContainer;
-        
+
+        [SerializeField] Transform playerEvaluationPos;
+        [SerializeField] Transform enemyEvaluationPos;
+
         [SerializeField] float stickerScaleMultiplier = 0.5f;
 
         public EvaluationView evaluationView;
         public Transform StickerContainer => stickerContainer;
         public CardAnimations CardAnimations => cardAnimation;
-        
+
         public bool canReceiveStickers = false;
-        
+
         Card card;
 
         void OnEnable()
@@ -41,12 +44,13 @@ namespace Views
             }
         }
 
-        public void SetCard(Card card, bool showEvaluation = true)
+        public void SetCard(Card c, bool showEvaluation = true, bool isPlayer = false)
         {
-            SetValue(card.Value);
-            SetVisual(card);
+            SetValue(c.Value);
+            SetVisual(c);
 
             evaluationView.gameObject.SetActive(showEvaluation);
+            evaluationView.transform.position = (isPlayer ? playerEvaluationPos : enemyEvaluationPos).position;
         }
 
         void SetValue(int value)
@@ -61,7 +65,7 @@ namespace Views
             card = c;
             var texture = cardTextureDatabase.GetTexture(c.Suit, c.Value);
             cardRenderer.material.SetTexture("_MainTex", texture);
-            
+
             RebuildStickers();
         }
 
@@ -102,12 +106,17 @@ namespace Views
             cardAnimation.Highlight(hover);
         }
 
-        public void Burn (System.Action onEnd)
+        public void Burn(System.Action onEnd)
         {
             cardAnimation.Burn(onEnd);
         }
+
         public Card GetCard() => card;
 
         public void AllowStickers() => canReceiveStickers = true;
+
+        public void ShowEvaluation() => evaluationView.gameObject.SetActive(true);
+        
+        public void HideEvaluation() => evaluationView.gameObject.SetActive(false);
     }
 }

@@ -18,6 +18,7 @@ namespace Presenters
         [SerializeField] DiscardPileView discardPileView;
 
         [SerializeField] Transform previewAnchor;
+        [SerializeField] Transform combatAnchor;
 
         CardView previewView;
         CardView currentView;
@@ -27,14 +28,17 @@ namespace Presenters
             CombatEventManager.OnEnemyPlayCard += HandleEnemyCardPlayed;
             CombatEventManager.OnEnemyPlaceStickerPreview += HandleEnemyPlaceStickerPreview;
             CombatEventManager.OnResolveCardsVisual += HandleResolutionVisual;
+
+            //TODO: clean up. This is to avoid the navigation from behind and into "combat"
+            previewAnchor = combatAnchor;
         }
 
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
         {
-            if (currentView == null)
+            if (previewView == null)
                 return;
 
-            var card = currentView.GetCard();
+            var card = previewView.GetCard();
             var fate = GetFinalFate(conflictOutcome, resolution.Get(card));
             StartCoroutine(AnimateResolution(fate));
         }
@@ -97,14 +101,13 @@ namespace Presenters
         IEnumerator InitializePreview(Card card)
         {
             yield return new WaitForSeconds(1f);
-            
+
             previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
             previewView.SetCard(card);
-            previewView.AddComponent<BillboardView>();
 
             previewView.transform.localScale = Vector3.zero;
             previewView.transform
-                       .DOScale(1f, 0.25f)
+                       .DOScale(2f, 0.25f)
                        .SetEase(Ease.OutBack);
 
             yield return transitionService.Move(
@@ -164,6 +167,21 @@ namespace Presenters
             }
 
             return (minLocal + maxLocal) * 0.5f;
+        }
+
+        public IEnumerator MoveInPosition()
+        {
+            if (previewView == null)
+                yield break;
+
+            yield return transitionService.Move(
+                previewView.transform,
+                combatAnchor.position,
+                combatAnchor.rotation,
+                1f
+            );
+
+            previewView.ShowEvaluation();
         }
     }
 
