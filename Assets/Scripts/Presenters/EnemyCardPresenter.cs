@@ -93,7 +93,7 @@ namespace Presenters
                 Destroy(currentView.gameObject);
 
             currentView = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
-            currentView.SetCard(card);
+            currentView.SetCard(card, false);
 
             StartCoroutine(InitializePreview(card));
         }
@@ -126,7 +126,7 @@ namespace Presenters
             if (currentView == null)
                 return;
 
-            currentView.SetCard(card);
+            currentView.SetCard(card, false);
 
             if (previewView != null)
                 previewView.SetCard(card);
