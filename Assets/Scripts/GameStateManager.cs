@@ -7,7 +7,6 @@ using Factories;
 using Presenters;
 using Services;
 using UnityEngine;
-using Utils;
 using Views;
 
 public class GameStateManager : MonoBehaviour
@@ -22,15 +21,16 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] EnemyManager enemyManager;
 
-    [Header("Views")] 
-    [SerializeField] HandView handView;
+    [Header("Views")] [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
     [SerializeField] TooltipView tooltipView;
     [SerializeField] GameResultView gameResultView;
 
     [Header("Presenters")]
-    [SerializeField] EnemyCardPresenter enemyCardPresenter;
+    [SerializeField]
+    EnemyCardPresenter enemyCardPresenter;
+
     [SerializeField] StickerPresenter stickerPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
@@ -163,9 +163,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (!stickerTutorial)
         {
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.stickerPhase, 
-                Context.Enemy.Data.backgroundColor, 
-                Context.Enemy.Data.textColor);
+            DialogueService.TutorialStickerDialogue(Context.Enemy.Data);
             stickerTutorial = true;
         }
 
@@ -179,7 +177,7 @@ public class GameStateManager : MonoBehaviour
 
         Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
         card.AddSticker(sticker);
-        
+
         TransitionTo(GameState.EnemyPlaceSticker);
     }
 
@@ -187,15 +185,11 @@ public class GameStateManager : MonoBehaviour
     {
         if (!winnerTutorial)
         {
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.encounterPhase, 
-                Context.Enemy.Data.backgroundColor,
-                Context.Enemy.Data.textColor);
+            DialogueService.TutorialEncounterDialogue(Context.Enemy.Data);
             winnerTutorial = true;
         }
         else
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne(),
-                Context.Enemy.Data.backgroundColor,
-                Context.Enemy.Data.textColor);
+            DialogueService.ThinkingDialogue(Context.Enemy.Data);
 
         yield return enemyTurnService.PlaceSticker(Context);
 
@@ -211,11 +205,8 @@ public class GameStateManager : MonoBehaviour
     IEnumerator EnterConflictResolution()
     {
         yield return enemyCardPresenter.MoveInPosition();
-        
-        //TODO: show both values here? 
-        
         yield return combatResolutionService.Resolve(Context);
-        
+
         TransitionTo(GameState.Draw);
     }
 
@@ -232,9 +223,7 @@ public class GameStateManager : MonoBehaviour
         if (Context.Enemy.IsDead)
         {
             yield return new WaitForSeconds(2f);
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.onLoseGame,
-                Context.Enemy.Data.backgroundColor,
-                Context.Enemy.Data.textColor);
+            DialogueService.LoseGameDialogue(Context.Enemy.Data);
             yield return new WaitForSeconds(3f);
         }
 
@@ -258,9 +247,7 @@ public class GameStateManager : MonoBehaviour
             TransitionTo(GameState.EnemyPlaysCard);
         }
         else
-        {
             gameResultView.ShowWin();
-        }
     }
 
     void OnDestroy()
