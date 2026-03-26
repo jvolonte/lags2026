@@ -24,6 +24,21 @@ namespace Presenters
             CombatEventManager.OnResolveCardsVisual += HandleResolutionVisual;
         }
 
+        void OnDestroy()
+        {
+            CombatEventManager.OnPlayCard -= HandlePlayerCardPlayed;
+            CombatEventManager.OnResolveCardsVisual -= HandleResolutionVisual;
+        }
+
+        public void UpdateCards(Card card)
+        {
+            if (currentView != null)
+                currentView.SetCard(card, showEvaluation: false, isPlayer: true);
+
+            if (previewView != null)
+                previewView.SetCard(card, showEvaluation: true, isPlayer: true);
+        }
+
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
         {
             if (previewView == null)
@@ -85,12 +100,6 @@ namespace Presenters
 
             if (previewView != null)
                 Destroy(previewView.gameObject);
-        }
-
-        void OnDestroy()
-        {
-            CombatEventManager.OnPlayCard -= HandlePlayerCardPlayed;
-            CombatEventManager.OnResolveCardsVisual -= HandleResolutionVisual;
         }
 
         void HandlePlayerCardPlayed(CardView source) =>

@@ -22,16 +22,16 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] EnemyManager enemyManager;
 
-    [Header("Views")] [SerializeField] HandView handView;
+    [Header("Views")] 
+    [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
     [SerializeField] TooltipView tooltipView;
     [SerializeField] GameResultView gameResultView;
 
     [Header("Presenters")]
-    [SerializeField]
-    EnemyCardPresenter enemyCardPresenter;
-
+    [SerializeField] EnemyCardPresenter enemyCardPresenter;
+    [SerializeField] PlayerCardPresenter playerCardPresenter;
     [SerializeField] StickerPresenter stickerPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
@@ -178,6 +178,8 @@ public class GameStateManager : MonoBehaviour
 
         Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
         card.Stickers.Add(sticker);
+
+        playerCardPresenter.UpdateCards(card);
 
         TransitionTo(GameState.EnemyPlaceSticker);
     }

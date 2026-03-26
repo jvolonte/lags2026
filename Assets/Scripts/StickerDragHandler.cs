@@ -22,6 +22,9 @@ public class StickerDragHandler : MonoBehaviour
 
     [SerializeField] GameStateManager gameStateManager;
 
+    CardView currentHoveredCard;
+    float scaleDuration = 0.25f;
+
     void Awake()
     {
         cam = Camera.main;
@@ -69,7 +72,7 @@ public class StickerDragHandler : MonoBehaviour
         originalPosition = dragging.transform.position;
         originalRotation = dragging.transform.rotation;
 
-        dragging.transform.DOScale(stickerScaleMultiplier, 0.15f);
+        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
         FaceCameraSmooth(dragging.transform);
         dragging.GetComponent<StickerView>().SetRenderOnTop(true);
 
@@ -83,17 +86,49 @@ public class StickerDragHandler : MonoBehaviour
         var planePos = cam.transform.position + cam.transform.forward * dragDistance;
         var plane = new Plane(-cam.transform.forward, planePos);
 
+        CardView newHoveredCard = null;
+
         if (Physics.Raycast(ray, out var hit, 100f, cardLayer))
         {
             plane.SetNormalAndPosition(hit.normal, hit.point + hit.normal * 0.05f);
-            RotateTowards(dragging.transform, hit.transform.rotation);
+
+            newHoveredCard = hit.collider.GetComponent<CardView>()
+                             ?? hit.collider.GetComponentInChildren<CardView>();
+
+            if (newHoveredCard != null)
+                RotateTowards(dragging.transform, newHoveredCard.transform.rotation);
+            else
+                FaceCameraSmooth(dragging.transform);
         }
         else
             FaceCameraSmooth(dragging.transform);
 
+        if (newHoveredCard != currentHoveredCard)
+        {
+            if (currentHoveredCard != null && newHoveredCard == null)
+                ResetDragScale();
+
+            if (newHoveredCard != null)
+                ApplyScaleForCard(newHoveredCard);
+
+            currentHoveredCard = newHoveredCard;
+        }
+
         if (plane.Raycast(ray, out var dist))
             dragging.transform.position = ray.GetPoint(dist);
     }
+
+    void ApplyScaleForCard(CardView card)
+    {
+        var cardScale = card.transform.lossyScale;
+        var scaleFactor = cardScale.x;
+        var targetScale = originalScale * (scaleFactor * stickerScaleMultiplier);
+        dragging.transform.DOScale(targetScale, scaleDuration).SetEase(Ease.OutBack)
+            ;
+    }
+
+    void ResetDragScale() =>
+        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
 
     void EndDrag(Vector2 screenPos)
     {
@@ -116,11 +151,12 @@ public class StickerDragHandler : MonoBehaviour
 
         ReturnToOrigin(dragging);
         dragging = null;
+        currentHoveredCard = null;
     }
 
     void ReturnToOrigin(StickerView sticker)
     {
-        sticker.transform.DOScale(originalScale, 0.2f);
+        sticker.transform.DOScale(originalScale, scaleDuration).SetEase(Ease.OutBack);
         sticker.transform.SetParent(originalParent);
         sticker.transform.DOMove(originalPosition, 0.25f).SetEase(Ease.OutQuad);
         sticker.transform.DORotateQuaternion(originalRotation, 0.25f);
