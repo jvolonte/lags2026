@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Presenters.StickerPresenter
   container: {fileID: 4887226834949248597}
+  surfaceRoot: {fileID: 3226877626504957288}
   surface: {fileID: 6295597709434797105}
   spacing: 1.1
   surfaceOffset: 0.05
