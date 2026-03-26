@@ -66,12 +66,12 @@ public class ConflictResolver
     static void ResolvePlayerWin(GameContext game, ResolutionContext resolution)
     {
         game.Enemy.Damage();
-        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.loseRound.PickOne());
+        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.loseRound.PickOne(), game.Enemy.Data.Color);
     }
 
     static void ResolveEnemyWin(GameContext game, ResolutionContext resolution)
     {
-        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.winRound.PickOne());
+        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.winRound.PickOne(), game.Enemy.Data.Color);
     }
 
     static void ResolveTie(GameContext game, ResolutionContext resolution)

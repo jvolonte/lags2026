@@ -19,18 +19,19 @@ public class GameStateManager : MonoBehaviour
     CardFactory cardFactory;
     StickerFactory stickerFactory;
     DeckFactory deckFactory;
-    
+
     [SerializeField] EnemyManager enemyManager;
 
-    [Header("Views")] 
-    [SerializeField] HandView handView;
+    [Header("Views")] [SerializeField] HandView handView;
     [SerializeField] DeckView deckView;
     [SerializeField] DiscardPileView discardPileView;
     [SerializeField] TooltipView tooltipView;
     [SerializeField] GameResultView gameResultView;
 
-    [Header("Presenters")] 
-    [SerializeField] EnemyCardPresenter enemyCardPresenter;
+    [Header("Presenters")]
+    [SerializeField]
+    EnemyCardPresenter enemyCardPresenter;
+
     [SerializeField] StickerPresenter stickerPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
@@ -161,7 +162,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (!stickerTutorial)
         {
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.stickerPhase);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.stickerPhase, Context.Enemy.Data.Color);
             stickerTutorial = true;
         }
 
@@ -183,11 +184,11 @@ public class GameStateManager : MonoBehaviour
     {
         if (!winnerTutorial)
         {
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.encounterPhase);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.encounterPhase, Context.Enemy.Data.Color);
             winnerTutorial = true;
         }
         else
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne());
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne(), Context.Enemy.Data.Color);
 
         yield return enemyTurnService.PlaceSticker(Context);
 
@@ -219,7 +220,7 @@ public class GameStateManager : MonoBehaviour
         if (Context.Enemy.IsDead)
         {
             yield return new WaitForSeconds(2f);
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.onLoseGame);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.onLoseGame, Context.Enemy.Data.Color);
             yield return new WaitForSeconds(3f);
         }
 

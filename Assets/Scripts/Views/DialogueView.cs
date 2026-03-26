@@ -32,23 +32,28 @@ namespace Views
             CombatEventManager.OnPlayDialogue -= ShowDialogue;
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             StopAllCoroutines();
             dialogueBox.SetActive(false);
             currentDialogue = null;
             hideDialogue = null;
         }
-        public void ShowDialogue(string line) => 
-            ShowDialogue(line, defaultBackgroundColor, defaultTextColor);
-        public void ShowDialogue(string line, Color backColor, Color textColor)
+
+        void ShowDialogue(string line, Color color) => 
+            ShowDialogue(line, color, GetTextColor(color));
+
+        static Color GetTextColor(Color bg) => GetLuminance(bg) > 0.5f ? Color.black : Color.white;
+        static float GetLuminance(Color c) => 0.2126f * c.r + 0.7152f * c.g + 0.0722f * c.b;
+
+        void ShowDialogue(string line, Color backColor, Color textColor)
         {
             if (currentDialogue != null)
                 StopCoroutine(currentDialogue);
 
             dialogueBox.gameObject.SetActive(true);
 
-            for (int i = 0; i < backgroundImages.Length; i++)
+            for (var i = 0; i < backgroundImages.Length; i++)
                 backgroundImages[i].color = backColor;
             tmpBody.color = textColor;
 
@@ -57,7 +62,8 @@ namespace Views
 
             currentDialogue = StartCoroutine(TypeDialogue(line));
         }
-        public void HideDialogue ()
+
+        void HideDialogue ()
         {
             if (currentDialogue == null) return;
             if (hideDialogue != null) return;

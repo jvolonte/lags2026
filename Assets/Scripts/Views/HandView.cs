@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using CardZones;
+using DG.Tweening;
+using Services;
 using UnityEngine;
 
 namespace Views
@@ -15,6 +18,10 @@ namespace Views
         Hand hand;
 
         HandCardView hovered;
+
+        [SerializeField] ViewTransitionService transitionService;
+        [SerializeField] Transform deckAnchor;
+        // [SerializeField] GameObject cardProxyPrefab;
 
         public void Bind(Hand h)
         {
@@ -66,10 +73,14 @@ namespace Views
             hand.OnCardRemoved -= RemoveCard;
         }
 
-        void AddCard(Card card)
+        void AddCard(Card card) =>
+            StartCoroutine(AddCardWithTransition(card));
+
+        IEnumerator AddCardWithTransition(Card card)
         {
             var view = Instantiate(cardPrefab, container);
             view.SetCard(card);
+            view.gameObject.SetActive(false);
 
             view.OnHoverChanged += HandleHover;
 
@@ -77,7 +88,42 @@ namespace Views
             hovered = null;
 
             Layout();
+
+            var (pos, rot) = ProxyPositionAndRotation(view);
+
+            var proxy = Instantiate(view.gameObject, deckAnchor.position, deckAnchor.rotation);
+            proxy.SetActive(true);
+            transitionService.DisableInteractiveLayers(proxy);
+
+            var proxyView = proxy.GetComponent<CardView>();
+            proxyView?.SetCard(card, false);
+
+            yield return transitionService
+                         .Move(proxy.transform, pos, rot, 0.3f)
+                         .WaitForCompletion();
+
+            view.gameObject.SetActive(true);
+            Destroy(proxy);
+
             UpdateHoverState();
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        (Vector3, Quaternion) ProxyPositionAndRotation(HandCardView view)
+        {
+            var newIndex = views.IndexOf(view);
+            var centerOffset = (views.Count - 1) * 0.5f;
+            var x = (newIndex - centerOffset) * spacing;
+            var y = Mathf.Abs(newIndex - centerOffset) * -0.01f;
+            var z = -newIndex * 0.001f;
+
+            var targetLocalPos = new Vector3(x, y, z);
+            var targetLocalRot = Quaternion.Euler(0, 0, (newIndex - centerOffset) * -3f);
+
+            var targetWorldPos = container.TransformPoint(targetLocalPos);
+            var targetWorldRot = container.rotation * targetLocalRot;
+
+            return (targetWorldPos, targetWorldRot);
         }
 
         void RemoveCard(Card card)
@@ -89,7 +135,7 @@ namespace Views
             views.Remove(view);
             Destroy(view.gameObject);
             hovered = null;
-            
+
             Layout();
             UpdateHoverState();
         }
@@ -110,7 +156,7 @@ namespace Views
                 var z = -i * 0.001f;
 
                 var targetPos = new Vector3(x, y, z);
-                
+
                 var targetRot = Quaternion.Euler(0, 0, (i - centerOffset) * -3f);
 
                 view.SetBaseTransform(targetPos, targetRot);

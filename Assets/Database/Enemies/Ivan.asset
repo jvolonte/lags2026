@@ -17,3 +17,4 @@ MonoBehaviour:
   health: 8
   stickersInCards: {x: 3, y: 3}
   prefab: {fileID: 7159483058502474910, guid: 21d0ce6ea4a6e72488f17852e0a81eb9, type: 3}
+  Color: {r: 0.20392157, g: 0.21176471, b: 0.2784314, a: 1}
