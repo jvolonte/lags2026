@@ -1767,7 +1767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14509805, g: 0.14509805, b: 0.14509805, a: 1}
+  m_Color: {r: 0.10980392, g: 0.10980392, b: 0.10980392, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2088,7 +2088,7 @@ MonoBehaviour:
   playAgainButton: {fileID: 638535293}
   canvasGroup: {fileID: 861335795}
   thanks: {fileID: 468693725}
-  typeSpeed: 0.002
+  typeSpeed: 0.004
   linePause: 0.75
   buttonDelay: 1
 --- !u!225 &861335795

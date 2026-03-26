@@ -938,6 +938,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3797841123745081334, guid: f5bac01d49d92424eb426c8c481c6c97, type: 3}
+      propertyPath: cardDummy
+      value: 
+      objectReference: {fileID: 1299322538598141496, guid: 6ac5e46092ad8774dbdee799bfb9292b, type: 3}
     - target: {fileID: 6053094090211585818, guid: f5bac01d49d92424eb426c8c481c6c97, type: 3}
       propertyPath: m_Name
       value: DiscardPileView
