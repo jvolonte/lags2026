@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using DG.Tweening;
 using Services;
+using Unity.VisualScripting;
 using UnityEngine;
 using Views;
 
@@ -15,6 +17,9 @@ namespace Presenters
         [SerializeField] ViewTransitionService transitionService;
         [SerializeField] DiscardPileView discardPileView;
 
+        [SerializeField] Transform previewAnchor;
+
+        CardView previewView;
         CardView currentView;
 
         void Awake()
@@ -66,6 +71,9 @@ namespace Presenters
         {
             if (currentView != null)
                 Destroy(currentView.gameObject);
+
+            if (previewView != null)
+                Destroy(previewView.gameObject);
         }
 
         void OnDestroy()
@@ -83,6 +91,30 @@ namespace Presenters
             currentView = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
             currentView.SetCard(card);
 
+            StartCoroutine(InitializePreview(card));
+        }
+
+        IEnumerator InitializePreview(Card card)
+        {
+            yield return new WaitForSeconds(1f);
+            
+            previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
+            previewView.SetCard(card);
+            previewView.AddComponent<BillboardView>();
+
+            previewView.transform.localScale = Vector3.zero;
+            previewView.transform
+                       .DOScale(1f, 0.25f)
+                       .SetEase(Ease.OutBack);
+
+            yield return transitionService.Move(
+                previewView.transform,
+                previewAnchor.position,
+                previewAnchor.rotation,
+                1f
+            );
+
+            previewView.transform.SetParent(previewAnchor);
             CombatEventManager.EnemyEvaluationReady(currentView.evaluationView);
         }
 
@@ -92,6 +124,9 @@ namespace Presenters
                 return;
 
             currentView.SetCard(card);
+
+            if (previewView != null)
+                previewView.SetCard(card);
         }
 
         public Vector2 GetRandomStickerPosition() =>

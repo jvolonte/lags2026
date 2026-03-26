@@ -186,6 +186,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7359074048334115922}
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
+--- !u!1 &2635767318889118542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5132875878238588125}
+  m_Layer: 0
+  m_Name: PreviewEnemyCardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5132875878238588125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2635767318889118542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 3.5, y: 8, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1213129004549399509}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &3640346228286292204
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +280,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3885665573398926851}
+  - {fileID: 5132875878238588125}
   m_Father: {fileID: 2725160548276362669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &955165979893390285
@@ -267,6 +299,7 @@ MonoBehaviour:
   prefab: {fileID: 4329143455819833247, guid: b7d69555223fc4bef933436b70756feb, type: 3}
   transitionService: {fileID: 9019273266478554123}
   discardPileView: {fileID: 4028474427465191081}
+  previewAnchor: {fileID: 5132875878238588125}
 --- !u!1 &4304148733489219667
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +461,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3814524417744889312}
+  - {fileID: 1786878112431843137}
   m_Father: {fileID: 2725160548276362669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &295381878002888645
@@ -824,6 +858,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Services.ViewTransitionService
   defaultDuration: 0.25
   ease: 7
+--- !u!1 &7161405022031998351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1786878112431843137}
+  m_Layer: 0
+  m_Name: PreviewPlayerCardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1786878112431843137
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7161405022031998351}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 3.5, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7359074048334115922}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8557733220231888169
 GameObject:
   m_ObjectHideFlags: 0
