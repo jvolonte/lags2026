@@ -68,7 +68,7 @@ namespace Views
         void RebuildStickers()
         {
             var baseZ = -0.02f;
-            var zStep = -0.01f;
+            var zStep = -0.001f;
 
             for (var i = 0; i < card.Stickers.Count; i++)
             {

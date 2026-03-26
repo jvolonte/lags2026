@@ -140,7 +140,9 @@ public class StickerDragHandler : MonoBehaviour
         };
 
         stickerView.transform.SetParent(container, false);
-        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, -0.02f);
+        const float stickerZStep = -0.001f;
+        var stickerCount = cardView.GetCard().Stickers.Count;
+        stickerView.transform.localPosition = new Vector3(localPos.x, localPos.y, -0.02f + stickerCount * stickerZStep);
         stickerView.transform.localScale = Vector3.one * stickerScaleMultiplier;
         stickerView.transform.localRotation = Quaternion.identity;
 
