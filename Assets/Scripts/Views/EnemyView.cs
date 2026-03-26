@@ -1,72 +1,78 @@
 using UnityEngine;
 
-public class EnemyView : MonoBehaviour
+namespace Views
 {
-    private const int MAX_DUMMYCARDS = 8;
-
-    [SerializeField] Animator animator;
-    [SerializeField] GameObject cardDummy;
-    [SerializeField] float handCardsAngle;
-
-    bool initialized;
-    Transform[] cards;
-    int currentCardsAmount;
-
-    private void OnEnable()
-    {   
-        Initialize();
-    }
-    private void OnDestroy()
+    public class EnemyView : MonoBehaviour
     {
-        CombatEventManager.OnEnemyHealthChanged -= OnHealthChanged;
-    }
-    private void LateUpdate()
-    {
-        if (currentCardsAmount > 0)
+        const int MAX_DUMMYCARDS = 8;
+
+        [SerializeField] Animator animator;
+        [SerializeField] GameObject cardDummy;
+        [SerializeField] float handCardsAngle;
+
+        bool initialized;
+        Transform[] cards;
+        int currentCardsAmount;
+
+        void OnEnable()
         {
-            float initialAngle = handCardsAngle * currentCardsAmount * 0.5f;
+            Initialize();
+        }
 
-            for (int i = 0; i < cards.Length; i++)
+        void OnDestroy() => CombatEventManager.OnEnemyHealthChanged -= OnHealthChanged;
+
+        void LateUpdate()
+        {
+            if (currentCardsAmount > 0)
             {
-                cards[i].localPosition = Vector3.forward * 0.01f * i + Vector3.right * 0.03f * i;
-                cards[i].localRotation = Quaternion.Lerp(cards[i].localRotation, 
-                    Quaternion.Euler(0, 0, initialAngle - i * handCardsAngle), 
-                    Time.deltaTime * 7f);
+                var initialAngle = handCardsAngle * currentCardsAmount * 0.5f;
+
+                for (var i = 0; i < cards.Length; i++)
+                {
+                    cards[i].localPosition = Vector3.forward * (0.01f * i) + Vector3.right * (0.03f * i);
+                    cards[i].localRotation = Quaternion.Lerp(cards[i].localRotation,
+                        Quaternion.Euler(0, 0, initialAngle - i * handCardsAngle),
+                        Time.deltaTime * 7f);
+                }
             }
         }
-    }
-    void Initialize ()
-    {
-        if (initialized) return;
 
-        cards = new Transform[MAX_DUMMYCARDS];
-        for (int i = 0; i < cards.Length; i++)
+        void Initialize()
         {
-            cards[i] = Instantiate(cardDummy, cardDummy.transform.parent).transform;
-            cards[i].transform.GetChild(0).transform.localPosition = Vector3.up * 0.3f;
+            if (initialized) return;
+
+            cards = new Transform[MAX_DUMMYCARDS];
+            for (var i = 0; i < cards.Length; i++)
+            {
+                cards[i] = Instantiate(cardDummy, cardDummy.transform.parent).transform;
+                cards[i].transform.GetChild(0).transform.localPosition = Vector3.up * 0.3f;
+            }
+
+            cardDummy.SetActive(false);
+            SetCardsAmount(3);
+
+            CombatEventManager.OnEnemyHealthChanged += OnHealthChanged;
+
+            initialized = true;
         }
-        cardDummy.SetActive(false);
-        SetCardsAmount(3);
 
-        CombatEventManager.OnEnemyHealthChanged += OnHealthChanged;
-
-        initialized = true;
-    }
-    public void SetCardsAmount (int amount)
-    {
-        for (int i = 0;i < cards.Length;i++)
+        public void SetCardsAmount(int amount)
         {
-            cards[i].gameObject.SetActive(i < amount);
+            for (var i = 0; i < cards.Length; i++)
+                cards[i].gameObject.SetActive(i < amount);
+
+            currentCardsAmount = amount;
         }
-        currentCardsAmount = amount;
-    }
-    private void OnHealthChanged (int current, int max)
-    {
-        if (current == max) return;
-        GetHurt();
-    }
-    public void GetHurt ()
-    {
-        animator.Play("RecieveDamage", 0, 0f);
+
+        void OnHealthChanged(int current, int max)
+        {
+            if (current == max) return;
+            GetHurt();
+        }
+
+        public void GetHurt()
+        {
+            animator.Play("RecieveDamage", 0, 0f);
+        }
     }
 }

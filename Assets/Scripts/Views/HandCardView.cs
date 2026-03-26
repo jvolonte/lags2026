@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using Utils;
 
 namespace Views
 {
@@ -18,16 +19,15 @@ namespace Views
         float offsetX;
         bool isHovered;
 
-        [SerializeField] float hoverDistanceZ = .2f; 
-        [SerializeField] float hoverDistanceY = .2f; 
+        [SerializeField] float hoverDistanceZ = .2f;
+        [SerializeField] float hoverDistanceY = .2f;
         [SerializeField] float scale = 1.2f;
         [SerializeField] float rotationRadius = 0.3f;
         [SerializeField] float rotationAngleRange = 20f;
-        
 
         void Awake() => baseScale = transform.localScale;
 
-        private void LateUpdate()
+        void LateUpdate()
         {
             UpdateRotation();
         }
@@ -38,7 +38,7 @@ namespace Views
             cardView.SetCard(card, false);
             cardView.AllowStickers();
         }
-        
+
         public void SetHovered(bool hovered) => OnHoverChanged?.Invoke(this, hovered);
 
         public void OnClicked() => CombatEventManager.PlayerPlaysCard(cardView);
@@ -53,7 +53,6 @@ namespace Views
             UpdatePosition();
         }
 
-
         public void SetHover(bool active)
         {
             isHovered = active;
@@ -63,7 +62,7 @@ namespace Views
 
             transform
                 .DOScale(active ? baseScale * scale : baseScale, 0.2f);
-            
+
             UpdatePosition();
         }
 
@@ -86,30 +85,64 @@ namespace Views
             transform.DOLocalMove(target, 0.2f)
                      .SetEase(Ease.OutQuad);
         }
-        void UpdateRotation ()
+
+        void UpdateRotation()
         {
-            if (isHovered)
+            var current = transform.localRotation;
+
+            if (!IsValidQuaternion(current))
             {
-                LookMouse();
+                Debug.LogWarning("Fixing invalid current rotation on " + gameObject.name);
+                current = Quaternion.identity;
+                transform.localRotation = current;
             }
+
+            if (!IsValidQuaternion(baseRot))
+            {
+                Debug.LogWarning("Fixing invalid baseRot on " + gameObject.name);
+                baseRot = Quaternion.identity;
+            }
+
+            if (isHovered)
+                LookMouse();
             else
             {
-                transform.localRotation =
-                    Quaternion.Lerp(transform.localRotation, baseRot, Time.deltaTime * 10f);
+                var target = Quaternion.Lerp(current, baseRot, Time.deltaTime * 10f);
+                if (IsValidQuaternion(target))
+                    transform.localRotation = target;
             }
         }
-        void LookMouse ()
+
+        void LookMouse()
         {
-            Vector2 cardScreenPosition = Camera.main.WorldToViewportPoint(transform.position);
-            Vector2 mouseScreenPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            if (rotationRadius <= 0.0001f)
+                return;
+
+            var cam = Helpers.Camera;
+
+            Vector2 cardScreenPosition = cam.WorldToViewportPoint(transform.position);
+            Vector2 mouseScreenPosition = cam.ScreenToViewportPoint(Input.mousePosition);
             Vector2 delta = Vector3.ClampMagnitude(mouseScreenPosition - cardScreenPosition, rotationRadius);
 
-            Quaternion rotation = Quaternion.Euler(
-                (delta.y/rotationRadius) * rotationAngleRange, 
-                (-delta.x/rotationRadius) * rotationAngleRange, 
-                0f);
+            var safeRadius = Mathf.Max(rotationRadius, 0.0001f);
+
+            var rotation = Quaternion.Euler(
+                delta.y / safeRadius * rotationAngleRange,
+                -delta.x / safeRadius * rotationAngleRange,
+                0f
+            );
 
             transform.localRotation = baseRot * rotation;
+        }
+
+        static bool IsValidQuaternion(Quaternion q)
+        {
+            if (float.IsNaN(q.x) || float.IsNaN(q.y) || float.IsNaN(q.z) || float.IsNaN(q.w))
+                return false;
+
+            var magnitude = q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w;
+
+            return magnitude > 0.0001f;
         }
     }
 }

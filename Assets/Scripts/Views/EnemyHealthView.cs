@@ -67,11 +67,8 @@ namespace Views
             {
                 if (current < lastHealth)
                 {
-                    for (var i = lastHealth - 1; i >= current; i--)
-                    {
-                        Debug.Log($"Setting off for index: {i}");
-                        hearts[i].SetFilled(false);
-                    } 
+                    for (var i = lastHealth - 1; i >= current; i--) 
+                        hearts[i].SetFilled(false); 
                 }
             }
 
