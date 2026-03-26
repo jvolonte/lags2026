@@ -40,13 +40,7 @@ namespace Views
             hideDialogue = null;
         }
 
-        void ShowDialogue(string line, Color color) => 
-            ShowDialogue(line, color, GetTextColor(color));
-
-        static Color GetTextColor(Color bg) => GetLuminance(bg) > 0.5f ? Color.black : Color.white;
-        static float GetLuminance(Color c) => 0.2126f * c.r + 0.7152f * c.g + 0.0722f * c.b;
-
-        void ShowDialogue(string line, Color backColor, Color textColor)
+        void ShowDialogue(string line, Color backColor, Color textColor, float display = -1f)
         {
             if (currentDialogue != null)
                 StopCoroutine(currentDialogue);
@@ -60,10 +54,10 @@ namespace Views
             animator.clip = animator.GetClip("animDialogueBoxPopUp");
             animator.Play();
 
-            currentDialogue = StartCoroutine(TypeDialogue(line));
+            currentDialogue = StartCoroutine(TypeDialogue(line, display > 0 ? display : displayTime));
         }
 
-        void HideDialogue ()
+        void HideDialogue()
         {
             if (currentDialogue == null) return;
             if (hideDialogue != null) return;
@@ -75,7 +69,8 @@ namespace Views
 
             currentDialogue = null;
         }
-        IEnumerator HideDialogueWait ()
+
+        IEnumerator HideDialogueWait()
         {
             yield return null;
 
@@ -85,7 +80,8 @@ namespace Views
 
             hideDialogue = null;
         }
-        IEnumerator TypeDialogue(string line)
+
+        IEnumerator TypeDialogue(string line,  float display)
         {
             tmpBody.text = "";
             foreach (var c in line)
@@ -94,7 +90,7 @@ namespace Views
                 yield return new WaitForSeconds(characterDelay);
             }
 
-            yield return new WaitForSeconds(displayTime);
+            yield return new WaitForSeconds(display);
 
             HideDialogue();
         }
