@@ -49,6 +49,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _BurnNoise:
+        m_Texture: {fileID: 2800000, guid: 6b66a40c5b770a04d87c53e20ebb2358, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0.58, y: -0.36}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -105,6 +109,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _BurnValue: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -138,6 +143,9 @@ Material:
     - _Back1: {r: 0.745, g: 0.4120391, b: 0.4120391, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Border: {r: 0.90800005, g: 0.89267516, b: 0.8543629, a: 1}
+    - _Burn: {r: 0.8962264, g: 0.2240566, b: 0, a: 1}
+    - _Burn0: {r: 0.3773585, g: 0.34709862, b: 0.34709862, a: 1}
+    - _Burn1: {r: 1, g: 0.41661775, b: 0.19215685, a: 1}
     - _Card: {r: 0.939, g: 0.93031496, b: 0.89027834, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

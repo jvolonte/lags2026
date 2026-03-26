@@ -102,6 +102,10 @@ namespace Views
             cardAnimation.Highlight(hover);
         }
 
+        public void Burn (System.Action onEnd)
+        {
+            cardAnimation.Burn(onEnd);
+        }
         public Card GetCard() => card;
 
         public void AllowStickers() => canReceiveStickers = true;

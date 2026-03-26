@@ -1,5 +1,6 @@
 using System.Collections;
 using Services;
+using Unity.VisualScripting;
 using UnityEngine;
 using Views;
 
@@ -57,8 +58,12 @@ namespace Presenters
             }
             else
             {
-                //TODO: trigger card lost effect!
-                Debug.Log("Disappear player card effect");
+                bool done = false;
+                float watchdog = 0f;
+
+                currentView.Burn(() => done = true);
+
+                while (!done && watchdog < 3f) { watchdog += Time.deltaTime;  yield return null; }
             }
 
             HandleClearTable();
