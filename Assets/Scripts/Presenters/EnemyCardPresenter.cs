@@ -40,8 +40,8 @@ namespace Presenters
                 : round switch
                 {
                     ConflictOutcome.PlayerWin => CardFate.Discard,
-                    ConflictOutcome.EnemyWin => CardFate.Destroy,
                     ConflictOutcome.Tie => CardFate.Destroy,
+                    ConflictOutcome.EnemyWin => CardFate.Destroy,
                     _ => CardFate.Destroy
                 };
 

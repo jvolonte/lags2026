@@ -23,22 +23,19 @@ namespace Services
         {
             var result = ConflictResolver.Resolve(context);
 
-            yield return PlayEvaluation(context);
+            yield return PlayEvaluation(result);
             yield return new WaitForSeconds(2);
             ConflictResolver.ApplyOutcome(result, context);
-            
+
             //TODO: check if this is needed
             yield return new WaitForSeconds(2);
         }
 
-        IEnumerator PlayEvaluation(GameContext context)
+        IEnumerator PlayEvaluation(ConflictResult result)
         {
-            var playerEval = context.PlayerCurrentCard.Calculate(context.EnemyCurrentCard, context);
-            var enemyEval = context.EnemyCurrentCard.Calculate(context.PlayerCurrentCard, context);
-
             yield return DOTween.Sequence()
-                                .Join(playerView.Play(playerEval))
-                                .Join(enemyView.Play(enemyEval))
+                                .Join(playerView.Play(result.PlayerEvaluation))
+                                .Join(enemyView.Play(result.EnemyEvaluation))
                                 .WaitForCompletion();
         }
     }

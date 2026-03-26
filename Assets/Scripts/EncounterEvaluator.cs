@@ -33,6 +33,8 @@ public struct ConflictResult
     public int PlayerValue;
     public int EnemyValue;
     public ConflictOutcome Outcome;
+    public EvaluationContext PlayerEvaluation;
+    public EvaluationContext EnemyEvaluation;
 }
 
 public class WinRuleSet

@@ -23,7 +23,9 @@ public class ConflictResolver
         {
             PlayerValue = playerEvaluationContext.Value,
             EnemyValue = enemyEvaluationContext.Value,
-            Outcome = outcome
+            Outcome = outcome,
+            PlayerEvaluation = playerEvaluationContext,
+            EnemyEvaluation = enemyEvaluationContext
         };
     }
 
