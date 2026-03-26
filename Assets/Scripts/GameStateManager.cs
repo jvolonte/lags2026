@@ -162,7 +162,9 @@ public class GameStateManager : MonoBehaviour
     {
         if (!stickerTutorial)
         {
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.stickerPhase, Context.Enemy.Data.Color);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.stickerPhase, 
+                Context.Enemy.Data.backgroundColor, 
+                Context.Enemy.Data.textColor);
             stickerTutorial = true;
         }
 
@@ -184,11 +186,15 @@ public class GameStateManager : MonoBehaviour
     {
         if (!winnerTutorial)
         {
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.encounterPhase, Context.Enemy.Data.Color);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.encounterPhase, 
+                Context.Enemy.Data.backgroundColor,
+                Context.Enemy.Data.textColor);
             winnerTutorial = true;
         }
         else
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne(), Context.Enemy.Data.Color);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.thinking.PickOne(),
+                Context.Enemy.Data.backgroundColor,
+                Context.Enemy.Data.textColor);
 
         yield return enemyTurnService.PlaceSticker(Context);
 
@@ -220,7 +226,9 @@ public class GameStateManager : MonoBehaviour
         if (Context.Enemy.IsDead)
         {
             yield return new WaitForSeconds(2f);
-            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.onLoseGame, Context.Enemy.Data.Color);
+            CombatEventManager.PlayDialogue(Context.Enemy.Data.dialogue.onLoseGame,
+                Context.Enemy.Data.backgroundColor,
+                Context.Enemy.Data.textColor);
             yield return new WaitForSeconds(3f);
         }
 
