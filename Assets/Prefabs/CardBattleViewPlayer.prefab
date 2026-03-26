@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardBattleViewPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3415019301518466258, guid: e3fc1b5be5dcb1d4a9bc46b0d01c4b87, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4205487927228253612, guid: e3fc1b5be5dcb1d4a9bc46b0d01c4b87, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0
@@ -83,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 4205487927228253612, guid: e3fc1b5be5dcb1d4a9bc46b0d01c4b87, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267648460350683139, guid: e3fc1b5be5dcb1d4a9bc46b0d01c4b87, type: 3}
+      propertyPath: appearFromLeft
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
