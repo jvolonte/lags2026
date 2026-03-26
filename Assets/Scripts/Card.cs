@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
 using Stickers;
-using UnityEngine;
 
 public class Card
 {
+    public Action OnStickerAdded;
+    
     public int Value;
     public Suit Suit;
     public List<StickerPlacement> Stickers;
@@ -53,6 +55,12 @@ public class Card
     }
 
     public override string ToString() => $"{Value} of {Suit}";
+
+    public void AddSticker(StickerPlacement sticker)
+    {
+        Stickers.Add(sticker);
+        OnStickerAdded?.Invoke();
+    }
 }
 
 public enum Suit

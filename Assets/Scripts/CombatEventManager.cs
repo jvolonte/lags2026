@@ -10,6 +10,7 @@ public static class CombatEventManager
     public static event Action<CardView> OnPlayerPlaysCard;
     public static event Action<CardView> OnPlayCard;
     public static event Action<Card> OnEnemyPlayCard;
+    public static event Action OnPlayerCardReachedPosition;
 
     public static Action<Card, StickerPlacement> OnEnemyPlaceStickerPreview;
     public static event Action<StickerPlacement, Card> OnAddSticker;
@@ -57,4 +58,6 @@ public static class CombatEventManager
 
     public static void Discard(Card card) => OnDiscard?.Invoke(card);
     public static void StickerDestroyed(StickerView view) => OnStickerDestroyed?.Invoke(view);
+
+    public static void PlayerCardReachedPosition() => OnPlayerCardReachedPosition?.Invoke();
 }

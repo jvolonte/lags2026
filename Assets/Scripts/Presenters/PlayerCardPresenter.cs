@@ -138,14 +138,13 @@ namespace Presenters
 
         IEnumerator InitializePreview(Card card)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
 
             previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
             previewView.SetCard(card, isPlayer: true);
             previewView.AllowStickers();
 
             previewView.transform.localScale = Vector3.zero;
-
             previewView.transform
                        .DOScale(2f, 0.2f)
                        .SetEase(Ease.OutBack);
@@ -154,10 +153,11 @@ namespace Presenters
                 previewView.transform,
                 previewAnchor.position,
                 previewAnchor.rotation,
-                0.4f
+                1f
             );
 
             previewView.transform.SetParent(previewAnchor);
+            CombatEventManager.PlayerCardReachedPosition();
         }
     }
 }

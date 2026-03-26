@@ -4,7 +4,6 @@ using System.Linq;
 using Data;
 using DG.Tweening;
 using Services;
-using Unity.VisualScripting;
 using UnityEngine;
 using Views;
 
@@ -100,7 +99,7 @@ namespace Presenters
 
         IEnumerator InitializePreview(Card card)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
 
             previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
             previewView.SetCard(card);

@@ -31,17 +31,16 @@ namespace Views
         void OnEnable()
         {
             if (handCardView != null)
-            {
                 handCardView.OnHoverChanged += OnHoverChange;
-            }
         }
 
         void OnDisable()
         {
             if (handCardView != null)
-            {
                 handCardView.OnHoverChanged -= OnHoverChange;
-            }
+
+            if (card != null)
+                card.OnStickerAdded -= RebuildStickers;
         }
 
         public void SetCard(Card c, bool showEvaluation = true, bool isPlayer = false)
@@ -62,11 +61,23 @@ namespace Views
 
         void SetVisual(Card c)
         {
-            card = c;
+            SubscribeToChangedOnView(c);
+
             var texture = cardTextureDatabase.GetTexture(c.Suit, c.Value);
             cardRenderer.material.SetTexture("_MainTex", texture);
 
             RebuildStickers();
+        }
+
+        void SubscribeToChangedOnView(Card c)
+        {
+            if (card != null)
+                card.OnStickerAdded -= RebuildStickers;
+
+            card = c;
+
+            if (card != null)
+                card.OnStickerAdded += RebuildStickers;
         }
 
         void RebuildStickers()
@@ -101,22 +112,16 @@ namespace Views
             }
         }
 
-        void OnHoverChange(HandCardView view, bool hover)
-        {
-            cardAnimation.Highlight(hover);
-        }
+        void OnHoverChange(HandCardView view, bool hover) => cardAnimation.Highlight(hover);
 
-        public void Burn(System.Action onEnd)
-        {
-            cardAnimation.Burn(onEnd);
-        }
+        public void Burn(System.Action onEnd) => cardAnimation.Burn(onEnd);
 
         public Card GetCard() => card;
 
         public void AllowStickers() => canReceiveStickers = true;
 
         public void ShowEvaluation() => evaluationView.gameObject.SetActive(true);
-        
+
         public void HideEvaluation() => evaluationView.gameObject.SetActive(false);
     }
 }

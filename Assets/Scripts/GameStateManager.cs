@@ -31,7 +31,6 @@ public class GameStateManager : MonoBehaviour
 
     [Header("Presenters")]
     [SerializeField] EnemyCardPresenter enemyCardPresenter;
-    [SerializeField] PlayerCardPresenter playerCardPresenter;
     [SerializeField] StickerPresenter stickerPresenter;
 
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
@@ -59,7 +58,10 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnStickerHoverEnter += ShowTooltip;
         CombatEventManager.OnStickerHoverExit += HideTooltip;
         CombatEventManager.OnDiscard += HandleDiscard;
+        CombatEventManager.OnPlayerCardReachedPosition += HandleShowStickers;
     }
+
+    void HandleShowStickers() => TransitionTo(GameState.RevealStickers);
 
     void HandleDiscard(Card card) => Context.Player.Discard.Add(card);
 
@@ -146,7 +148,6 @@ public class GameStateManager : MonoBehaviour
             return;
 
         Context.PlayerCurrentCard = view.GetCard();
-        TransitionTo(GameState.RevealStickers);
     }
 
     void EnterRevealStickers()
@@ -177,10 +178,8 @@ public class GameStateManager : MonoBehaviour
             return;
 
         Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
-        card.Stickers.Add(sticker);
-
-        playerCardPresenter.UpdateCards(card);
-
+        card.AddSticker(sticker);
+        
         TransitionTo(GameState.EnemyPlaceSticker);
     }
 
@@ -272,6 +271,7 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnStickerHoverEnter -= ShowTooltip;
         CombatEventManager.OnStickerHoverExit -= HideTooltip;
         CombatEventManager.OnDiscard -= HandleDiscard;
+        CombatEventManager.OnPlayerCardReachedPosition -= HandleShowStickers;
     }
 
     public void Debug_KillEnemyAndAdvance()
