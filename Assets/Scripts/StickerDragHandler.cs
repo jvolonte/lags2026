@@ -72,7 +72,7 @@ public class StickerDragHandler : MonoBehaviour
         originalPosition = dragging.transform.position;
         originalRotation = dragging.transform.rotation;
 
-        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration);
+        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
         FaceCameraSmooth(dragging.transform);
         dragging.GetComponent<StickerView>().SetRenderOnTop(true);
 
@@ -123,11 +123,12 @@ public class StickerDragHandler : MonoBehaviour
         var cardScale = card.transform.lossyScale;
         var scaleFactor = cardScale.x;
         var targetScale = originalScale * (scaleFactor * stickerScaleMultiplier);
-        dragging.transform.DOScale(targetScale, scaleDuration);
+        dragging.transform.DOScale(targetScale, scaleDuration).SetEase(Ease.OutBack)
+            ;
     }
 
     void ResetDragScale() =>
-        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration);
+        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
 
     void EndDrag(Vector2 screenPos)
     {
@@ -155,7 +156,7 @@ public class StickerDragHandler : MonoBehaviour
 
     void ReturnToOrigin(StickerView sticker)
     {
-        sticker.transform.DOScale(originalScale, scaleDuration);
+        sticker.transform.DOScale(originalScale, scaleDuration).SetEase(Ease.OutBack);
         sticker.transform.SetParent(originalParent);
         sticker.transform.DOMove(originalPosition, 0.25f).SetEase(Ease.OutQuad);
         sticker.transform.DORotateQuaternion(originalRotation, 0.25f);

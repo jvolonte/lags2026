@@ -424,6 +424,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117376427}
   m_CullTransparentMesh: 1
+--- !u!114 &134165731 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 295381878002888645, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b0833819e4d42bbbf1ff1c846938cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Presenters.PlayerCardPresenter
 --- !u!4 &139515496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2121115330533410744, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
@@ -1771,6 +1782,7 @@ MonoBehaviour:
   tooltipView: {fileID: 6008554469362422521}
   gameResultView: {fileID: 861335794}
   enemyCardPresenter: {fileID: 268042610}
+  playerCardPresenter: {fileID: 134165731}
   stickerPresenter: {fileID: 780951947}
   stickers:
   - {fileID: 11400000, guid: 4f08524f02cec4a8abdf097defe6d047, type: 2}
