@@ -10,7 +10,7 @@ namespace Presenters
     {
         [Header("References")]
         [SerializeField] Transform container;
-        [SerializeField] MeshRenderer surface;
+        [SerializeField] Renderer surface;
 
         [Header("Layout")] [SerializeField] float spacing = 0.5f;
         [SerializeField] float surfaceOffset = 0.02f;
