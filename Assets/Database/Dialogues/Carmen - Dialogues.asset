@@ -16,11 +16,18 @@ MonoBehaviour:
   thinking:
   - Which one... oh, tricky little thing.
   - ...
+  - Won't see this one coming, tsk
+  - tsk... this one will surely work
+  - tricky... tricky
   winRound:
   - Another one for me... delightful.
+  - As expected
+  - 'Better luck next round tsk '
   loseRound:
   - Oh... clever, very clever.
   - tsk tsk
-  onLoseGame: "Oh dear... you\u2019ve bested me."
+  - 'tricky, ain''t you? '
+  - Dissapointing.
+  onLoseGame: Oh dear... you've bested me.
   stickerPhase: 
   encounterPhase: 

@@ -17,12 +17,19 @@ MonoBehaviour:
   - "Hmmm... which one\u2019ll make me shine tonight?"
   - Let's see... gotta keep my edge.
   - "hmm\u2026 smooth moves only."
+  - and a one, and a two...
+  - this one will go without a hitch
+  - Gonna give you the show you deserve!
   winRound:
   - Smooth and easy.
   - hah! Keep up, or you'll miss the groove.
+  - Don't get blinded darling
+  - You missed a cue
   loseRound:
   - Hah... not bad, you got me this time.
   - sigh...
-  onLoseGame: Heh... you got the last move. Respect.
+  - Gonna have to step up my groove!
+  - Won't get outmatched!
+  onLoseGame: You got the last move. Respect.
   stickerPhase: 
   encounterPhase: 
