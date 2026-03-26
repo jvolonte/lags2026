@@ -14,5 +14,7 @@ namespace Data
         
         [Header("Presentation")]
         public GameObject prefab;
+
+        public Color Color;
     }
 }

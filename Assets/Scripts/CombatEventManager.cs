@@ -19,7 +19,7 @@ public static class CombatEventManager
     public static event Action<Enemy> OnEnemySet;
     public static event Action<List<StickerInstance>> OnRevealStickers;
     public static event Action OnClearStickers;
-    public static event Action<string> OnPlayDialogue;
+    public static event Action<string, Color> OnPlayDialogue;
 
     public static event Action<StickerData, Vector3, Quaternion> OnStickerHoverEnter;
     public static event Action OnStickerHoverExit;
@@ -44,7 +44,7 @@ public static class CombatEventManager
     public static void RevealStickers(List<StickerInstance> stickers) => OnRevealStickers?.Invoke(stickers);
     public static void ClearStickers() => OnClearStickers?.Invoke();
 
-    public static void PlayDialogue(string message) => OnPlayDialogue?.Invoke(message);
+    public static void PlayDialogue(string message, Color bgColor) => OnPlayDialogue?.Invoke(message, bgColor);
 
     public static void StickerHoverEnter(StickerData data, Vector3 pos, Quaternion rot) =>
         OnStickerHoverEnter?.Invoke(data, pos, rot);

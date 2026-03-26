@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour
         var data = enemies[currentIndex];
 
         CurrentEnemy = EnemyFactory.Create(data);
-        CombatEventManager.PlayDialogue(CurrentEnemy.Data.dialogue.onGameStart);
+        CombatEventManager.PlayDialogue(CurrentEnemy.Data.dialogue.onGameStart, CurrentEnemy.Data.Color);
         CombatEventManager.SetEnemy(CurrentEnemy);
     }
 
