@@ -62,8 +62,10 @@ public class GameStateManager : MonoBehaviour
 
     void HandleDiscard(Card card) => Context.Player.Discard.Add(card);
 
-    void ShowTooltip(StickerData data, Vector3 pos, Quaternion rot) =>
-        tooltipView.Show(data.GetDescription(), pos, rot);
+    void ShowTooltip(StickerData data, Vector3 pos, Quaternion rot)
+    {
+        tooltipView.Show(data.GetDescription(), pos);
+    }
 
     void HideTooltip() => tooltipView.Hide();
 
