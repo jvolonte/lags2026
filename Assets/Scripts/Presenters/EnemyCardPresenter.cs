@@ -58,11 +58,6 @@ namespace Presenters
                     onArrive: () => CombatEventManager.Discard(currentView.GetCard())
                 );
             }
-            else
-            {
-                //TODO: trigger card lost effect!
-                Debug.Log("Disappear enemy card effect");
-            }
 
             HandleClearTable();
         }

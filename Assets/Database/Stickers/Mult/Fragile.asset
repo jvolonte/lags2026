@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fragile
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.FragileStickerData
   id: Fragile
-  descriptionTemplate: 'x{value}.
+  descriptionTemplate: 'x{value}
 
     {chance}% chance to destroy this card'
   rarity: 0
