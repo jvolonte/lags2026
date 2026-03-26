@@ -17,15 +17,22 @@ MonoBehaviour:
   - this one... no... no... this one stays... stays...
   - they don't like that... they don't like that one...
   - they'll tell me... they always tell me...
+  - no... no...This one is too precious to play... I'll play this one...yes
+  - no...no....no....yes....yes...no...
+  - they love this...they want to be together
   winRound:
   - ...mine now... mine...
   - see? they come to me... they always come back.
   - hehehEHEHheehEHEHEHeh
   - "you can\u2019t keep them. NO oNe cAN"
+  - all will be back together soon...yes...yes
+  - you want to be together... dont you little ones?
   loseRound:
   - no... no... give it back... give it
   - ssshhhkk... tsssk. tsssk.
   - ...take them... take them and... NO No no! MINE
+  - NO.....no...no.... you are not worthy
+  - You don't understand.... the damage...
   onLoseGame: NOOoooOOOOOooOoOooooooOoOoOoooOOOOOooo
   stickerPhase: 
   encounterPhase: 

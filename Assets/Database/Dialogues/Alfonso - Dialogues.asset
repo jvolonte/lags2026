@@ -16,11 +16,19 @@ MonoBehaviour:
   thinking:
   - 'Can''t go wrong... or can I? '
   - What to do? ...
+  - 'so many choices... '
+  - this one... or ... this one?
+  - hmm... probably...
   winRound:
   - Ha! That's how it's done.
+  - One more for me!
+  - Seems I still got it
   loseRound:
   - Hah... okay, you got me there.
   - Ugh.
+  - Won't be so easy next round
+  - Need some more beer...
+  - hah... good play
   onLoseGame: "Well... fair\u2019s fair, I suppose"
   stickerPhase: "Pick a sticker. Use it on your cards. I\u2019ll take from what you
     leave."
