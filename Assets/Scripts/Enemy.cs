@@ -6,7 +6,7 @@ public class Enemy
     public EnemyData Data { get; }
 
     public int Health { get; private set; }
-    
+
     public Enemy(EnemyData data)
     {
         Data = data;
@@ -19,6 +19,9 @@ public class Enemy
         Health -= amount;
         SfxManager.Play(SfxClipId.EnemyDamage);
         CombatEventManager.EnemyHealthChanged(Health, Data.health);
+
+        if (IsDead)
+            SfxManager.Play(SfxClipId.OpponentDefeated);
     }
 
     public bool IsDead => Health <= 0;

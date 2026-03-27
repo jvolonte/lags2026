@@ -36,8 +36,7 @@ namespace Views
                           "You've won.\n" +
                           "\n" +
                           "The door opens.\n" +
-                          "A new face takes the empty seat.\n" +
-                          "You deal.";
+                          "A new face takes the empty seat.";
 
             StopAllCoroutines();
             StartCoroutine(ShowRoutine(message));

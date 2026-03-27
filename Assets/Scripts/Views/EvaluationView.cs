@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using Audio;
 
 namespace Views
 {
@@ -29,7 +30,6 @@ namespace Views
             {
                 if (step.Source == null) continue;
 
-
                 var view = stickers.First(s => s.GetLogic() == step.Source);
                 if (view != null)
                 {
@@ -40,7 +40,7 @@ namespace Views
             }
         }
 
-        IEnumerator UpdateValue (EvaluationStep step)
+        IEnumerator UpdateValue(EvaluationStep step)
         {
             float triggerAnimationWait = 0.08f;
 
@@ -53,10 +53,17 @@ namespace Views
 
             while (t < 1f)
             {
-                t = Mathf.Clamp01(t + Time.deltaTime/animationDuration);
+                t = Mathf.Clamp01(t + Time.deltaTime / animationDuration);
                 t1 += Time.deltaTime;
 
                 value = Mathf.FloorToInt(Mathf.Lerp(startValue, endValue, t));
+
+                if (value != step.PreviousValue)
+                {
+                    var delta = value - step.PreviousValue;
+                    PlayValueSfx(delta, value);
+                }
+
                 text.text = value.ToString();
 
                 if (t1 >= triggerAnimationWait)
@@ -64,11 +71,30 @@ namespace Views
                     animator[ANIMATION_TRIGGER_EVALUATION].time = 0;
                     animator.Sample();
                     animator.Play(ANIMATION_TRIGGER_EVALUATION);
-                    t1 -= triggerAnimationWait; 
+                    t1 -= triggerAnimationWait;
                 }
 
                 yield return null;
             }
+        }
+
+        static void PlayValueSfx(int delta, int currentValue)
+        {
+            if (delta == 0) return;
+
+            var id = delta > 0
+                ? SfxClipId.PositiveEvaluation
+                : SfxClipId.NegativeEvaluation;
+
+            SfxManager.Play(id, pitch: GetPitch(currentValue, delta));
+        }
+
+        static float GetPitch(int value, int delta)
+        {
+            var basePitch = delta > 0 ? 1f : 0.9f;
+            var growth = Mathf.Log10(Mathf.Max(1, value));
+            var pitch = basePitch + growth * 0.05f;
+            return Mathf.Clamp(pitch, 0.8f, 1.5f);
         }
     }
 }
