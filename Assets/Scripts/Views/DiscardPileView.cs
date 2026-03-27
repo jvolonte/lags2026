@@ -108,7 +108,7 @@ namespace Views
 
             currentTopView.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(-2f, 2f));
 
-            currentTopView.SetCard(card, false);
+            currentTopView.SetCard(card);
         }
 
         void UpdateDummyCards()

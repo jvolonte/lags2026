@@ -33,7 +33,7 @@ namespace Presenters
         public void UpdateCards(Card card)
         {
             if (currentView != null)
-                currentView.SetCard(card, showEvaluation: false, isPlayer: true);
+                currentView.SetCard(card);
 
             combatView.SetCard(card, true);
         }
@@ -128,7 +128,7 @@ namespace Presenters
                     currentView = Instantiate(prefab, targetPosition, targetRotation, spawnPoint);
                     currentView.transform.localScale = targetScale;
 
-                    currentView.SetCard(card, false);
+                    currentView.SetCard(card);
                     currentView.AllowStickers();
 
                     StartCoroutine(InitializePreview(card));

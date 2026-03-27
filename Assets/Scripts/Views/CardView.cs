@@ -15,13 +15,9 @@ namespace Views
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated;
         [SerializeField] Transform stickerContainer;
-
-        [SerializeField] Transform playerEvaluationPos;
-        [SerializeField] Transform enemyEvaluationPos;
-
+        
         [SerializeField] float stickerScaleMultiplier = 0.5f;
 
-        public EvaluationView evaluationView;
         public Transform StickerContainer => stickerContainer;
         public CardAnimations CardAnimations => cardAnimation;
 
@@ -46,20 +42,16 @@ namespace Views
                 card.OnStickerAdded -= RebuildStickers;
         }
 
-        public void SetCard(Card c, bool showEvaluation = true, bool isPlayer = false)
+        public void SetCard(Card c)
         {
             SetValue(c.Value);
             SetVisual(c);
-
-            evaluationView.gameObject.SetActive(showEvaluation);
-            evaluationView.transform.position = (isPlayer ? playerEvaluationPos : enemyEvaluationPos).position;
         }
 
         void SetValue(int value)
         {
             valueText.text = value.ToString();
             valueTextRotated.text = value.ToString();
-            evaluationView.SetValue(value);
         }
 
         void SetVisual(Card c)
