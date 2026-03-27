@@ -128,8 +128,6 @@ public class GameStateManager : MonoBehaviour
         Context.Player.Deck.Shuffle();
 
         player.Draw();
-
-        TransitionTo(GameState.EnemyPlaysCard);
     }
 
     void EnterEnemyPlaysCard()
