@@ -89,6 +89,9 @@ namespace Factories
             if (ctx.IsOdd)
                 pool.RemoveAll(s => s is EvenStickerData);
 
+            if (ctx.HasDuplicates)
+                pool.RemoveAll(s => s is PurityStickerData);
+
             return pool;
         }
     }
@@ -123,7 +126,10 @@ namespace Factories
         public void Register(StickerPlacement placement) =>
             Selected.Add(placement.Data);
 
-        public bool Has(StickerData type) =>
-            Selected.Contains(type);
+        public bool Has(StickerData type) => Selected.Contains(type);
+
+        public bool HasDuplicates => Selected
+                                     .GroupBy(s => s.GetType())
+                                     .Any(g => g.Count() > 1);
     }
 }
