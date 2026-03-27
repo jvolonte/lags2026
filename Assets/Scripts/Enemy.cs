@@ -1,3 +1,4 @@
+using Audio;
 using Data;
 
 public class Enemy
@@ -16,6 +17,7 @@ public class Enemy
     public void Damage(int amount = 1)
     {
         Health -= amount;
+        SfxManager.Play(SfxClipId.EnemyDamage);
         CombatEventManager.EnemyHealthChanged(Health, Data.health);
     }
 

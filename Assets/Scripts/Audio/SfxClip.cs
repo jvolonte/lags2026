@@ -27,5 +27,6 @@ namespace Audio
         HoverCard,
         OpponentDefeated,
         GameOver,
+        EnemyDamage,
     }
 }
