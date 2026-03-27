@@ -70,11 +70,11 @@ namespace Presenters
 
                 combatView.Hide(false, () => CombatEventManager.Discard(card));
 
-                //yield return transitionService.MoveAndSwap(
-                //    source: previewView.transform,
-                //    target: target,
-                //    proxyPrefab: previewView.gameObject,
-                //    onArrive: () => CombatEventManager.Discard(previewView.GetCard()));
+                yield return transitionService.MoveAndSwap(
+                    source: currentView.transform,
+                    target: target,
+                    proxyPrefab: currentView.gameObject, 
+                    () => { });
             }
             else
             {
