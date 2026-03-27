@@ -128,9 +128,7 @@ namespace Presenters
 
                     currentView.SetCard(card, false);
                     currentView.AllowStickers();
-
-                    CombatEventManager.PlayerEvaluationReady(previewView.evaluationView);
-
+                    
                     StartCoroutine(InitializePreview(card));
                 }
             );
@@ -157,7 +155,10 @@ namespace Presenters
             );
 
             previewView.transform.SetParent(previewAnchor);
+
             CombatEventManager.PlayerCardReachedPosition();
+            CombatEventManager.PlayerEvaluationReady(previewView.evaluationView);
+
         }
     }
 }
