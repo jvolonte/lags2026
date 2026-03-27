@@ -43,7 +43,7 @@ public class CardCombatView : MonoBehaviour
 
     public void SetValue(int value) =>
         evaluationView.SetValue(value);
-    public void SetCard (Card card)
+    public void SetCard (Card card, bool allowStickers)
     {
         if (previewView)
             Destroy(previewView.gameObject);
@@ -53,6 +53,7 @@ public class CardCombatView : MonoBehaviour
         previewView.transform.localRotation = Quaternion.identity;
         previewView.transform.localScale = Vector3.one;
         previewView.SetCard(card);
+        if (allowStickers) previewView.AllowStickers();
 
         previewView.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
     }
@@ -78,7 +79,7 @@ public class CardCombatView : MonoBehaviour
     {
         root.gameObject.SetActive(false);
 
-        SetCard(card);  
+        SetCard(card, allowStickers: !isEnemy);  
         SetValue(card.Value);
 
         root.transform.localPosition = Vector3.right * 5f;

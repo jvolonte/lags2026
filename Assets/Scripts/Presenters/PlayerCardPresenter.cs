@@ -35,7 +35,7 @@ namespace Presenters
             if (currentView != null)
                 currentView.SetCard(card, showEvaluation: false, isPlayer: true);
 
-            combatView.SetCard(card);
+            combatView.SetCard(card, true);
         }
 
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)

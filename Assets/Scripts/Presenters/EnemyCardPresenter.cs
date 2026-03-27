@@ -134,7 +134,7 @@ namespace Presenters
                 return;
 
             currentView.SetCard(card, false);
-            combatView.SetCard(card);
+            combatView.SetCard(card, false);
         }
 
         public Vector2 GetRandomStickerPosition() =>
