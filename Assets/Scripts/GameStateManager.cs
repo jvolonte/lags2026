@@ -204,7 +204,6 @@ public class GameStateManager : MonoBehaviour
 
     IEnumerator EnterConflictResolution()
     {
-        yield return enemyCardPresenter.MoveInPosition();
         yield return combatResolutionService.Resolve(Context);
 
         TransitionTo(GameState.Draw);

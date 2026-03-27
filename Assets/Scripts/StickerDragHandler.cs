@@ -95,7 +95,7 @@ public class StickerDragHandler : MonoBehaviour
             newHoveredCard = hit.collider.GetComponent<CardView>()
                              ?? hit.collider.GetComponentInChildren<CardView>();
 
-            if (newHoveredCard != null)
+            if (newHoveredCard != null && newHoveredCard.canReceiveStickers)
                 RotateTowards(dragging.transform, newHoveredCard.transform.rotation);
             else
                 FaceCameraSmooth(dragging.transform);

@@ -1,7 +1,7 @@
 using System.Collections;
-using DG.Tweening;
 using Services;
 using UnityEngine;
+using Utils;
 using Views;
 
 namespace Presenters
@@ -11,10 +11,14 @@ namespace Presenters
         [SerializeField] Transform spawnPoint;
         [SerializeField] CardView prefab;
         [SerializeField] ViewTransitionService transitionService;
-        [SerializeField] DiscardPileView discardPileView;
-
         [SerializeField] Transform previewAnchor;
+
+        [Header("Views")] [SerializeField] DiscardPileView discardPileView;
         [SerializeField] CardCombatView combatView;
+
+        [Header("Configuration")]
+        [SerializeField]
+        float combatDelay = 0.5f;
 
         CardView currentView;
 
@@ -73,12 +77,11 @@ namespace Presenters
                 yield return transitionService.MoveAndSwap(
                     source: currentView.transform,
                     target: target,
-                    proxyPrefab: currentView.gameObject, 
+                    proxyPrefab: currentView.gameObject,
                     () => { });
             }
             else
             {
-                //previewView.HideEvaluation();
                 var done = false;
                 var watchdog = 0f;
 
@@ -99,9 +102,6 @@ namespace Presenters
         {
             if (currentView != null)
                 Destroy(currentView.gameObject);
-
-            //if (previewView != null)
-            //    Destroy(previewView.gameObject);
         }
 
         void HandlePlayerCardPlayed(CardView source) =>
@@ -122,11 +122,9 @@ namespace Presenters
                     if (currentView != null)
                         Destroy(currentView.gameObject);
 
-                    //if (previewView != null)
-                    //    Destroy(previewView.gameObject);
-
                     currentView = Instantiate(prefab, targetPosition, targetRotation, spawnPoint);
                     currentView.transform.localScale = targetScale;
+                    currentView.gameObject.ReplaceLayerRecursively(LayerService.CARD_LAYER, LayerService.DEFAULT_LAYER);
 
                     currentView.SetCard(card);
                     currentView.AllowStickers();
@@ -138,25 +136,7 @@ namespace Presenters
 
         IEnumerator InitializePreview(Card card)
         {
-            yield return new WaitForSeconds(.5f);
-
-            //previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
-            //previewView.SetCard(card, isPlayer: true);
-            //previewView.AllowStickers();
-
-            //previewView.transform.localScale = Vector3.zero;
-            //previewView.transform
-            //           .DOScale(2f, 0.2f)
-            //           .SetEase(Ease.OutBack);
-
-            //yield return transitionService.Move(
-            //    previewView.transform,
-            //    previewAnchor.position,
-            //    previewAnchor.rotation,
-            //    1f
-            //);
-
-            //previewView.transform.SetParent(previewAnchor);
+            yield return new WaitForSeconds(combatDelay);
 
             yield return combatView.Show(card, false);
 

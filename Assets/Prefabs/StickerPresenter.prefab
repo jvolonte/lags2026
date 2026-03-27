@@ -155,6 +155,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2809172976510900586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4412658858972061033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9187599969552184683}
+  m_Layer: 9
+  m_Name: Slot1
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9187599969552184683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4412658858972061033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.01652789, y: 0.9943846, z: -0.104513936, w: 0.0017371498}
+  m_LocalPosition: {x: 0, y: 5, z: 7.34}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2809172976510900586}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4899656626431156153
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +218,9 @@ Transform:
   m_Children:
   - {fileID: 4887226834949248597}
   - {fileID: 3226877626504957288}
+  - {fileID: 9187599969552184683}
+  - {fileID: 7040964833142627846}
+  - {fileID: 2237715030178239487}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8851420477171901554
@@ -204,9 +238,44 @@ MonoBehaviour:
   container: {fileID: 4887226834949248597}
   surfaceRoot: {fileID: 3226877626504957288}
   surface: {fileID: 6295597709434797105}
+  slots:
+  - {fileID: 9187599969552184683}
+  - {fileID: 7040964833142627846}
+  - {fileID: 2237715030178239487}
   spacing: 1.1
   surfaceOffset: 0.05
   depthStep: 0.01
+--- !u!1 &5882950131057510769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7040964833142627846}
+  m_Layer: 9
+  m_Name: Slot2
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7040964833142627846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5882950131057510769}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.01652789, y: 0.9943846, z: -0.104513936, w: 0.0017371498}
+  m_LocalPosition: {x: 0.65, y: 5.917, z: 7.142}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2809172976510900586}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7850571581456213786
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,3 +367,34 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &8742229284551078829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2237715030178239487}
+  m_Layer: 9
+  m_Name: Slot3
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2237715030178239487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8742229284551078829}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.01652789, y: 0.9943846, z: -0.104513936, w: 0.0017371498}
+  m_LocalPosition: {x: -0.45, y: 5.952, z: 7.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2809172976510900586}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

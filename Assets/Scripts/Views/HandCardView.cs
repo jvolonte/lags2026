@@ -102,7 +102,7 @@ namespace Views
                 transform.localRotation = current;
             }
 
-            if (!IsValidQuaternion(baseRot)) 
+            if (!IsValidQuaternion(baseRot))
                 baseRot = Quaternion.identity;
 
             if (isHovered)
@@ -147,6 +147,10 @@ namespace Views
             return magnitude > 0.0001f;
         }
 
-        void OnDestroy() => Card.OnStickerAdded -= SetOverlayLayer;
+        void OnDestroy()
+        {
+            if (Card != null)
+                Card.OnStickerAdded -= SetOverlayLayer;
+        }
     }
 }

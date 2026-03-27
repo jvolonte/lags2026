@@ -15,6 +15,7 @@ namespace Presenters
 
         [SerializeField] Transform surfaceRoot;
         [SerializeField] Renderer surface;
+        [SerializeField] Transform[] slots;
 
         [Header("Layout")] [SerializeField] float spacing = 0.5f;
         [SerializeField] float surfaceOffset = 0.02f;
@@ -67,7 +68,8 @@ namespace Presenters
                     normal * surfaceOffset +
                     normal * (-i * depthStep);
 
-                view.transform.position = worldPos;
+                view.transform.position = slots[i].position + normal * surfaceOffset + normal * (-i * depthStep);
+                
                 var baseRotation = Quaternion.LookRotation(-normal, up);
 
                 var randomTilt = Quaternion.Euler(0, 0, Random.Range(-5f, 5f));

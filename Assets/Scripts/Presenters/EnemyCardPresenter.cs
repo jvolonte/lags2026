@@ -5,6 +5,7 @@ using Data;
 using DG.Tweening;
 using Services;
 using UnityEngine;
+using Utils;
 using Views;
 
 namespace Presenters
@@ -15,10 +16,10 @@ namespace Presenters
         [SerializeField] CardView prefab;
         [SerializeField] ViewTransitionService transitionService;
         [SerializeField] DiscardPileView discardPileView;
-
-        [SerializeField] Transform previewAnchor;
-        [SerializeField] Transform combatAnchor;
         [SerializeField] CardCombatView combatView;
+
+        [Header("Configuration")]
+        [SerializeField] float combatDelay = 0.5f;
 
         CardView currentView;
 
@@ -27,16 +28,10 @@ namespace Presenters
             CombatEventManager.OnEnemyPlayCard += HandleEnemyCardPlayed;
             CombatEventManager.OnEnemyPlaceStickerPreview += HandleEnemyPlaceStickerPreview;
             CombatEventManager.OnResolveCardsVisual += HandleResolutionVisual;
-
-            //TODO: clean up. This is to avoid the navigation from behind and into "combat"
-            previewAnchor = combatAnchor;
         }
 
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
         {
-            //if (previewView == null)
-            //    return;
-
             var card = combatView.GetCard();
 
             if (card == null) return;
@@ -79,9 +74,6 @@ namespace Presenters
         {
             if (currentView != null)
                 Destroy(currentView.gameObject);
-
-            //if (previewView != null)
-            //    Destroy(previewView.gameObject);
         }
 
         void OnDestroy()
@@ -98,30 +90,14 @@ namespace Presenters
 
             currentView = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
             currentView.SetCard(card);
+            currentView.gameObject.ReplaceLayerRecursively(LayerService.CARD_LAYER, LayerService.DEFAULT_LAYER);
 
             StartCoroutine(InitializePreview(card));
         }
 
         IEnumerator InitializePreview(Card card)
         {
-            yield return new WaitForSeconds(.5f);
-
-            //previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
-            //previewView.SetCard(card);
-
-            //previewView.transform.localScale = Vector3.zero;
-            //previewView.transform
-            //           .DOScale(2f, 0.25f)
-            //           .SetEase(Ease.OutBack);
-
-            //yield return transitionService.Move(
-            //    previewView.transform,
-            //    previewAnchor.position,
-            //    previewAnchor.rotation,
-            //    1f
-            //);
-
-            //previewView.transform.SetParent(previewAnchor);
+            yield return new WaitForSeconds(combatDelay);
 
             yield return combatView.Show(card, true);
 
@@ -172,22 +148,6 @@ namespace Presenters
             }
 
             return (minLocal + maxLocal) * 0.5f;
-        }
-
-        public IEnumerator MoveInPosition()
-        {
-            //if (previewView == null)
-            //    yield break;
-
-            //yield return transitionService.Move(
-            //    previewView.transform,
-            //    combatAnchor.position,
-            //    combatAnchor.rotation,
-            //    1f
-            //);
-
-            //previewView.ShowEvaluation();
-            yield break;
         }
     }
 
