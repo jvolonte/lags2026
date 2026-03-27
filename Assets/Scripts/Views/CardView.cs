@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Data;
 using TMPro;
 using UnityEngine;
+using Utils;
 
 namespace Views
 {
@@ -15,7 +16,7 @@ namespace Views
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated;
         [SerializeField] Transform stickerContainer;
-        
+
         [SerializeField] float stickerScaleMultiplier = 0.5f;
 
         public Transform StickerContainer => stickerContainer;
@@ -25,7 +26,7 @@ namespace Views
 
         Card card;
 
-        readonly List<StickerView> stickerViews = new  List<StickerView>();
+        readonly List<StickerView> stickerViews = new List<StickerView>();
 
         void OnEnable()
         {
@@ -37,9 +38,6 @@ namespace Views
         {
             if (handCardView != null)
                 handCardView.OnHoverChanged -= OnHoverChange;
-
-            if (card != null)
-                card.OnStickerAdded -= RebuildStickers;
         }
 
         public void SetCard(Card c)
@@ -78,6 +76,8 @@ namespace Views
         void RebuildStickers()
         {
             stickerViews.Clear();
+            stickerContainer.DeleteChildren();
+
             var baseZ = -0.02f;
             var zStep = -0.001f;
 

@@ -1,3 +1,4 @@
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -21,19 +22,17 @@ namespace Views
 
             text.text = currentValue.ToString();
 
+            var cardView = combatView.GetCardView();
+            var stickers = cardView.GetStickers();
+
             foreach (var step in context.Steps)
             {
-                // var cardView = combatView.GetCardView();
-                // if (cardView != null)
-                // {
-                //     var stickers = cardView.GetStickers();
-                //     var stickerView = stickers.First(s => s.GetLogic().GetType() == step.Source.GetType());
-                //     if (stickerView != null)
-                //     {
-                //         Debug.Log("not found!");
-                //     }
-                //     sequence.Append(HighlightSticker(stickerView));
-                // }
+                if (step.Source != null)
+                {
+                    var view = stickers.First(s => s.GetLogic() == step.Source);
+                    if (view != null)
+                        sequence.Append(HighlightSticker(view));
+                }
 
                 sequence.Append(CreateStepTween(step));
             }

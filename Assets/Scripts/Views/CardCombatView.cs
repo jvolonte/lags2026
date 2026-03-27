@@ -16,13 +16,16 @@ public class CardCombatView : MonoBehaviour
     [SerializeField] bool appearFromLeft;
 
     [Header("Scene References")]
-    [SerializeField] ViewTransitionService transitionService;
+    [SerializeField]
+    ViewTransitionService transitionService;
+
     [SerializeField] DiscardPileView discardPileView;
 
     public EvaluationView EvaluationView => evaluationView;
 
     CardView previewView;
     Coroutine transition;
+    Card card;
 
     private void Awake()
     {
@@ -44,8 +47,9 @@ public class CardCombatView : MonoBehaviour
     public void SetValue(int value) =>
         evaluationView.SetValue(value);
 
-    public void SetCard(Card card, bool allowStickers)
+    public void SetCard(Card c, bool allowStickers)
     {
+        card = c;
         if (previewView)
             Destroy(previewView.gameObject);
 
@@ -53,9 +57,21 @@ public class CardCombatView : MonoBehaviour
         previewView.transform.localPosition = Vector3.zero;
         previewView.transform.localRotation = Quaternion.identity;
         previewView.transform.localScale = Vector3.one;
-        previewView.SetCard(card);
+        previewView.SetCard(c);
         if (allowStickers) previewView.AllowStickers();
 
+        xxx();
+
+        c.OnStickerAdded += xxx;
+    }
+
+    void OnDestroy()
+    {
+        card.OnStickerAdded -= xxx;
+    }
+
+    void xxx()
+    {
         previewView.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
     }
 
@@ -101,7 +117,7 @@ public class CardCombatView : MonoBehaviour
             CombatEventManager.PlayerEvaluationReady(evaluationView, this);
     }
 
-    IEnumerator HideTransition (bool isEnemy, float duration)
+    IEnumerator HideTransition(bool isEnemy, float duration)
     {
         Vector3 goalPos = Vector3.right * 5f;
         goalPos *= appearFromLeft ? -1 : 1;
@@ -113,11 +129,11 @@ public class CardCombatView : MonoBehaviour
 
         root.gameObject.SetActive(false);
 
-        if (previewView) 
+        if (previewView)
             Destroy(previewView.gameObject);
     }
 
-    IEnumerator BurnTransition ()
+    IEnumerator BurnTransition()
     {
         bool done = false;
 
