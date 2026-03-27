@@ -19,4 +19,4 @@ MonoBehaviour:
   rarity: 0
   prefab: {fileID: 3218893417315888488, guid: 8eeb0f2171efe499d9897918dff7b22b, type: 3}
   value: 2
-  breakChance: 0.3
+  breakChance: 0.4
