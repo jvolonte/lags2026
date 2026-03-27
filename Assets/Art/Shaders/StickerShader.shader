@@ -6,6 +6,9 @@ Shader "Sticker"
         _Add("Color Add", Color) = (0,0,0,0)
         _Multiply("Color Multiply", Color) = (1,1,1,1)
         _ReflectionValue("Reflection", Range(0,1)) = 0
+        _BurnNoise("Burn Noise", 2D) = "white" {}
+        _BurnValue ("Burn Amount", Range(0,1)) = 0
+        _Burn ("Burn Color", Color) = (0,0,0,0)
     }
     SubShader
     {
@@ -41,6 +44,10 @@ Shader "Sticker"
             float4 _Add;
             float4 _Multiply;
             float _ReflectionValue;
+            sampler2D _BurnNoise;
+            float4 _BurnNoise_ST;
+            float _BurnValue;
+            float4 _Burn;
 
             v2f vert (appdata v)
             {
@@ -60,6 +67,17 @@ Shader "Sticker"
 
                 clip(tex.a - 0.5);
 
+                float2 burnUV = i.localPos.xy * _BurnNoise_ST.xy + _BurnNoise_ST.zw;
+                fixed4 burnMask = tex2D(_BurnNoise, burnUV);
+                float burnRawValue = saturate(1-burnMask.r);
+                
+                float burn = lerp(-0.25, 1.25, _BurnValue);
+
+                float burnMaskValue = step(burn, burnRawValue);
+                float burnEdge = 1.0 - step(burn + 0.2, burnRawValue);
+
+                clip(burnMaskValue-0.5);
+
                 fixed4 col = (1,1,1,1);
 
                 float stickerHeight = 0.5;
@@ -74,6 +92,7 @@ Shader "Sticker"
                 col += hardReflection;
                 col += _Add;
                 col *= _Multiply;
+                col = lerp(col, _Burn, burnEdge);
 
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);

@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using Views;
 
 public class CardAnimations : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class CardAnimations : MonoBehaviour
     public UnityEngine.Animation animator;
     public GameObject shadowCaster;
     public ParticleSystem vfxBurningCard;
+    public Transform stickersContainer;
 
     [Header("Animation Parameters")]
     public float reflectionDuration;
@@ -27,6 +29,8 @@ public class CardAnimations : MonoBehaviour
 
     private Coroutine coroutineBurning;
     private Coroutine coroutineReflection;
+
+    private StickerView[] stickers;
 
     private System.Action onBurnEndAction;
 
@@ -80,6 +84,10 @@ public class CardAnimations : MonoBehaviour
 
         coroutineBurning = StartCoroutine(Burning(onEnd));
     }
+    public void BurnSticker (StickerView stickerView, System.Action onEnd = null)
+    {
+        StartCoroutine(BurnStickers(1f, onEnd, stickerView));
+    }
     IEnumerator Burning(System.Action onEnd)
     {
         float watchdog = 0f;
@@ -88,6 +96,10 @@ public class CardAnimations : MonoBehaviour
 
         burning = true;
         shadowCaster.gameObject.SetActive(false);
+
+        GetStickers();
+
+        StartCoroutine(BurnStickers(1f, null, stickers));
 
         yield return null;
 
@@ -103,6 +115,21 @@ public class CardAnimations : MonoBehaviour
 
         onBurnEndAction = null;
         coroutineBurning = null;      
+    }
+    IEnumerator BurnStickers (float duration, System.Action onEnd, params StickerView[] stickers)
+    {
+        float v = 0f;
+        while (v < 1f)
+        {
+            v = Mathf.Clamp01(v + Time.deltaTime / duration);
+            for (int i = 0; i < stickers.Length; i++)
+            {
+                stickers[i].SetBurningValue(v);
+            }
+            yield return null;
+        }
+
+        onEnd?.Invoke();
     }
     public void Highlight (bool on)
     {
@@ -124,5 +151,9 @@ public class CardAnimations : MonoBehaviour
         }
 
         coroutineReflection = null;
+    }
+    private void GetStickers ()
+    {
+        stickers = stickersContainer.GetComponentsInChildren<StickerView>();
     }
 }

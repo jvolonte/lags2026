@@ -489,6 +489,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Views.StickerView
   meshRenderer: {fileID: 838026654517815702}
+  burnNoise: {fileID: 2800000, guid: 6b66a40c5b770a04d87c53e20ebb2358, type: 3}
+  burnEdgeColor: {r: 1, g: 0.19129385, b: 0, a: 1}
+  burnColor: {r: 0.4811321, g: 0, b: 0, a: 1}
 --- !u!114 &7804320498532542225
 MonoBehaviour:
   m_ObjectHideFlags: 0

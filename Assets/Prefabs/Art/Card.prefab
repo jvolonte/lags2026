@@ -539,6 +539,7 @@ MonoBehaviour:
   animator: {fileID: 8829362383178452124}
   shadowCaster: {fileID: 4039190930703449895}
   vfxBurningCard: {fileID: 5618139906087853595}
+  stickersContainer: {fileID: 0}
   reflectionDuration: 0.4
   highlightOnDuration: 0.2
   highlightOffDuration: 0.2
@@ -740,7 +741,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -1502,7 +1503,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 40
+      scalar: 80
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5667,7 +5668,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
