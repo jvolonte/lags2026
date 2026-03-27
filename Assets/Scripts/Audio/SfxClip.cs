@@ -28,5 +28,7 @@ namespace Audio
         OpponentDefeated,
         GameOver,
         EnemyDamage,
+        PositiveEvaluation,
+        NegativeEvaluation,
     }
 }
