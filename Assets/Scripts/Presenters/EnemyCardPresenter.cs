@@ -60,10 +60,10 @@ namespace Presenters
                 var target = discardPileView.GetAnchor();
 
                 yield return transitionService.MoveAndSwap(
-                    source: currentView.transform,
+                    source: previewView.transform,
                     target: target,
-                    proxyPrefab: currentView.gameObject,
-                    onArrive: () => CombatEventManager.Discard(currentView.GetCard())
+                    proxyPrefab: previewView.gameObject,
+                    onArrive: () => CombatEventManager.Discard(previewView.GetCard())
                 );
             }
 
@@ -117,7 +117,7 @@ namespace Presenters
             );
 
             previewView.transform.SetParent(previewAnchor);
-            CombatEventManager.EnemyEvaluationReady(currentView.evaluationView);
+            CombatEventManager.EnemyEvaluationReady(previewView.evaluationView);
         }
 
         void HandleEnemyPlaceStickerPreview(Card card, StickerPlacement placement)

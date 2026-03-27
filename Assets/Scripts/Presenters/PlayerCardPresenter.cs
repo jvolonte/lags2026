@@ -129,7 +129,7 @@ namespace Presenters
                     currentView.SetCard(card, false);
                     currentView.AllowStickers();
 
-                    CombatEventManager.PlayerEvaluationReady(currentView.evaluationView);
+                    CombatEventManager.PlayerEvaluationReady(previewView.evaluationView);
 
                     StartCoroutine(InitializePreview(card));
                 }
