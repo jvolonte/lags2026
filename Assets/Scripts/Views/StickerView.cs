@@ -1,3 +1,4 @@
+using System.Linq;
 using Data.Stickers;
 using Stickers;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace Views
             meshRenderer.material.SetTexture("_BurnNoise", burnNoise);
             meshRenderer.material.SetColor("_Burn", burnEdgeColor);
         }
+
         public void Bind(StickerInstance inst)
         {
             instance = inst;
@@ -29,7 +31,7 @@ namespace Views
 
         public ISticker GetLogic() => instance.Logic;
         public StickerData GetData() => instance.Data;
-        
+
         public void SetRenderOnTop(bool enabled)
         {
             var mat = meshRenderer.material;
@@ -54,6 +56,17 @@ namespace Views
         {
             meshRenderer.material.SetFloat("_BurnValue", value);
             meshRenderer.material.SetColor("_Multiply", Color.Lerp(Color.white, burnColor, value));
+
+            HideStickerExtras();
+        }
+
+        void HideStickerExtras()
+        {
+            var meshes = meshRenderer
+                         .GetComponentsInChildren<MeshRenderer>()
+                         .Where(m => m != meshRenderer);
+
+            foreach (var mesh in meshes) mesh.gameObject.SetActive(false);
         }
 
         void OnDestroy() => CombatEventManager.StickerDestroyed(this);

@@ -33,7 +33,6 @@ namespace CardZones
             if (discardPile.Count == 0)
                 return;
 
-            Debug.Log("Refilling deck from discard pile");
             while (discardPile.Count > 0)
             {
                 var card = discardPile.Draw();
