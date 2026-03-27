@@ -8,6 +8,8 @@ namespace Presenters
 {
     public class StickerPresenter : MonoBehaviour
     {
+        private const string OVERLAY_LAYER = "Overlay";
+
         [Header("References")]
         [SerializeField] Transform container;
         [SerializeField] Transform surfaceRoot;
@@ -72,6 +74,8 @@ namespace Presenters
 
                 var targetScale = view.transform.localScale;
                 view.transform.localScale = Vector3.zero;
+
+                view.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
 
                 view.transform
                     .DOScale(targetScale, 0.25f)

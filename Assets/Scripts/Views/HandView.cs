@@ -9,6 +9,8 @@ namespace Views
 {
     public class HandView : MonoBehaviour
     {
+        private const string OVERLAY_LAYER = "Overlay";
+
         [SerializeField] Transform container;
         [SerializeField] HandCardView cardPrefab;
 
@@ -81,6 +83,8 @@ namespace Views
             var view = Instantiate(cardPrefab, container);
             view.SetCard(card);
             view.gameObject.SetActive(false);
+
+            view.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
 
             view.OnHoverChanged += HandleHover;
 

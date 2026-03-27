@@ -18,8 +18,8 @@ namespace Presenters
 
         [SerializeField] Transform previewAnchor;
         [SerializeField] Transform combatAnchor;
+        [SerializeField] CardCombatView combatView;
 
-        CardView previewView;
         CardView currentView;
 
         void Awake()
@@ -34,10 +34,13 @@ namespace Presenters
 
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
         {
-            if (previewView == null)
-                return;
+            //if (previewView == null)
+            //    return;
 
-            var card = previewView.GetCard();
+            var card = combatView.GetCard();
+
+            if (card == null) return;
+
             var fate = GetFinalFate(conflictOutcome, resolution.Get(card));
             StartCoroutine(AnimateResolution(fate));
         }
@@ -55,6 +58,8 @@ namespace Presenters
 
         IEnumerator AnimateResolution(CardFate fate)
         {
+            combatView.Hide(true);
+
             if (fate is CardFate.Discard)
             {
                 var target = discardPileView.GetAnchor();
@@ -75,8 +80,8 @@ namespace Presenters
             if (currentView != null)
                 Destroy(currentView.gameObject);
 
-            if (previewView != null)
-                Destroy(previewView.gameObject);
+            //if (previewView != null)
+            //    Destroy(previewView.gameObject);
         }
 
         void OnDestroy()
@@ -101,23 +106,26 @@ namespace Presenters
         {
             yield return new WaitForSeconds(.5f);
 
-            previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
-            previewView.SetCard(card);
+            //previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
+            //previewView.SetCard(card);
 
-            previewView.transform.localScale = Vector3.zero;
-            previewView.transform
-                       .DOScale(2f, 0.25f)
-                       .SetEase(Ease.OutBack);
+            //previewView.transform.localScale = Vector3.zero;
+            //previewView.transform
+            //           .DOScale(2f, 0.25f)
+            //           .SetEase(Ease.OutBack);
 
-            yield return transitionService.Move(
-                previewView.transform,
-                previewAnchor.position,
-                previewAnchor.rotation,
-                1f
-            );
+            //yield return transitionService.Move(
+            //    previewView.transform,
+            //    previewAnchor.position,
+            //    previewAnchor.rotation,
+            //    1f
+            //);
 
-            previewView.transform.SetParent(previewAnchor);
-            CombatEventManager.EnemyEvaluationReady(currentView.evaluationView);
+            //previewView.transform.SetParent(previewAnchor);
+
+            yield return combatView.Show(card, true);
+
+            CombatEventManager.EnemyEvaluationReady(combatView.EvaluationView);
         }
 
         void HandleEnemyPlaceStickerPreview(Card card, StickerPlacement placement)
@@ -126,9 +134,7 @@ namespace Presenters
                 return;
 
             currentView.SetCard(card, false);
-
-            if (previewView != null)
-                previewView.SetCard(card);
+            combatView.SetCard(card);
         }
 
         public Vector2 GetRandomStickerPosition() =>
@@ -170,17 +176,18 @@ namespace Presenters
 
         public IEnumerator MoveInPosition()
         {
-            if (previewView == null)
-                yield break;
+            //if (previewView == null)
+            //    yield break;
 
-            yield return transitionService.Move(
-                previewView.transform,
-                combatAnchor.position,
-                combatAnchor.rotation,
-                1f
-            );
+            //yield return transitionService.Move(
+            //    previewView.transform,
+            //    combatAnchor.position,
+            //    combatAnchor.rotation,
+            //    1f
+            //);
 
-            previewView.ShowEvaluation();
+            //previewView.ShowEvaluation();
+            yield break;
         }
     }
 

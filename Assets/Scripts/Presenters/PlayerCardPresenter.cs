@@ -14,8 +14,8 @@ namespace Presenters
         [SerializeField] DiscardPileView discardPileView;
 
         [SerializeField] Transform previewAnchor;
+        [SerializeField] CardCombatView combatView;
 
-        CardView previewView;
         CardView currentView;
 
         void Awake()
@@ -35,16 +35,15 @@ namespace Presenters
             if (currentView != null)
                 currentView.SetCard(card, showEvaluation: false, isPlayer: true);
 
-            if (previewView != null)
-                previewView.SetCard(card, showEvaluation: true, isPlayer: true);
+            combatView.SetCard(card);
         }
 
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
         {
-            if (previewView == null)
-                return;
+            var card = combatView.GetCard();
 
-            var card = previewView.GetCard();
+            if (card == null) return;
+
             var fate = GetFinalFate(conflictOutcome, resolution.Get(card));
             StartCoroutine(AnimateResolution(fate));
         }
@@ -67,21 +66,24 @@ namespace Presenters
             if (fate is CardFate.Discard)
             {
                 var target = discardPileView.GetAnchor();
+                var card = combatView.GetCard();
 
-                yield return transitionService.MoveAndSwap(
-                    source: previewView.transform,
-                    target: target,
-                    proxyPrefab: previewView.gameObject,
-                    onArrive: () => CombatEventManager.Discard(previewView.GetCard()));
+                combatView.Hide(false, () => CombatEventManager.Discard(card));
+
+                //yield return transitionService.MoveAndSwap(
+                //    source: previewView.transform,
+                //    target: target,
+                //    proxyPrefab: previewView.gameObject,
+                //    onArrive: () => CombatEventManager.Discard(previewView.GetCard()));
             }
             else
             {
-                previewView.HideEvaluation();
+                //previewView.HideEvaluation();
                 var done = false;
                 var watchdog = 0f;
 
                 currentView.Burn(() => done = true);
-                previewView.Burn(() => { });
+                combatView.Burn();
 
                 while (!done && watchdog < 3f)
                 {
@@ -98,8 +100,8 @@ namespace Presenters
             if (currentView != null)
                 Destroy(currentView.gameObject);
 
-            if (previewView != null)
-                Destroy(previewView.gameObject);
+            //if (previewView != null)
+            //    Destroy(previewView.gameObject);
         }
 
         void HandlePlayerCardPlayed(CardView source) =>
@@ -120,16 +122,14 @@ namespace Presenters
                     if (currentView != null)
                         Destroy(currentView.gameObject);
 
-                    if (previewView != null)
-                        Destroy(previewView.gameObject);
+                    //if (previewView != null)
+                    //    Destroy(previewView.gameObject);
 
                     currentView = Instantiate(prefab, targetPosition, targetRotation, spawnPoint);
                     currentView.transform.localScale = targetScale;
 
                     currentView.SetCard(card, false);
                     currentView.AllowStickers();
-
-                    CombatEventManager.PlayerEvaluationReady(currentView.evaluationView);
 
                     StartCoroutine(InitializePreview(card));
                 }
@@ -140,23 +140,28 @@ namespace Presenters
         {
             yield return new WaitForSeconds(.5f);
 
-            previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
-            previewView.SetCard(card, isPlayer: true);
-            previewView.AllowStickers();
+            //previewView = Instantiate(prefab, currentView.transform.position, currentView.transform.rotation);
+            //previewView.SetCard(card, isPlayer: true);
+            //previewView.AllowStickers();
 
-            previewView.transform.localScale = Vector3.zero;
-            previewView.transform
-                       .DOScale(2f, 0.2f)
-                       .SetEase(Ease.OutBack);
+            //previewView.transform.localScale = Vector3.zero;
+            //previewView.transform
+            //           .DOScale(2f, 0.2f)
+            //           .SetEase(Ease.OutBack);
 
-            yield return transitionService.Move(
-                previewView.transform,
-                previewAnchor.position,
-                previewAnchor.rotation,
-                1f
-            );
+            //yield return transitionService.Move(
+            //    previewView.transform,
+            //    previewAnchor.position,
+            //    previewAnchor.rotation,
+            //    1f
+            //);
 
-            previewView.transform.SetParent(previewAnchor);
+            //previewView.transform.SetParent(previewAnchor);
+
+            yield return combatView.Show(card, false);
+
+            CombatEventManager.PlayerEvaluationReady(combatView.EvaluationView);
+
             CombatEventManager.PlayerCardReachedPosition();
         }
     }
