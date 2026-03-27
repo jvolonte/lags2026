@@ -2,81 +2,73 @@ using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 namespace Views
 {
     public class EvaluationView : MonoBehaviour
     {
+        private const string ANIMATION_TRIGGER_EVALUATION = "animEvaluationTrigger";
+
+        [SerializeField] UnityEngine.Animation animator;
         [SerializeField] TextMeshProUGUI text;
         [SerializeField] float animationDuration = 0.3f;
 
         public void SetValue(int value) => text.text = value.ToString();
 
-        public Tween Play(EvaluationContext context, CardCombatView combatView)
+        public IEnumerator Play(EvaluationContext context, CardCombatView combatView)
         {
-            var sequence = DOTween.Sequence();
-
             var currentValue = context.Steps.Count > 0
                 ? context.Steps[0].PreviousValue
                 : context.Value;
-
             text.text = currentValue.ToString();
-
             var cardView = combatView.GetCardView();
             var stickers = cardView.GetStickers();
 
             foreach (var step in context.Steps)
             {
-                if (step.Source != null)
+                if (step.Source == null) continue;
+
+
+                var view = stickers.First(s => s.GetLogic() == step.Source);
+                if (view != null)
                 {
-                    var view = stickers.First(s => s.GetLogic() == step.Source);
-                    if (view != null)
-                        sequence.Append(HighlightSticker(view));
+                    yield return view.Trigger();
                 }
 
-                sequence.Append(CreateStepTween(step));
+                yield return UpdateValue(step);
             }
-
-            return sequence;
         }
 
-        Tween HighlightSticker(StickerView view)
+        IEnumerator UpdateValue (EvaluationStep step)
         {
-            var originalScale = view.transform.localScale;
-            var seq = DOTween.Sequence();
+            float triggerAnimationWait = 0.08f;
 
-            seq.Append(view.transform.DOScale(originalScale * 1.25f, 0.1f));
-            seq.Append(view.transform.DOScale(originalScale, 0.1f));
+            var startValue = step.PreviousValue;
+            var endValue = step.NewValue;
+            var value = startValue;
 
-            return seq;
-        }
+            float t = 0f;
+            float t1 = triggerAnimationWait;
 
-        Tween CreateStepTween(EvaluationStep step)
-        {
-            var value = step.PreviousValue;
+            while (t < 1f)
+            {
+                t = Mathf.Clamp01(t + Time.deltaTime/animationDuration);
+                t1 += Time.deltaTime;
 
-            var seq = DOTween.Sequence();
+                value = Mathf.FloorToInt(Mathf.Lerp(startValue, endValue, t));
+                text.text = value.ToString();
 
-            seq.Append(
-                DOTween.To(
-                    () => value,
-                    x =>
-                    {
-                        value = x;
-                        text.text = x.ToString();
-                    },
-                    step.NewValue,
-                    animationDuration
-                ).SetEase(Ease.OutQuad)
-            );
+                if (t1 >= triggerAnimationWait)
+                {
+                    animator[ANIMATION_TRIGGER_EVALUATION].time = 0;
+                    animator.Sample();
+                    animator.Play(ANIMATION_TRIGGER_EVALUATION);
+                    t1 -= triggerAnimationWait; 
+                }
 
-            seq.Join(
-                transform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 5, 0.5f)
-            );
-
-            seq.AppendInterval(0.05f);
-
-            return seq;
+                yield return null;
+            }
         }
     }
 }

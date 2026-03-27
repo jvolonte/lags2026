@@ -45,10 +45,8 @@ namespace Services
 
         IEnumerator PlayEvaluation(ConflictResult result)
         {
-            yield return DOTween.Sequence()
-                                .Join(playerView.Play(result.PlayerEvaluation, playerCombatView))
-                                .Join(enemyView.Play(result.EnemyEvaluation, enemyCombatView))
-                                .WaitForCompletion();
+            yield return enemyView.Play(result.EnemyEvaluation, enemyCombatView);
+            yield return playerView.Play(result.PlayerEvaluation, playerCombatView);
         }
     }
 }

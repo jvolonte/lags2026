@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Data.Stickers;
 using Stickers;
@@ -7,6 +8,9 @@ namespace Views
 {
     public class StickerView : MonoBehaviour
     {
+        private const string ANIMATION_TRIGGER = "animStickerTrigger2";
+
+        [SerializeField] UnityEngine.Animation animator;
         [SerializeField] MeshRenderer meshRenderer;
         [SerializeField] Texture burnNoise;
         [SerializeField] Color burnEdgeColor;
@@ -22,6 +26,7 @@ namespace Views
         {
             meshRenderer.material.SetTexture("_BurnNoise", burnNoise);
             meshRenderer.material.SetColor("_Burn", burnEdgeColor);
+            animator[ANIMATION_TRIGGER].wrapMode = WrapMode.Once;
         }
 
         public void Bind(StickerInstance inst)
@@ -58,6 +63,26 @@ namespace Views
             meshRenderer.material.SetColor("_Multiply", Color.Lerp(Color.white, burnColor, value));
 
             HideStickerExtras();
+        }
+
+        public Coroutine Trigger (float speed = 1f)
+            => StartCoroutine(TriggerAnimation(speed));
+
+        IEnumerator TriggerAnimation (float speed)
+        {
+            animator[ANIMATION_TRIGGER].speed = speed;
+            animator.clip = animator.GetClip(ANIMATION_TRIGGER);
+            animator.Play();
+
+            yield return null;
+
+            float normalizedTime = animator[ANIMATION_TRIGGER].normalizedTime;
+
+            while (normalizedTime < 0.8f && animator.isPlaying)
+            {
+                normalizedTime = animator[ANIMATION_TRIGGER].normalizedTime;
+                yield return null;
+            }
         }
 
         void HideStickerExtras()
