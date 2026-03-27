@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Audio;
 using Services;
@@ -29,6 +28,7 @@ namespace Presenters
 
         IEnumerator SpawnCoroutine(Enemy enemy)
         {
+            yield return new WaitForSeconds(1);
             var delay = current != null ? 1.5f : 0;
             spawnPoint.DeleteChildren();
 
