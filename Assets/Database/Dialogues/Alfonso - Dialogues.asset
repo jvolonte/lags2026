@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf555bfe9da9488cbab3dac7e1bcc86c, type: 3}
   m_Name: Alfonso - Dialogues
   m_EditorClassIdentifier: Assembly-CSharp::Data.DialogueData
-  onGameStart: 'Alright... I''ll throw down a card first, then it''s your move. '
+  onGameStart: Wanna play? I go first. Highest card wins, easy right? Your turn.
   thinking:
   - 'Can''t go wrong... or can I? '
   - What to do? ...
@@ -30,7 +30,6 @@ MonoBehaviour:
   - Need some more beer...
   - hah... good play
   onLoseGame: "Well... fair\u2019s fair, I suppose"
-  stickerPhase: "Pick a sticker. Use it on your cards. I\u2019ll take from what you
-    leave."
-  encounterPhase: Highest card wins. Take mine if you beat me, or hand yours over
-    if I win. Simple, right?
+  stickerPhase: "Now pick a sticker. Drag it on your card or one on your hand.\nI\u2019ll
+    take from what you leave."
+  encounterPhase: The winner takes the cards in play. Run out of cards, and you lose.

@@ -19,6 +19,8 @@ namespace Views
         Coroutine currentDialogue;
         Coroutine hideDialogue;
 
+        bool currentDialogueIsTutorial;
+
         void Awake()
         {
             CombatEventManager.OnPlayDialogue += ShowDialogue;
@@ -40,8 +42,10 @@ namespace Views
             hideDialogue = null;
         }
 
-        void ShowDialogue(string line, Color backColor, Color textColor, float display = -1f)
+        void ShowDialogue(string line, Color backColor, Color textColor, bool tutorial)
         {
+            currentDialogueIsTutorial = tutorial;
+
             if (currentDialogue != null)
                 StopCoroutine(currentDialogue);
 
@@ -54,7 +58,7 @@ namespace Views
             animator.clip = animator.GetClip("animDialogueBoxPopUp");
             animator.Play();
 
-            currentDialogue = StartCoroutine(TypeDialogue(line, display > 0 ? display : displayTime));
+            currentDialogue = StartCoroutine(TypeDialogue(line, displayTime));
         }
 
         void HideDialogue()
@@ -81,7 +85,7 @@ namespace Views
             hideDialogue = null;
         }
 
-        IEnumerator TypeDialogue(string line,  float display)
+        IEnumerator TypeDialogue(string line, float display)
         {
             tmpBody.text = "";
             foreach (var c in line)
@@ -90,9 +94,11 @@ namespace Views
                 yield return new WaitForSeconds(characterDelay);
             }
 
-            yield return new WaitForSeconds(display);
-
-            HideDialogue();
+            if (!currentDialogueIsTutorial)
+            {
+                yield return new WaitForSeconds(display);
+                HideDialogue();
+            }
         }
     }
 }

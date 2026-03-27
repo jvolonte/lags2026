@@ -39,7 +39,7 @@ namespace Presenters
             yield return new WaitForSeconds(delay);
             current = Instantiate(enemy.Data.prefab, spawnPoint);
             CombatEventManager.EnemyReady(enemy);
-            DialogueService.GameStart(enemy.Data);
+            DialogueService.GameStart(enemy.Data, isTutorial: enemy.Data.id == "Alfonso");
         }
 
         static void HandleBGM(Enemy enemy)
