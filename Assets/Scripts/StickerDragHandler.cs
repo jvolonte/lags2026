@@ -9,8 +9,6 @@ public class StickerDragHandler : MonoBehaviour
 {
     Camera cam;
 
-    StickerView dragging;
-
     Vector3 originalPosition;
     Vector3 originalScale;
     Quaternion originalRotation;
@@ -23,7 +21,10 @@ public class StickerDragHandler : MonoBehaviour
     [SerializeField] GameStateManager gameStateManager;
 
     CardView currentHoveredCard;
+    StickerView hoverSticker;
+    StickerView draggingSticker;
     float scaleDuration = 0.25f;
+    Ray ray;
 
     void Awake()
     {
@@ -38,45 +39,61 @@ public class StickerDragHandler : MonoBehaviour
         var mouse = Mouse.current;
         if (mouse == null) return;
 
-        if (mouse.leftButton.wasPressedThisFrame)
+        StickerView sticker = null;
+        if (draggingSticker == null)
+        {
+            ray = cam.ScreenPointToRay(mouse.position.ReadValue());
+            
+            if (Physics.Raycast(ray, out var hit))
+            {
+                var view = hit.collider.GetComponentInParent<StickerView>();
+                if (view != null && view.CanDrag)
+                    sticker = view;
+            }  
+        }
+
+        if (sticker != hoverSticker)
+        {
+            Debug.Log("New: " + sticker);
+            Debug.Log("Old: " + hoverSticker);
+            hoverSticker?.Highlight(false);
+            sticker?.Highlight(true);
+        }
+        hoverSticker = sticker;
+
+        if (mouse.leftButton.wasPressedThisFrame && draggingSticker == null)
             TryStartDrag(mouse.position.ReadValue());
 
-        if (mouse.leftButton.isPressed && dragging != null)
+        if (mouse.leftButton.isPressed && draggingSticker != null)
             Drag(mouse.position.ReadValue());
 
-        if (mouse.leftButton.wasReleasedThisFrame && dragging != null)
+        if (mouse.leftButton.wasReleasedThisFrame && draggingSticker != null)
             EndDrag(mouse.position.ReadValue());
     }
 
     void TryStartDrag(Vector2 screenPos)
     {
-        var ray = cam.ScreenPointToRay(screenPos);
+        if (hoverSticker == null) return;
 
-        if (Physics.Raycast(ray, out var hit))
-        {
-            var view = hit.collider.GetComponentInParent<StickerView>();
-            if (view == null || !view.CanDrag) return;
-
-            StartDrag(view);
-        }
+        StartDrag(hoverSticker);
     }
 
     void StartDrag(StickerView view)
     {
-        dragging = view;
+        draggingSticker = view;
 
-        originalParent = dragging.transform.parent;
-        dragging.transform.SetParent(null, true);
+        originalParent = draggingSticker.transform.parent;
+        draggingSticker.transform.SetParent(null, true);
 
-        originalScale = dragging.transform.localScale;
-        originalPosition = dragging.transform.position;
-        originalRotation = dragging.transform.rotation;
+        originalScale = draggingSticker.transform.localScale;
+        originalPosition = draggingSticker.transform.position;
+        originalRotation = draggingSticker.transform.rotation;
 
-        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
-        FaceCameraSmooth(dragging.transform);
-        dragging.GetComponent<StickerView>().SetRenderOnTop(true);
+        draggingSticker.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
+        FaceCameraSmooth(draggingSticker.transform);
+        draggingSticker.GetComponent<StickerView>().SetRenderOnTop(true);
 
-        dragging.Dragging = true;
+        draggingSticker.Dragging = true;
     }
 
     void Drag(Vector2 screenPos)
@@ -96,12 +113,12 @@ public class StickerDragHandler : MonoBehaviour
                              ?? hit.collider.GetComponentInChildren<CardView>();
 
             if (newHoveredCard != null && newHoveredCard.canReceiveStickers)
-                RotateTowards(dragging.transform, newHoveredCard.transform.rotation);
+                RotateTowards(draggingSticker.transform, newHoveredCard.transform.rotation);
             else
-                FaceCameraSmooth(dragging.transform);
+                FaceCameraSmooth(draggingSticker.transform);
         }
         else
-            FaceCameraSmooth(dragging.transform);
+            FaceCameraSmooth(draggingSticker.transform);
 
         if (newHoveredCard != currentHoveredCard)
         {
@@ -115,7 +132,7 @@ public class StickerDragHandler : MonoBehaviour
         }
 
         if (plane.Raycast(ray, out var dist))
-            dragging.transform.position = ray.GetPoint(dist);
+            draggingSticker.transform.position = ray.GetPoint(dist);
     }
 
     void ApplyScaleForCard(CardView card)
@@ -123,16 +140,16 @@ public class StickerDragHandler : MonoBehaviour
         var cardScale = card.transform.lossyScale;
         var scaleFactor = cardScale.x;
         var targetScale = originalScale * (scaleFactor * stickerScaleMultiplier);
-        dragging.transform.DOScale(targetScale, scaleDuration).SetEase(Ease.OutBack)
+        draggingSticker.transform.DOScale(targetScale, scaleDuration).SetEase(Ease.OutBack)
             ;
     }
 
     void ResetDragScale() =>
-        dragging.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
+        draggingSticker.transform.DOScale(originalScale * stickerScaleMultiplier, scaleDuration).SetEase(Ease.OutBack);
 
     void EndDrag(Vector2 screenPos)
     {
-        dragging.Dragging = false;
+        draggingSticker.Dragging = false;
 
         var ray = cam.ScreenPointToRay(screenPos);
 
@@ -143,14 +160,14 @@ public class StickerDragHandler : MonoBehaviour
 
             if (card != null && card.canReceiveStickers)
             {
-                ApplySticker(card, dragging);
-                dragging = null;
+                ApplySticker(card, draggingSticker);
+                draggingSticker = null;
                 return;
             }
         }
 
-        ReturnToOrigin(dragging);
-        dragging = null;
+        ReturnToOrigin(draggingSticker);
+        draggingSticker = null;
         currentHoveredCard = null;
     }
 

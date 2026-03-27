@@ -85,6 +85,7 @@ namespace Presenters
                     .SetEase(Ease.OutBack)
                     .SetDelay(i * 0.05f);
 
+                view.Interactable = true;
                 view.Bind(stickers[i]);
                 views.Add(view);
             }
