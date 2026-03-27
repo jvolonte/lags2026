@@ -1,31 +1,34 @@
 using UnityEngine;
 
-public static class GameObjectUtils 
+namespace Utils
 {
-    public static void SetLayerRecursively(this GameObject obj, string layerName)
+    public static class GameObjectUtils 
     {
-        int layer = LayerMask.NameToLayer(layerName);
-        if (layer == -1)
+        public static void SetLayerRecursively(this GameObject obj, string layerName)
         {
-            Debug.LogWarning($"Layer '{layerName}' does not exist.");
-            return;
+            int layer = LayerMask.NameToLayer(layerName);
+            if (layer == -1)
+            {
+                Debug.LogWarning($"Layer '{layerName}' does not exist.");
+                return;
+            }
+
+            foreach (Transform t in obj.GetComponentsInChildren<Transform>(true))
+                t.gameObject.layer = layer;
         }
-
-        foreach (Transform t in obj.GetComponentsInChildren<Transform>(true))
-            t.gameObject.layer = layer;
-    }
-    public static void ReplaceLayerRecursively(this GameObject obj, string fromLayer, string toLayer)
-    {
-        int from = LayerMask.NameToLayer(fromLayer);
-        int to = LayerMask.NameToLayer(toLayer);
-
-        if (from == -1) { Debug.LogWarning($"Layer '{fromLayer}' does not exist."); return; }
-        if (to == -1) { Debug.LogWarning($"Layer '{toLayer}' does not exist."); return; }
-
-        foreach (Transform t in obj.GetComponentsInChildren<Transform>(true))
+        public static void ReplaceLayerRecursively(this GameObject obj, string fromLayer, string toLayer)
         {
-            if (t.gameObject.layer == from)
-                t.gameObject.layer = to;
+            int from = LayerMask.NameToLayer(fromLayer);
+            int to = LayerMask.NameToLayer(toLayer);
+
+            if (from == -1) { Debug.LogWarning($"Layer '{fromLayer}' does not exist."); return; }
+            if (to == -1) { Debug.LogWarning($"Layer '{toLayer}' does not exist."); return; }
+
+            foreach (Transform t in obj.GetComponentsInChildren<Transform>(true))
+            {
+                if (t.gameObject.layer == from)
+                    t.gameObject.layer = to;
+            }
         }
     }
 }

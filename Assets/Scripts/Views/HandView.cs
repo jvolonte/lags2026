@@ -4,13 +4,12 @@ using CardZones;
 using DG.Tweening;
 using Services;
 using UnityEngine;
+using Utils;
 
 namespace Views
 {
     public class HandView : MonoBehaviour
     {
-        private const string OVERLAY_LAYER = "Overlay";
-
         [SerializeField] Transform container;
         [SerializeField] HandCardView cardPrefab;
 
@@ -23,7 +22,6 @@ namespace Views
 
         [SerializeField] ViewTransitionService transitionService;
         [SerializeField] Transform deckAnchor;
-        // [SerializeField] GameObject cardProxyPrefab;
 
         public void Bind(Hand h)
         {
@@ -84,7 +82,7 @@ namespace Views
             view.SetCard(card);
             view.gameObject.SetActive(false);
 
-            view.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
+            view.gameObject.ReplaceLayerRecursively(LayerService.DEFAULT_LAYER, LayerService.OVERLAY_LAYER);
 
             view.OnHoverChanged += HandleHover;
 

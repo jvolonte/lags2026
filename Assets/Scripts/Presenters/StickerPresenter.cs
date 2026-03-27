@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using Services;
 using UnityEngine;
 using Utils;
 using Views;
@@ -8,10 +9,10 @@ namespace Presenters
 {
     public class StickerPresenter : MonoBehaviour
     {
-        private const string OVERLAY_LAYER = "Overlay";
-
         [Header("References")]
-        [SerializeField] Transform container;
+        [SerializeField]
+        Transform container;
+
         [SerializeField] Transform surfaceRoot;
         [SerializeField] Renderer surface;
 
@@ -75,7 +76,7 @@ namespace Presenters
                 var targetScale = view.transform.localScale;
                 view.transform.localScale = Vector3.zero;
 
-                view.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
+                view.gameObject.ReplaceLayerRecursively(LayerService.DEFAULT_LAYER, LayerService.OVERLAY_LAYER);
 
                 view.transform
                     .DOScale(targetScale, 0.25f)
@@ -97,13 +98,13 @@ namespace Presenters
         {
             surfaceRoot.transform.gameObject.SetActive(true);
             surfaceRoot.transform.DOScale(1f, 0.35f)
-                     .SetEase(Ease.OutBack)
-                     .OnComplete(() => Show(stickers));
+                       .SetEase(Ease.OutBack)
+                       .OnComplete(() => Show(stickers));
         }
 
         public void HideSheet() =>
             surfaceRoot.transform.DOScale(0f, 0.35f)
-                     .SetEase(Ease.InBack)
-                     .OnComplete(() => surfaceRoot.transform.gameObject.SetActive(false));
+                       .SetEase(Ease.InBack)
+                       .OnComplete(() => surfaceRoot.transform.gameObject.SetActive(false));
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Services;
 using UnityEngine;
 using Utils;
 
@@ -37,7 +38,12 @@ namespace Views
             Card = card;
             cardView.SetCard(card);
             cardView.AllowStickers();
+
+            Card.OnStickerAdded += SetOverlayLayer;
         }
+
+        void SetOverlayLayer() =>
+            cardView.gameObject.ReplaceLayerRecursively(LayerService.DEFAULT_LAYER, LayerService.OVERLAY_LAYER);
 
         public void SetHovered(bool hovered) => OnHoverChanged?.Invoke(this, hovered);
 
@@ -92,16 +98,12 @@ namespace Views
 
             if (!IsValidQuaternion(current))
             {
-                Debug.LogWarning("Fixing invalid current rotation on " + gameObject.name);
                 current = Quaternion.identity;
                 transform.localRotation = current;
             }
 
-            if (!IsValidQuaternion(baseRot))
-            {
-                Debug.LogWarning("Fixing invalid baseRot on " + gameObject.name);
+            if (!IsValidQuaternion(baseRot)) 
                 baseRot = Quaternion.identity;
-            }
 
             if (isHovered)
                 LookMouse();
@@ -144,5 +146,7 @@ namespace Views
 
             return magnitude > 0.0001f;
         }
+
+        void OnDestroy() => Card.OnStickerAdded -= SetOverlayLayer;
     }
 }
