@@ -105,7 +105,8 @@ namespace Views
             yield return DOTween.Sequence()
                                 .Join(root.DOLocalMove(Vector3.zero, duration))
                                 .Join(root.DOLocalRotateQuaternion(Quaternion.identity, duration * 1.1f))
-                                .SetEase(Ease.OutCubic);
+                                .SetEase(Ease.OutCubic)
+                                .WaitForCompletion();
 
             if (isEnemy)
                 CombatEventManager.EnemyEvaluationReady(evaluationView, this);
@@ -121,7 +122,8 @@ namespace Views
             yield return DOTween.Sequence()
                                 .Join(root.DOLocalMove(goalPos, duration))
                                 .Join(root.DOLocalRotateQuaternion(Quaternion.identity, duration))
-                                .SetEase(Ease.OutCubic);
+                                .SetEase(Ease.OutCubic)
+                                .WaitForCompletion();
 
             root.gameObject.SetActive(false);
 
