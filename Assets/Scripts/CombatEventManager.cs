@@ -28,6 +28,7 @@ public static class CombatEventManager
     public static event Action<Card> OnDiscard;
     public static event Action<StickerView> OnStickerDestroyed;
     public static event Action<Enemy> OnEnemyReady;
+    public static event Action OnEnemyCleared;
 
     public static void PlayCard(CardView view) => OnPlayCard?.Invoke(view);
     public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
@@ -63,4 +64,5 @@ public static class CombatEventManager
     public static void PlayerCardReachedPosition() => OnPlayerCardReachedPosition?.Invoke();
 
     public static void EnemyReady(Enemy enemy) => OnEnemyReady?.Invoke(enemy);
+    public static void ClearEnemy() => OnEnemyCleared?.Invoke();
 }

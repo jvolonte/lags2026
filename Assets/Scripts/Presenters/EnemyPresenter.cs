@@ -33,7 +33,10 @@ namespace Presenters
             spawnPoint.DeleteChildren();
 
             if (current != null)
+            {
                 Destroy(current);
+                CombatEventManager.ClearEnemy();
+            }
 
             HandleBGM(enemy);
             yield return new WaitForSeconds(delay);

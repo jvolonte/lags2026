@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Utils;
 
 namespace Views
 {
@@ -18,12 +19,20 @@ namespace Views
         {
             CombatEventManager.OnEnemyReady += Build;
             CombatEventManager.OnEnemyHealthChanged += UpdateHearts;
+            CombatEventManager.OnEnemyCleared += Clear;
         }
 
         void OnDestroy()
         {
             CombatEventManager.OnEnemyHealthChanged -= UpdateHearts;
             CombatEventManager.OnEnemyReady -= Build;
+            CombatEventManager.OnEnemyCleared -= Clear;
+        }
+
+        public void Clear()
+        {
+            container.DeleteChildren();
+            hearts.Clear();
         }
 
         void Build(Enemy enemy)
