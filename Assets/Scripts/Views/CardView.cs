@@ -85,15 +85,9 @@ namespace Views
             for (var i = 0; i < card.Stickers.Count; i++)
             {
                 var placement = card.Stickers[i];
-
                 var view = Instantiate(placement.Data.prefab, stickerContainer, false);
-
-                view.Bind(new StickerInstance
-                {
-                    Logic = placement.Logic,
-                    Data = placement.Data
-                });
-
+                view.Bind(new StickerInstance { Logic = placement.Logic, Data = placement.Data });
+                
                 view.transform.localScale = Vector3.one * stickerScaleMultiplier;
                 view.transform.localRotation = Quaternion.identity;
 
