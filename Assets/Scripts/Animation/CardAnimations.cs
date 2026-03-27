@@ -14,6 +14,7 @@ public class CardAnimations : MonoBehaviour
     public GameObject shadowCaster;
     public ParticleSystem vfxBurningCard;
     public Transform stickersContainer;
+    public GameObject cardNumbers;
 
     [Header("Animation Parameters")]
     public float reflectionDuration;
@@ -46,6 +47,7 @@ public class CardAnimations : MonoBehaviour
         meshSelection.material.SetColor("_OverrideColor", Color.black);
         shadowCaster.gameObject.SetActive(true);
         vfxBurningCard.Stop(true);
+        cardNumbers.SetActive(true);
 
         burning = false;
         highlighted = false;
@@ -77,6 +79,7 @@ public class CardAnimations : MonoBehaviour
         }
                 
     }
+
     public void Burn (System.Action onEnd = null)
     {
         animator.clip = animator.GetClip(ANIM_CLIP_BURN);
@@ -84,10 +87,17 @@ public class CardAnimations : MonoBehaviour
 
         coroutineBurning = StartCoroutine(Burning(onEnd));
     }
+
     public void BurnSticker (StickerView stickerView, System.Action onEnd = null)
     {
         StartCoroutine(BurnStickers(1f, onEnd, stickerView));
     }
+
+    public void AnimationOnDisableOtherGraphics ()
+    {
+        cardNumbers.SetActive(false);
+    }
+
     IEnumerator Burning(System.Action onEnd)
     {
         float watchdog = 0f;
