@@ -12,10 +12,10 @@ namespace Services
             CombatEventManager.PlayDialogue(data.dialogue.thinking.PickOne(), data.backgroundColor, data.textColor);
 
         public static void TutorialEncounterDialogue(EnemyData data) =>
-            CombatEventManager.PlayDialogue(data.dialogue.encounterPhase, data.backgroundColor, data.textColor);
+            CombatEventManager.PlayDialogue(data.dialogue.encounterPhase, data.backgroundColor, data.textColor, 4f);
 
         public static void TutorialStickerDialogue(EnemyData data) =>
-            CombatEventManager.PlayDialogue(data.dialogue.stickerPhase, data.backgroundColor, data.textColor);
+            CombatEventManager.PlayDialogue(data.dialogue.stickerPhase, data.backgroundColor, data.textColor, 4f);
 
         public static void GameStart(EnemyData data) =>
             CombatEventManager.PlayDialogue(data.dialogue.onGameStart, data.backgroundColor, data.textColor);
