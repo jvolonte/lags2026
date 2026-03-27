@@ -16,14 +16,14 @@ namespace Views
 
         void Awake()
         {
-            CombatEventManager.OnEnemySet += Build;
+            CombatEventManager.OnEnemyReady += Build;
             CombatEventManager.OnEnemyHealthChanged += UpdateHearts;
         }
 
         void OnDestroy()
         {
             CombatEventManager.OnEnemyHealthChanged -= UpdateHearts;
-            CombatEventManager.OnEnemySet -= Build;
+            CombatEventManager.OnEnemyReady -= Build;
         }
 
         void Build(Enemy enemy)

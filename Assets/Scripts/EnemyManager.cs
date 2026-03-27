@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Data;
 using Factories;
-using Services;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -22,9 +21,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         var data = enemies[currentIndex];
-
         CurrentEnemy = EnemyFactory.Create(data);
-        DialogueService.GameStart(CurrentEnemy.Data);
         CombatEventManager.SetEnemy(CurrentEnemy);
     }
 
