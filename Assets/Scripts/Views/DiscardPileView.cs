@@ -103,9 +103,8 @@ namespace Views
             currentTopView = Instantiate(cardPrefab, cardAnchor);
             var stackHeight = Mathf.Clamp(pile.Count - 1, 0, MAX_DUMMYCARDS);
 
-            var topZ = 0.002f * (stackHeight + 1);
+            const float topZ = -0.05f;
             currentTopView.transform.localPosition = new Vector3(0f, 0.02f * stackHeight, topZ);
-
             currentTopView.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(-2f, 2f));
 
             currentTopView.SetCard(card);
@@ -125,12 +124,13 @@ namespace Views
                 {
                     obj.SetActive(true);
 
-                    var stackOffset = 0.002f * i;
-
-                    dummyCards[i].localPosition = new Vector3(Random.Range(-0.01f, 0.01f), 0.02f * i, stackOffset);
+                    var x = Random.Range(-0.01f, 0.01f);
+                    var z = 0.001f * i;
+                    dummyCards[i].localPosition =
+                        new Vector3(Random.Range(-0.01f, 0.01f), 0.002f * i, z);
 
                     dummyCards[i].localPosition =
-                        new Vector3(Random.Range(-0.01f, 0.01f), 0.02f * i, Random.Range(-0.01f, 0.01f));
+                        new Vector3(x, 0.02f * i, Random.Range(-0.01f, 0.01f));
 
                     dummyCards[i].localRotation =
                         faceUpRotation * Quaternion.AngleAxis(Random.Range(-3f, 3f), Vector3.forward);

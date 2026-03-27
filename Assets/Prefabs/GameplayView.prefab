@@ -332,9 +332,8 @@ MonoBehaviour:
   prefab: {fileID: 4329143455819833247, guid: b7d69555223fc4bef933436b70756feb, type: 3}
   transitionService: {fileID: 9019273266478554123}
   discardPileView: {fileID: 4028474427465191081}
-  previewAnchor: {fileID: 5132875878238588125}
-  combatAnchor: {fileID: 2386192065794875291}
   combatView: {fileID: 968637712784285565}
+  combatDelay: 0.5
 --- !u!1 &4304148733489219667
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,9 +513,10 @@ MonoBehaviour:
   spawnPoint: {fileID: 3814524417744889312}
   prefab: {fileID: 4329143455819833247, guid: b7d69555223fc4bef933436b70756feb, type: 3}
   transitionService: {fileID: 9019273266478554123}
-  discardPileView: {fileID: 4028474427465191081}
   previewAnchor: {fileID: 1786878112431843137}
+  discardPileView: {fileID: 4028474427465191081}
   combatView: {fileID: 1633311782094035409}
+  combatDelay: 0.5
 --- !u!1 &5415951879649005332
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,10 +950,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3797841123745081334, guid: f5bac01d49d92424eb426c8c481c6c97, type: 3}
-      propertyPath: cardDummy
-      value: 
-      objectReference: {fileID: 1299322538598141496, guid: 6ac5e46092ad8774dbdee799bfb9292b, type: 3}
     - target: {fileID: 6053094090211585818, guid: f5bac01d49d92424eb426c8c481c6c97, type: 3}
       propertyPath: m_Name
       value: DiscardPileView
