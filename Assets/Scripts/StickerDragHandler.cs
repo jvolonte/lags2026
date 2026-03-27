@@ -93,7 +93,7 @@ public class StickerDragHandler : MonoBehaviour
         FaceCameraSmooth(draggingSticker.transform);
         draggingSticker.GetComponent<StickerView>().SetRenderOnTop(true);
 
-        draggingSticker.Dragging = true;
+        draggingSticker.DragBegin();
     }
 
     void Drag(Vector2 screenPos)
@@ -149,7 +149,7 @@ public class StickerDragHandler : MonoBehaviour
 
     void EndDrag(Vector2 screenPos)
     {
-        draggingSticker.Dragging = false;
+        draggingSticker.DragEnd();
 
         var ray = cam.ScreenPointToRay(screenPos);
 

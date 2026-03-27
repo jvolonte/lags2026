@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Linq;
+using Animation;
 using Audio;
 using Data.Stickers;
 using Stickers;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Views
 {
@@ -13,6 +15,7 @@ namespace Views
         private const string ANIMATION_TRIGGER = "animStickerTrigger";
         private static readonly Vector3 highlightDisplacement = new Vector3(0f, 0.1f, -0.1f);
 
+        [SerializeField] StickerShadow shadowCaster;
         [SerializeField] UnityEngine.Animation animator;
         [SerializeField] MeshRenderer meshRenderer;
         [SerializeField] Transform root;
@@ -47,7 +50,12 @@ namespace Views
             meshRenderer.material.SetTexture("_BurnNoise", burnNoise);
             meshRenderer.material.SetColor("_Burn", burnEdgeColor);
             animator[ANIMATION_TRIGGER].wrapMode = WrapMode.Once;
-            randomAngle = Mathf.Sign(Random.Range(-1f, 1f)) * Random.Range(10f, 15f);
+            randomAngle = Mathf.Sign(Random.Range(-1f, 1f)) * Random.Range(10f, 15f);           
+        }
+        private void Start()
+        {
+            shadowCaster.enabled = false;
+            shadowCaster.UpdateShadowTexture();
         }
 
         private void LateUpdate()
@@ -61,8 +69,12 @@ namespace Views
 
             if (highlightedTime > 0f)
             {
+                if (!shadowCaster.Shadow.gameObject.activeSelf) 
+                    shadowCaster.Shadow.gameObject.SetActive(true);
+
                 root.localPosition = highlightDisplacement * curveSelection.Evaluate(highlightedTime);
                 root.localRotation = Quaternion.AngleAxis(randomAngle * curveSelection.Evaluate(highlightedTime), Vector3.forward);
+                shadowCaster.Shadow.localPosition = -root.localPosition + Vector3.forward * 0.001f;
             }
             else
             {
@@ -97,12 +109,25 @@ namespace Views
 
         public void DisableDragging() => CanDrag = false;
 
+        public void DragBegin ()
+        {
+            Dragging = true;
+            shadowCaster.enabled = true;
+        }
+        public void DragEnd ()
+        {
+            Dragging = false;
+            shadowCaster.enabled = false;
+            shadowCaster.Shadow.gameObject.SetActive(false);
+        }
         public void Highlight(bool on)
         {
             if (!Interactable) return;
             if (highlighted == on)  return;
 
-            
+            if (highlightedTime <= 0f)
+                randomAngle = Mathf.Sign(Random.Range(-1f, 1f)) * Random.Range(10f, 15f);
+
             highlighted = on;
 
             if (highlighted && coroutineReflection == null)

@@ -8,6 +8,8 @@ namespace Animation
         [SerializeField] Transform stickerShadow;
         [SerializeField] Vector3 shadowOffset;
 
+        public Transform Shadow => stickerShadow;
+
         StickerView stickerView;
         MeshRenderer shadowMesh;
 
@@ -91,6 +93,7 @@ namespace Animation
         {
             Texture texSticker = stickerView.MeshRenderer.material.GetTexture("_MainTex");
             shadowMesh.material.SetTexture("_ShadowTex", texSticker);
+            stickerShadow.localScale = stickerView.MeshRenderer.transform.localScale;
         }
 
         public void GetWorldCards()

@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076af3dd7553d4754af53ab5508255f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Views.StickerView
+  shadowCaster: {fileID: 7804320498532542225}
   animator: {fileID: 7490851304236971770}
   meshRenderer: {fileID: 838026654517815702}
   root: {fileID: 9182807754211123553}
