@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Audio;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -111,7 +112,11 @@ namespace Views
 
         void OnHoverChange(HandCardView view, bool hover) => cardAnimation.Highlight(hover);
 
-        public void Burn(System.Action onEnd) => cardAnimation.Burn(onEnd);
+        public void Burn(System.Action onEnd)
+        {
+            cardAnimation.Burn(onEnd);
+            SfxManager.Play(SfxClipId.Burn);
+        }
 
         public Card GetCard() => card;
 

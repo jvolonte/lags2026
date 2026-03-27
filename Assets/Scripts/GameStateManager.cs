@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Audio;
 using CardZones;
 using Data;
 using Data.Stickers;
@@ -107,6 +108,8 @@ public class GameStateManager : MonoBehaviour
 
     void EnterSetup()
     {
+        BgmManager.Play(BgmClipId.Bar);
+        
         var discardPile = new DiscardPile();
         var deck = deckFactory.CreateRandom(discardPile);
         var hand = new Hand();

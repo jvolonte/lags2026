@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28e6e90e3541a887fca7c259721794, type: 3}
+  m_Name: StickerEvaluation
+  m_EditorClassIdentifier: Assembly-CSharp::Audio.SfxClip
+  id: 2
+  volumePercentage: 0.25
+  variants:
+  - {fileID: 8300000, guid: a8d290fed49a94bc4bc5f8329ac3177f, type: 3}
+  - {fileID: 8300000, guid: 1c6480fe9347340119d971bce8f93d26, type: 3}
+  - {fileID: 8300000, guid: de3ade70e6e334c2fac3e00aaf748ed8, type: 3}

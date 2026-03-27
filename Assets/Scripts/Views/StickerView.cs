@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Audio;
 using Data.Stickers;
 using Stickers;
 using UnityEngine;
@@ -65,14 +66,15 @@ namespace Views
             HideStickerExtras();
         }
 
-        public Coroutine Trigger (float speed = 1f)
-            => StartCoroutine(TriggerAnimation(speed));
+        public Coroutine Trigger(float speed = 1f) =>
+            StartCoroutine(TriggerAnimation(speed));
 
-        IEnumerator TriggerAnimation (float speed)
+        IEnumerator TriggerAnimation(float speed)
         {
             animator[ANIMATION_TRIGGER].speed = speed;
             animator.clip = animator.GetClip(ANIMATION_TRIGGER);
             animator.Play();
+            SfxManager.Play(SfxClipId.StickerEvaluation);
 
             yield return null;
 
