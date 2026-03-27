@@ -59,8 +59,10 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnStickerHoverExit += HideTooltip;
         CombatEventManager.OnDiscard += HandleDiscard;
         CombatEventManager.OnPlayerCardReachedPosition += HandleShowStickers;
+        CombatEventManager.OnEnemyReady += HandleNewRound;
     }
 
+    void HandleNewRound(Enemy _) => TransitionTo(GameState.EnemyPlaysCard);
     void HandleShowStickers() => TransitionTo(GameState.RevealStickers);
 
     void HandleDiscard(Card card) => Context.Player.Discard.Add(card);
@@ -242,8 +244,6 @@ public class GameStateManager : MonoBehaviour
         {
             enemyManager.StartNextEnemy();
             Context.Enemy = enemyManager.CurrentEnemy;
-
-            TransitionTo(GameState.EnemyPlaysCard);
         }
         else
             gameResultView.ShowWin();
@@ -258,6 +258,7 @@ public class GameStateManager : MonoBehaviour
         CombatEventManager.OnStickerHoverExit -= HideTooltip;
         CombatEventManager.OnDiscard -= HandleDiscard;
         CombatEventManager.OnPlayerCardReachedPosition -= HandleShowStickers;
+        CombatEventManager.OnEnemyReady -= HandleNewRound;
     }
 
     public void Debug_KillEnemyAndAdvance()
