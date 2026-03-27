@@ -25,7 +25,7 @@ namespace Stickers
 
             var newValue = Mathf.FloorToInt(context.Value * Multiplier);
 
-            context.AddStep(newValue, $"x{Multiplier} (Golden)", StepType.Multiply);
+            context.AddStep(newValue, $"x{Multiplier} (Golden)", StepType.Multiply, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

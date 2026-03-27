@@ -20,7 +20,7 @@ namespace Stickers
 
             var newValue = context.Value + Value;
 
-            context.AddStep(newValue, $"+{Value} (Even)", StepType.Conditional);
+            context.AddStep(newValue, $"+{Value} (Even)", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet) { }

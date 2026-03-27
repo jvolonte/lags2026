@@ -18,7 +18,7 @@ namespace Stickers
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
             var newValue = other.Suit == Suit ? Mathf.FloorToInt(context.Value * Value) : context.Value;
-            context.AddStep(newValue, $"*{Value}", StepType.Conditional);
+            context.AddStep(newValue, $"*{Value}", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

@@ -16,7 +16,7 @@ namespace Stickers
 
             var newValue = context.Value + value;
 
-            context.AddStep(newValue, $"+{value} (Necro)", StepType.Add);
+            context.AddStep(newValue, $"+{value} (Necro)", StepType.Add, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

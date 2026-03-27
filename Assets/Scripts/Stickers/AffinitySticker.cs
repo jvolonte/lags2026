@@ -38,7 +38,7 @@ namespace Stickers
             }
 
             if (!string.IsNullOrEmpty(stepText))
-                context.AddStep(newValue, stepText, StepType.Conditional);
+                context.AddStep(newValue, stepText, StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet) { }

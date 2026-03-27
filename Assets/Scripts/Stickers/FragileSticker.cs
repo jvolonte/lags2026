@@ -18,7 +18,7 @@ namespace Stickers
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
             var newValue = Mathf.FloorToInt(context.Value * Value);
-            context.AddStep(newValue, $"x{Value} (Fragile)", StepType.Multiply);
+            context.AddStep(newValue, $"x{Value} (Fragile)", StepType.Multiply, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

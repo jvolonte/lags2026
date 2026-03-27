@@ -24,7 +24,7 @@ namespace Stickers
 
             newValue = Mathf.Max(0, newValue);
 
-            context.AddStep(newValue, $"-{Value}", StepType.Conditional);
+            context.AddStep(newValue, $"-{Value}", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

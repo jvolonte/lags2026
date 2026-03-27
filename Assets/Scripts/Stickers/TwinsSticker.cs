@@ -24,7 +24,7 @@ namespace Stickers
 
             var newValue = context.Value + Value;
 
-            context.AddStep(newValue, $"+{Value} (Twins)", StepType.Conditional);
+            context.AddStep(newValue, $"+{Value} (Twins)", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

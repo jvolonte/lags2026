@@ -22,7 +22,7 @@ namespace Stickers
             Debug.Log($"Mimic copying {chosen.GetType().Name}");
             chosen.Resolve(context, source, other);
 
-            context.AddStep(context.Value, $"Mimic → {chosen.GetType().Name}", StepType.Conditional);
+            context.AddStep(context.Value, $"Mimic → {chosen.GetType().Name}", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

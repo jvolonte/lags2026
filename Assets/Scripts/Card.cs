@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using Data.Stickers;
 using Stickers;
 
 public class Card
@@ -77,6 +78,7 @@ public struct EvaluationStep
     public int NewValue;
     public string Description;
     public StepType Type;
+    public ISticker Source;
 }
 
 public enum StepType

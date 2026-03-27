@@ -26,7 +26,7 @@ namespace Stickers
             context.AddStep(newValue, delta > 0
                     ? $"+{Value} (Chaos)"
                     : $"-{Value} (Chaos)",
-                StepType.Conditional);
+                StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet) { }

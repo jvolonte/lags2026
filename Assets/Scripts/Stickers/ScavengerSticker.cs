@@ -21,7 +21,7 @@ namespace Stickers
             var bonus = context.Discard.Count * ValuePerCard;
             var newValue = context.Value + bonus;
 
-            context.AddStep(newValue, $"+{bonus} (Scavenger)", StepType.Add);
+            context.AddStep(newValue, $"+{bonus} (Scavenger)", StepType.Add, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

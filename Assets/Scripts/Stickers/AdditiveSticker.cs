@@ -13,7 +13,7 @@ namespace Stickers
         public void Resolve(EvaluationContext context, Card source, Card other)
         {
             var newValue = context.Value + Value;
-            context.AddStep(newValue, $"+{Value} (Add)", StepType.Add);
+            context.AddStep(newValue, $"+{Value} (Add)", StepType.Add, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

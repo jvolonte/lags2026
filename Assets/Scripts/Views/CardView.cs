@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace Views
         public bool canReceiveStickers = false;
 
         Card card;
+
+        readonly List<StickerView> stickerViews = new  List<StickerView>();
 
         void OnEnable()
         {
@@ -82,6 +85,7 @@ namespace Views
 
         void RebuildStickers()
         {
+            stickerViews.Clear();
             var baseZ = -0.02f;
             var zStep = -0.001f;
 
@@ -109,6 +113,7 @@ namespace Views
                 );
 
                 view.DisableDragging();
+                stickerViews.Add(view);
             }
         }
 
@@ -120,8 +125,6 @@ namespace Views
 
         public void AllowStickers() => canReceiveStickers = true;
 
-        public void ShowEvaluation() => evaluationView.gameObject.SetActive(true);
-
-        public void HideEvaluation() => evaluationView.gameObject.SetActive(false);
+        public List<StickerView> GetStickers() => stickerViews;
     }
 }

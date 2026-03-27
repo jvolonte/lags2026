@@ -125,7 +125,7 @@ namespace Presenters
 
             yield return combatView.Show(card, true);
 
-            CombatEventManager.EnemyEvaluationReady(combatView.EvaluationView);
+            CombatEventManager.EnemyEvaluationReady(combatView.EvaluationView, combatView);
         }
 
         void HandleEnemyPlaceStickerPreview(Card card, StickerPlacement placement)

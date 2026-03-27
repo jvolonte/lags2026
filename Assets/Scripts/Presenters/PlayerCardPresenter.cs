@@ -160,7 +160,7 @@ namespace Presenters
 
             yield return combatView.Show(card, false);
 
-            CombatEventManager.PlayerEvaluationReady(combatView.EvaluationView);
+            CombatEventManager.PlayerEvaluationReady(combatView.EvaluationView, combatView);
 
             CombatEventManager.PlayerCardReachedPosition();
         }

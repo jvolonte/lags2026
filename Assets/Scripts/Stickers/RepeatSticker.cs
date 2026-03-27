@@ -27,7 +27,7 @@ namespace Stickers
 
             var newValue = context.Value + bonus;
 
-            context.AddStep(newValue, $"+{bonus} (Repeat)", StepType.Conditional);
+            context.AddStep(newValue, $"+{bonus} (Repeat)", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)
