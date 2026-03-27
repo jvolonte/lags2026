@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Audio;
 using Data;
 using TMPro;
@@ -76,6 +77,9 @@ namespace Views
 
         void RebuildStickers()
         {
+            if (stickerContainer == null)
+                return;
+
             stickerViews.Clear();
             stickerContainer.DeleteChildren();
 
@@ -85,9 +89,15 @@ namespace Views
             for (var i = 0; i < card.Stickers.Count; i++)
             {
                 var placement = card.Stickers[i];
+                if (stickerContainer == null)
+                {
+                    Debug.LogError("StickerContainer is NULL, aborting rebuild", this);
+                    return;
+                }
+
                 var view = Instantiate(placement.Data.prefab, stickerContainer, false);
                 view.Bind(new StickerInstance { Logic = placement.Logic, Data = placement.Data });
-                
+
                 view.transform.localScale = Vector3.one * stickerScaleMultiplier;
                 view.transform.localRotation = Quaternion.identity;
 

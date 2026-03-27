@@ -4,7 +4,6 @@ using Animation;
 using Audio;
 using Data.Stickers;
 using Stickers;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -77,9 +76,7 @@ namespace Views
                 shadowCaster.Shadow.localPosition = -root.localPosition + Vector3.forward * 0.001f;
             }
             else
-            {
                 root.localPosition = Vector3.zero;
-            }
         }
         public void Bind(StickerInstance inst)
         {

@@ -35,14 +35,6 @@ namespace Presenters
             CombatEventManager.OnResolveCardsVisual -= HandleResolutionVisual;
         }
 
-        public void UpdateCards(Card card)
-        {
-            if (currentView != null)
-                currentView.SetCard(card);
-
-            combatView.SetCard(card, true);
-        }
-
         void HandleResolutionVisual(GameContext game, ResolutionContext resolution, ConflictOutcome conflictOutcome)
         {
             var card = combatView.GetCard();
