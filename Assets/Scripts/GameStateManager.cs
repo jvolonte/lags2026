@@ -227,7 +227,6 @@ public class GameStateManager : MonoBehaviour
 
         if (Context.Enemy.IsDead)
         {
-            SfxManager.Play(SfxClipId.OpponentDefeated);
             yield return new WaitForSeconds(2f);
             DialogueService.LoseGameDialogue(Context.Enemy.Data);
             yield return new WaitForSeconds(3f);
