@@ -100,7 +100,7 @@ namespace Views
             transitionService.DisableInteractiveLayers(proxy);
 
             var proxyView = proxy.GetComponent<CardView>();
-            proxyView?.SetCard(card, false);
+            proxyView?.SetCard(card);
 
             yield return transitionService
                          .Move(proxy.transform, pos, rot, 0.3f)

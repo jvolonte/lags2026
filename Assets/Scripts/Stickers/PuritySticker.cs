@@ -28,7 +28,7 @@ namespace Stickers
 
             var newValue = Mathf.FloorToInt(context.Value * Multiplier);
 
-            context.AddStep(newValue, $"x{Multiplier} (Purity)", StepType.Conditional);
+            context.AddStep(newValue, $"x{Multiplier} (Purity)", StepType.Conditional, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

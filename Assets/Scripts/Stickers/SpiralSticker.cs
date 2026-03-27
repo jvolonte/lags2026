@@ -20,7 +20,7 @@ namespace Stickers
 
             var newValue = context.Value + increment;
 
-            context.AddStep(newValue, $"+{increment} (Spiral x{count})", StepType.Add);
+            context.AddStep(newValue, $"+{increment} (Spiral x{count})", StepType.Add, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet) { }

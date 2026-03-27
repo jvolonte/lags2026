@@ -77,6 +77,7 @@ public struct EvaluationStep
     public int NewValue;
     public string Description;
     public StepType Type;
+    public ISticker Source;
 }
 
 public enum StepType

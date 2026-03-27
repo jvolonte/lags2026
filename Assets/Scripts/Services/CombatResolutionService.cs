@@ -9,6 +9,9 @@ namespace Services
     {
         EvaluationView playerView;
         EvaluationView enemyView;
+        
+        CardCombatView playerCombatView;
+        CardCombatView enemyCombatView;
 
         public CombatResolutionService()
         {
@@ -16,8 +19,17 @@ namespace Services
             CombatEventManager.OnPlayerEvaluationReady += SetPlayerView;
         }
 
-        void SetPlayerView(EvaluationView v) => playerView = v;
-        void SetEnemyView(EvaluationView v) => enemyView = v;
+        void SetPlayerView(EvaluationView v, CardCombatView c)
+        {
+            playerView = v;
+            playerCombatView = c;
+        }
+
+        void SetEnemyView(EvaluationView v, CardCombatView c)
+        {
+            enemyView = v;
+            enemyCombatView = c;
+        }
 
         public IEnumerator Resolve(GameContext context)
         {
@@ -34,8 +46,8 @@ namespace Services
         IEnumerator PlayEvaluation(ConflictResult result)
         {
             yield return DOTween.Sequence()
-                                .Join(playerView.Play(result.PlayerEvaluation))
-                                .Join(enemyView.Play(result.EnemyEvaluation))
+                                .Join(playerView.Play(result.PlayerEvaluation, playerCombatView))
+                                .Join(enemyView.Play(result.EnemyEvaluation, enemyCombatView))
                                 .WaitForCompletion();
         }
     }

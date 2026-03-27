@@ -35,7 +35,7 @@ namespace Views
         public void SetCard(Card card)
         {
             Card = card;
-            cardView.SetCard(card, false);
+            cardView.SetCard(card);
             cardView.AllowStickers();
         }
 

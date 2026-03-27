@@ -15,8 +15,8 @@ public static class CombatEventManager
     public static Action<Card, StickerPlacement> OnEnemyPlaceStickerPreview;
     public static event Action<StickerPlacement, Card> OnAddSticker;
     public static event Action<int, int> OnEnemyHealthChanged;
-    public static event Action<EvaluationView> OnEnemyEvaluationReady;
-    public static event Action<EvaluationView> OnPlayerEvaluationReady;
+    public static event Action<EvaluationView, CardCombatView> OnEnemyEvaluationReady;
+    public static event Action<EvaluationView, CardCombatView> OnPlayerEvaluationReady;
     public static event Action<Enemy> OnEnemySet;
     public static event Action<List<StickerInstance>> OnRevealStickers;
     public static event Action OnClearStickers;
@@ -32,11 +32,11 @@ public static class CombatEventManager
     public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
     public static void AddSticker(StickerPlacement sticker, Card card) => OnAddSticker?.Invoke(sticker, card);
 
-    public static void EnemyEvaluationReady(EvaluationView evaluationView) =>
-        OnEnemyEvaluationReady?.Invoke(evaluationView);
+    public static void EnemyEvaluationReady(EvaluationView evaluationView, CardCombatView combatView) =>
+        OnEnemyEvaluationReady?.Invoke(evaluationView, combatView);
 
-    public static void PlayerEvaluationReady(EvaluationView evaluationView) =>
-        OnPlayerEvaluationReady?.Invoke(evaluationView);
+    public static void PlayerEvaluationReady(EvaluationView evaluationView, CardCombatView combatView) =>
+        OnPlayerEvaluationReady?.Invoke(evaluationView, combatView);
 
     public static void PlayerPlaysCard(CardView view) => OnPlayerPlaysCard?.Invoke(view);
     public static void EnemyHealthChanged(int current, int max) => OnEnemyHealthChanged?.Invoke(current, max);

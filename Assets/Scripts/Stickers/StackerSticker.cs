@@ -19,7 +19,7 @@ namespace Stickers
             var bonus = count * ValuePerSticker;
             var newValue = context.Value + bonus;
 
-            context.AddStep(newValue, $"+{bonus} (Stacker)", StepType.Add);
+            context.AddStep(newValue, $"+{bonus} (Stacker)", StepType.Add, this);
         }
 
         public void ApplyRule(WinRuleSet ruleSet)

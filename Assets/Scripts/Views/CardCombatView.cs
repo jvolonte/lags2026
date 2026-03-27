@@ -29,21 +29,22 @@ public class CardCombatView : MonoBehaviour
         root.gameObject.SetActive(false);
     }
 
-    public Coroutine Show (Card card, bool isEnemy, System.Action onEnd = null) =>
+    public Coroutine Show(Card card, bool isEnemy, System.Action onEnd = null) =>
         StartCoroutine(Transition(ShowTransition(card, isEnemy, transitionDuration), onEnd));
 
-    public Coroutine Hide (bool isEnemy, System.Action onEnd = null) =>
+    public Coroutine Hide(bool isEnemy, System.Action onEnd = null) =>
         StartCoroutine(Transition(HideTransition(isEnemy, transitionDuration), onEnd));
 
-    public Coroutine Burn (System.Action onEnd = null) =>
+    public Coroutine Burn(System.Action onEnd = null) =>
         StartCoroutine(Transition(BurnTransition(), onEnd));
 
-    public Coroutine Discard (System.Action onEnd = null) =>
+    public Coroutine Discard(System.Action onEnd = null) =>
         StartCoroutine(Transition(DiscardTransition(), onEnd));
 
     public void SetValue(int value) =>
         evaluationView.SetValue(value);
-    public void SetCard (Card card, bool allowStickers)
+
+    public void SetCard(Card card, bool allowStickers)
     {
         if (previewView)
             Destroy(previewView.gameObject);
@@ -57,7 +58,8 @@ public class CardCombatView : MonoBehaviour
 
         previewView.gameObject.ReplaceLayerRecursively("Default", OVERLAY_LAYER);
     }
-    public Card GetCard ()
+
+    public Card GetCard()
     {
         if (previewView)
             return previewView.GetCard();
@@ -75,11 +77,11 @@ public class CardCombatView : MonoBehaviour
         onEnd?.Invoke();
     }
 
-    IEnumerator ShowTransition (Card card, bool isEnemy, float duration)
+    IEnumerator ShowTransition(Card card, bool isEnemy, float duration)
     {
         root.gameObject.SetActive(false);
 
-        SetCard(card, allowStickers: !isEnemy);  
+        SetCard(card, allowStickers: !isEnemy);
         SetValue(card.Value);
 
         root.transform.localPosition = Vector3.right * 5f;
@@ -89,10 +91,14 @@ public class CardCombatView : MonoBehaviour
         root.gameObject.SetActive(true);
 
         yield return DOTween.Sequence()
-                   .Join(root.DOLocalMove(Vector3.zero, duration))
-                   .Join(root.DOLocalRotateQuaternion(Quaternion.identity, duration * 1.1f))
-                   .SetEase(Ease.OutCubic)
-                   .WaitForCompletion();
+                            .Join(root.DOLocalMove(Vector3.zero, duration))
+                            .Join(root.DOLocalRotateQuaternion(Quaternion.identity, duration * 1.1f))
+                            .SetEase(Ease.OutCubic);
+
+        if (isEnemy)
+            CombatEventManager.EnemyEvaluationReady(evaluationView, this);
+        else
+            CombatEventManager.PlayerEvaluationReady(evaluationView, this);
     }
 
     IEnumerator HideTransition (bool isEnemy, float duration)
@@ -101,10 +107,9 @@ public class CardCombatView : MonoBehaviour
         goalPos *= appearFromLeft ? -1 : 1;
 
         yield return DOTween.Sequence()
-                   .Join(root.DOLocalMove(goalPos, duration))
-                   .Join(root.DOLocalRotateQuaternion(Quaternion.identity, duration))
-                   .SetEase(Ease.Linear)
-                   .WaitForCompletion();
+                            .Join(root.DOLocalMove(goalPos, duration))
+                            .Join(root.DOLocalRotateQuaternion(Quaternion.identity, duration))
+                            .SetEase(Ease.OutCubic);
 
         root.gameObject.SetActive(false);
 
@@ -123,7 +128,7 @@ public class CardCombatView : MonoBehaviour
         root.gameObject.SetActive(false);
     }
 
-    IEnumerator DiscardTransition ()
+    IEnumerator DiscardTransition()
     {
         var target = discardPileView.GetAnchor();
 
@@ -137,4 +142,6 @@ public class CardCombatView : MonoBehaviour
 
         root.gameObject.SetActive(false);
     }
+
+    public CardView GetCardView() => previewView;
 }

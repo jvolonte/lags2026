@@ -11,7 +11,7 @@ namespace Views
 
         public void SetValue(int value) => text.text = value.ToString();
 
-        public Tween Play(EvaluationContext context)
+        public Tween Play(EvaluationContext context, CardCombatView combatView)
         {
             var sequence = DOTween.Sequence();
 
@@ -22,9 +22,34 @@ namespace Views
             text.text = currentValue.ToString();
 
             foreach (var step in context.Steps)
+            {
+                // var cardView = combatView.GetCardView();
+                // if (cardView != null)
+                // {
+                //     var stickers = cardView.GetStickers();
+                //     var stickerView = stickers.First(s => s.GetLogic().GetType() == step.Source.GetType());
+                //     if (stickerView != null)
+                //     {
+                //         Debug.Log("not found!");
+                //     }
+                //     sequence.Append(HighlightSticker(stickerView));
+                // }
+
                 sequence.Append(CreateStepTween(step));
+            }
 
             return sequence;
+        }
+
+        Tween HighlightSticker(StickerView view)
+        {
+            var originalScale = view.transform.localScale;
+            var seq = DOTween.Sequence();
+
+            seq.Append(view.transform.DOScale(originalScale * 1.25f, 0.1f));
+            seq.Append(view.transform.DOScale(originalScale, 0.1f));
+
+            return seq;
         }
 
         Tween CreateStepTween(EvaluationStep step)

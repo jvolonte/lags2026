@@ -97,7 +97,7 @@ namespace Presenters
                 Destroy(currentView.gameObject);
 
             currentView = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
-            currentView.SetCard(card, false);
+            currentView.SetCard(card);
 
             StartCoroutine(InitializePreview(card));
         }
@@ -125,7 +125,7 @@ namespace Presenters
 
             yield return combatView.Show(card, true);
 
-            CombatEventManager.EnemyEvaluationReady(combatView.EvaluationView);
+            CombatEventManager.EnemyEvaluationReady(combatView.EvaluationView, combatView);
         }
 
         void HandleEnemyPlaceStickerPreview(Card card, StickerPlacement placement)
@@ -133,7 +133,7 @@ namespace Presenters
             if (currentView == null)
                 return;
 
-            currentView.SetCard(card, false);
+            currentView.SetCard(card);
             combatView.SetCard(card, false);
         }
 

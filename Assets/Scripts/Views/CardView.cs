@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -14,19 +15,17 @@ namespace Views
         [SerializeField] TextMeshProUGUI valueText;
         [SerializeField] TextMeshProUGUI valueTextRotated;
         [SerializeField] Transform stickerContainer;
-
-        [SerializeField] Transform playerEvaluationPos;
-        [SerializeField] Transform enemyEvaluationPos;
-
+        
         [SerializeField] float stickerScaleMultiplier = 0.5f;
 
-        public EvaluationView evaluationView;
         public Transform StickerContainer => stickerContainer;
         public CardAnimations CardAnimations => cardAnimation;
 
         public bool canReceiveStickers = false;
 
         Card card;
+
+        readonly List<StickerView> stickerViews = new  List<StickerView>();
 
         void OnEnable()
         {
@@ -43,20 +42,16 @@ namespace Views
                 card.OnStickerAdded -= RebuildStickers;
         }
 
-        public void SetCard(Card c, bool showEvaluation = true, bool isPlayer = false)
+        public void SetCard(Card c)
         {
             SetValue(c.Value);
             SetVisual(c);
-
-            evaluationView.gameObject.SetActive(showEvaluation);
-            evaluationView.transform.position = (isPlayer ? playerEvaluationPos : enemyEvaluationPos).position;
         }
 
         void SetValue(int value)
         {
             valueText.text = value.ToString();
             valueTextRotated.text = value.ToString();
-            evaluationView.SetValue(value);
         }
 
         void SetVisual(Card c)
@@ -82,6 +77,7 @@ namespace Views
 
         void RebuildStickers()
         {
+            stickerViews.Clear();
             var baseZ = -0.02f;
             var zStep = -0.001f;
 
@@ -109,6 +105,7 @@ namespace Views
                 );
 
                 view.DisableDragging();
+                stickerViews.Add(view);
             }
         }
 
@@ -120,8 +117,6 @@ namespace Views
 
         public void AllowStickers() => canReceiveStickers = true;
 
-        public void ShowEvaluation() => evaluationView.gameObject.SetActive(true);
-
-        public void HideEvaluation() => evaluationView.gameObject.SetActive(false);
+        public List<StickerView> GetStickers() => stickerViews;
     }
 }
