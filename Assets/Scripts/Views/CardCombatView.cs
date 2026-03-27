@@ -65,7 +65,8 @@ namespace Views
 
         void OnDestroy()
         {
-            card.OnStickerAdded -= SetOverlayLayer;
+            if(card != null)
+                card.OnStickerAdded -= SetOverlayLayer;
         }
 
         void SetOverlayLayer() =>
