@@ -23,6 +23,7 @@ namespace Audio
     public enum BgmClipId
     {
         None = 0,
-        Bar
+        Bar,
+        BaltasarSoundtrack,
     }
 }

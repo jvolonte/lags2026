@@ -17,5 +17,6 @@ MonoBehaviour:
   health: 10
   stickersInCards: {x: 4, y: 4}
   prefab: {fileID: 6269622246204630503, guid: 67234a591b2793b46ab115f49ce5f30b, type: 3}
+  bgmClipId: 2
   backgroundColor: {r: 0.3647059, g: 0.13725491, b: 0.24705884, a: 1}
   textColor: {r: 1, g: 0.47843137, b: 0.8509804, a: 1}

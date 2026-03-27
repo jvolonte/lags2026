@@ -21,6 +21,11 @@ namespace Audio
     {
         None,
         Burn,
-        StickerEvaluation
+        StickerEvaluation,
+        PlayCard,
+        ApplySticker,
+        HoverCard,
+        OpponentDefeated,
+        GameOver,
     }
 }

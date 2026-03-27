@@ -180,6 +180,7 @@ public class GameStateManager : MonoBehaviour
         if (CurrentState != GameState.PlayerPlaceSticker)
             return;
 
+        SfxManager.Play(SfxClipId.ApplySticker);
         Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
         card.AddSticker(sticker);
 
@@ -226,6 +227,7 @@ public class GameStateManager : MonoBehaviour
 
         if (Context.Enemy.IsDead)
         {
+            SfxManager.Play(SfxClipId.OpponentDefeated);
             yield return new WaitForSeconds(2f);
             DialogueService.LoseGameDialogue(Context.Enemy.Data);
             yield return new WaitForSeconds(3f);
@@ -239,7 +241,11 @@ public class GameStateManager : MonoBehaviour
         Context.Player.Deck.Count <= 0 &&
         Context.Player.Discard.Count <= 0;
 
-    void EnterGameOver() => gameResultView.ShowLose();
+    void EnterGameOver()
+    {
+        SfxManager.Play(SfxClipId.GameOver);
+        gameResultView.ShowLose();
+    }
 
     void EnterNextEncounter()
     {

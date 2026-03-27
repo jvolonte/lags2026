@@ -1,3 +1,4 @@
+using Audio;
 using UnityEngine;
 
 namespace Data
@@ -14,9 +15,11 @@ namespace Data
         
         [Header("Presentation")]
         public GameObject prefab;
+        public BgmClipId bgmClipId;
 
         [Header("Texts Presentation")]
         public Color backgroundColor;
         public Color textColor;
+
     }
 }

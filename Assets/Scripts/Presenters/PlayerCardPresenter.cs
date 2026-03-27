@@ -1,4 +1,5 @@
 using System.Collections;
+using Audio;
 using Services;
 using UnityEngine;
 using Utils;
@@ -119,6 +120,8 @@ namespace Presenters
                 proxyPrefab: sourceView.gameObject,
                 onArrive: () =>
                 {
+                    SfxManager.Play(SfxClipId.PlayCard);
+
                     if (currentView != null)
                         Destroy(currentView.gameObject);
 
