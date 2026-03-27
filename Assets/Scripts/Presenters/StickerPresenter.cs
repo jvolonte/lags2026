@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Data;
 using DG.Tweening;
 using Services;
 using UnityEngine;
@@ -29,12 +31,14 @@ namespace Presenters
 
             CombatEventManager.OnRevealStickers += ShowSheet;
             CombatEventManager.OnClearStickers += Clear;
+            CombatEventManager.OnEnemyPlaceStickerPreview += RemoveSticker;
         }
 
         void OnDestroy()
         {
             CombatEventManager.OnRevealStickers -= ShowSheet;
             CombatEventManager.OnClearStickers -= Clear;
+            CombatEventManager.OnEnemyPlaceStickerPreview -= RemoveSticker;
         }
 
         void Show(List<StickerInstance> stickers)
@@ -69,7 +73,7 @@ namespace Presenters
                     normal * (-i * depthStep);
 
                 view.transform.position = slots[i].position + normal * surfaceOffset + normal * (-i * depthStep);
-                
+
                 var baseRotation = Quaternion.LookRotation(-normal, up);
 
                 var randomTilt = Quaternion.Euler(0, 0, Random.Range(-5f, 5f));
@@ -95,6 +99,19 @@ namespace Presenters
         {
             container.DeleteChildren();
             views.Clear();
+        }
+
+        void RemoveSticker(Card card, StickerPlacement sticker)
+        {
+            if (views.Any())
+            {
+                var stickerView = views.First(s => s.GetLogic().GetType() == sticker.Logic.GetType());
+                if (stickerView != null)
+                {
+                    views.Remove(stickerView);
+                    Destroy(stickerView.gameObject);
+                }
+            }
         }
 
         public void ShowSheet(List<StickerInstance> stickers)
