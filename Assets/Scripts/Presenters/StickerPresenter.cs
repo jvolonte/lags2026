@@ -51,26 +51,13 @@ namespace Presenters
                 return;
             }
 
-            var bounds = surface.bounds;
-
-            var center = bounds.center;
             var up = surface.transform.up;
-            var right = surface.transform.right;
             var normal = surface.transform.forward;
-
-            var centerOffset = (stickers.Count - 1) * 0.5f;
 
             for (var i = 0; i < stickers.Count; i++)
             {
                 var view = Instantiate(stickers[i].Data.prefab, container);
-                var offset = (i - centerOffset) * spacing;
-
-                var worldPos =
-                    center +
-                    right * 0f +
-                    up * offset +
-                    normal * surfaceOffset +
-                    normal * (-i * depthStep);
+                view.Bind(new StickerInstance { Data = stickers[i].Data, Logic = stickers[i].Logic });
 
                 view.transform.position = slots[i].position + normal * surfaceOffset + normal * (-i * depthStep);
 
