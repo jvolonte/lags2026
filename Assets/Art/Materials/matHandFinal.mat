@@ -120,16 +120,16 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DitherScale: 2.57
-    - _DitherThreshold: 0.05
+    - _DitherThreshold: 0.14
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EffectBlend: 0.475
+    - _EffectBlend: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _GradientScale: 0.3
-    - _GradientScroll: 0.4
+    - _GradientScroll: 0.7
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -151,13 +151,13 @@ Material:
     - _Color0: {r: 0.32735035, g: 0.11836952, b: 0.7169812, a: 1}
     - _Color1: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GradientApex: {r: 0, g: 0, b: 0, a: 1}
+    - _GradientApex: {r: 0.187304, g: 0.09220363, b: 0.5283019, a: 1}
     - _GradientColorA: {r: 1, g: 0, b: 0, a: 1}
     - _GradientColorB: {r: 0, g: 0, b: 1, a: 1}
-    - _GradientFade: {r: 0.14562176, g: 0.039215676, b: 0.48235294, a: 1}
+    - _GradientFade: {r: 0.4433962, g: 0.123398006, b: 0.30474037, a: 1}
     - _Multiply: {r: 1, g: 1, b: 1, a: 1}
     - _Noise0Color: {r: 0.2784314, g: 0.13725491, b: 0.4039216, a: 1}
-    - _NoiseScroll: {r: 0.02, g: 0.02, b: 0, a: 0}
+    - _NoiseScroll: {r: 0.04, g: 0.06, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
