@@ -17,6 +17,9 @@ namespace Presenters
 
         [SerializeField] Transform surfaceRoot;
         [SerializeField] Renderer surface;
+        [SerializeField] Renderer surfaceFinalFight;
+        [SerializeField] ParticleSystem particles;
+        [SerializeField] ParticleSystem particlesFinalFight;
         [SerializeField] Transform[] slots;
 
         [Header("Layout")] [SerializeField] float spacing = 0.5f;
@@ -33,6 +36,7 @@ namespace Presenters
             CombatEventManager.OnRevealStickers += ShowSheet;
             CombatEventManager.OnClearStickers += Clear;
             CombatEventManager.OnEnemyPlaceStickerPreview += RemoveSticker;
+            CombatEventManager.OnEnemyReady += CheckFightCustoms;
         }
 
         void OnDestroy()
@@ -40,6 +44,7 @@ namespace Presenters
             CombatEventManager.OnRevealStickers -= ShowSheet;
             CombatEventManager.OnClearStickers -= Clear;
             CombatEventManager.OnEnemyPlaceStickerPreview -= RemoveSticker;
+            CombatEventManager.OnEnemyReady -= CheckFightCustoms;
         }
 
         void Show(List<StickerInstance> stickers)
@@ -114,5 +119,17 @@ namespace Presenters
             surfaceRoot.transform.DOScale(0f, 0.35f)
                        .SetEase(Ease.InBack)
                        .OnComplete(() => surfaceRoot.transform.gameObject.SetActive(false));
+
+        void CheckFightCustoms (Enemy enemy)
+        {
+            ToggleOnFinalFight(enemy.Data.id == EnemyId.Baltasar);
+        }
+        public void ToggleOnFinalFight (bool onFinalFight)
+        {
+            particles.gameObject.SetActive(!onFinalFight);
+            particlesFinalFight.gameObject.SetActive(onFinalFight);
+            surface.gameObject.SetActive(!onFinalFight);
+            surfaceFinalFight.gameObject.SetActive(onFinalFight);
+        }
     }
 }
