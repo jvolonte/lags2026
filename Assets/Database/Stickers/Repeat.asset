@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Repeat
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.RepeatStickerData
   id: Repeat
-  descriptionTemplate: Add +{value}% of this card's value at the end
+  descriptionTemplate: After all effects, +{value}% of this card's final value
   rarity: 2
   prefab: {fileID: 3218893417315888488, guid: 16faf54e0dbe64d5cb8a2a714667bba3, type: 3}
   multiplier: 0.5
