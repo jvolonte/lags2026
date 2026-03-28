@@ -32,7 +32,7 @@ namespace Presenters
             yield return new WaitForSeconds(1);
             var delay = current != null ? 1.5f : 0;
             spawnPoint.DeleteChildren();
-            
+
             if (current != null)
             {
                 Destroy(current);
@@ -45,7 +45,7 @@ namespace Presenters
             yield return new WaitForSeconds(delay);
             current = Instantiate(enemy.Data.prefab, spawnPoint);
             CombatEventManager.EnemyReady(enemy);
-            DialogueService.GameStart(enemy.Data, isTutorial: enemy.Data.id == "Alfonso");
+            DialogueService.GameStart(enemy.Data, isTutorial: enemy.Data.id == EnemyId.Alfonso);
         }
 
         void HandleTimeOfDay(Enemy enemy)
@@ -56,12 +56,20 @@ namespace Presenters
                 CombatEventManager.ChangeTimeOfDay(currentTimeOfDay);
             }
         }
-        
 
         static void HandleBGM(Enemy enemy)
         {
             if (enemy.Data.bgmClipId != BgmClipId.None)
                 BgmManager.Play(enemy.Data.bgmClipId);
         }
+    }
+
+    public enum EnemyId
+    {
+        Alfonso,
+        Carmen,
+        Vincent,
+        Ivan,
+        Baltasar
     }
 }

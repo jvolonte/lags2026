@@ -1,4 +1,5 @@
 using Audio;
+using Presenters;
 using UnityEngine;
 
 namespace Data
@@ -6,7 +7,7 @@ namespace Data
     [CreateAssetMenu(menuName = "Game/Enemy Data")]
     public class EnemyData : ScriptableObject
     {
-        public string id;
+        public EnemyId id;
         public DialogueData dialogue;
 
         [Header("Stats")]

@@ -54,8 +54,6 @@ public class StickerDragHandler : MonoBehaviour
 
         if (sticker != hoverSticker)
         {
-            Debug.Log("New: " + sticker);
-            Debug.Log("Old: " + hoverSticker);
             hoverSticker?.Highlight(false);
             sticker?.Highlight(true);
         }
