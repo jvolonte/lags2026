@@ -29,6 +29,11 @@ namespace Views
         {
             root.gameObject.SetActive(false);
         }
+        private void Start()
+        {
+            GameStateManager.Instance.OnStickerTutorialBegin += () => ToggleHighlightCard(true);
+            GameStateManager.Instance.OnStickerTutorialEnd += () => ToggleHighlightCard(false);
+        }
 
         public Coroutine Show(Card card, bool isEnemy, System.Action onEnd = null) =>
             StartCoroutine(Transition(ShowTransition(card, isEnemy, transitionDuration), onEnd));
@@ -62,6 +67,14 @@ namespace Views
             SetOverlayLayer();
 
             c.OnStickerAdded += SetOverlayLayer;
+        }
+
+        public void ToggleHighlightCard(bool show)
+        {
+            if (previewView == null) return;
+
+            if (previewView.canReceiveStickers)
+                previewView.ToggleOutline(show);
         }
 
         void OnDestroy()

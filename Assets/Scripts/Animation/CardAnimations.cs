@@ -15,6 +15,7 @@ public class CardAnimations : MonoBehaviour
     public ParticleSystem vfxBurningCard;
     public Transform stickersContainer;
     public GameObject cardNumbers;
+    public GameObject[] outlines;
 
     [Header("Animation Parameters")]
     public float reflectionDuration;
@@ -150,6 +151,20 @@ public class CardAnimations : MonoBehaviour
         if (highlighted && coroutineReflection == null)
             coroutineReflection = StartCoroutine(PlayReflection(reflectionDuration));
     }
+
+    public void ShowDashedOutline (int index)
+    {
+        outlines[0].SetActive(index == 0);
+        outlines[1].SetActive(index == 1);
+
+        outlines[0].transform.parent.gameObject.SetActive(true);
+    }
+
+    public void HideDashedOutline ()
+    {
+        outlines[0].transform.parent.gameObject.SetActive(false);
+    }
+
     private IEnumerator PlayReflection (float duration)
     {
         float t = 0f;

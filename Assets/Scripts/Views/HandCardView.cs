@@ -9,6 +9,8 @@ namespace Views
     public class HandCardView : MonoBehaviour
     {
         [SerializeField] CardView cardView;
+
+        public CardView View => cardView;
         public Card Card { get; private set; }
 
         public event Action<HandCardView, bool> OnHoverChanged;

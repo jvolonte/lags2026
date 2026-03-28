@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CardZones;
 using DG.Tweening;
 using Services;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
 
@@ -23,6 +24,11 @@ namespace Views
         [SerializeField] ViewTransitionService transitionService;
         [SerializeField] Transform deckAnchor;
 
+        private void Start()
+        {
+            GameStateManager.Instance.OnStickerTutorialBegin += () => ToggleHighlightHand(true);
+            GameStateManager.Instance.OnStickerTutorialEnd += () => ToggleHighlightHand(false);
+        }
         public void Bind(Hand h)
         {
             hand = h;
@@ -62,6 +68,13 @@ namespace Views
                     else
                         view.OffsetX(0);
                 }
+            }
+        }
+        public void ToggleHighlightHand(bool show)
+        {
+            for (var i = 0; i < views.Count; i++)
+            {
+                views[i].View.ToggleOutline(show);
             }
         }
 

@@ -12,6 +12,7 @@ using Views;
 
 public class GameStateManager : MonoBehaviour
 {
+    public static GameStateManager Instance { get; private set; }
     public GameState CurrentState { get; private set; }
 
     public readonly GameContext Context = new();
@@ -37,14 +38,20 @@ public class GameStateManager : MonoBehaviour
     [Header("Stickers")] [SerializeField] StickerData[] stickers;
 
     bool stickerTutorial;
+    bool onStickerTutorial;
     bool winnerTutorial;
 
     EnemyTurnService enemyTurnService;
     StickerDraftService stickerDraftService;
     CombatResolutionService combatResolutionService;
 
+    public System.Action OnStickerTutorialBegin;
+    public System.Action OnStickerTutorialEnd;
+
     void Awake()
     {
+        Instance = this;
+
         stickerFactory = new StickerFactory(stickers.ToList());
         cardFactory = new CardFactory(stickerFactory);
         deckFactory = new DeckFactory(cardFactory);
@@ -167,6 +174,8 @@ public class GameStateManager : MonoBehaviour
         if (!stickerTutorial)
         {
             DialogueService.TutorialStickerDialogue(Context.Enemy.Data);
+            OnStickerTutorialBegin?.Invoke();
+            onStickerTutorial = true;
             stickerTutorial = true;
         }
     }
@@ -179,6 +188,12 @@ public class GameStateManager : MonoBehaviour
         SfxManager.Play(SfxClipId.ApplySticker);
         Context.AvailableStickers = Context.AvailableStickers.Where(s => s.Logic != sticker.Logic).ToList();
         card.AddSticker(sticker);
+
+        if (onStickerTutorial)
+        {
+            onStickerTutorial = false;
+            OnStickerTutorialEnd.Invoke();
+        }
 
         TransitionTo(GameState.EnemyPlaceSticker);
     }

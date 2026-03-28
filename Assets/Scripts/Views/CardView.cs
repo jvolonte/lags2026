@@ -126,6 +126,14 @@ namespace Views
             SfxManager.Play(SfxClipId.Burn);
         }
 
+        public void ToggleOutline (bool active)
+        {
+            if (active)
+                cardAnimation.ShowDashedOutline(isCombatCard ? 0 : 1);
+            else
+                cardAnimation.HideDashedOutline();
+        }
+
         public Card GetCard() => card;
 
         public void AllowStickers() => canReceiveStickers = true;
