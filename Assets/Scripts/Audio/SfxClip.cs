@@ -30,5 +30,10 @@ namespace Audio
         EnemyDamage,
         PositiveEvaluation,
         NegativeEvaluation,
+        AlfonsoVoice,
+        CarmenVoice,
+        VincentVoice,
+        IvanVoice,
+        BaltasarVoice,
     }
 }

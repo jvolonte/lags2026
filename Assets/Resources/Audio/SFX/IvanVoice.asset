@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28e6e90e3541a887fca7c259721794, type: 3}
+  m_Name: IvanVoice
+  m_EditorClassIdentifier: Assembly-CSharp::Audio.SfxClip
+  id: 14
+  volumePercentage: 0.4
+  variants:
+  - {fileID: 8300000, guid: 75182cb0096a5455f915fa302c74bdaa, type: 3}
+  - {fileID: 8300000, guid: 136b8fd31e60d433db8e57a10dff7bd3, type: 3}
+  - {fileID: 8300000, guid: 3be77ba144faa47998032a14225998b9, type: 3}
+  - {fileID: 8300000, guid: 975469b94a58e42a6bb3dd8cc332a905, type: 3}

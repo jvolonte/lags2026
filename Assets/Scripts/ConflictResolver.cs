@@ -1,4 +1,5 @@
 using System.Linq;
+using Services;
 using Utils;
 
 public class ConflictResolver
@@ -66,20 +67,17 @@ public class ConflictResolver
     static void ResolvePlayerWin(GameContext game, ResolutionContext resolution)
     {
         game.Enemy.Damage();
-        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.loseRound.PickOne(), 
-            game.Enemy.Data.backgroundColor, 
-            game.Enemy.Data.textColor);
+        DialogueService.LoseRoundDialogue(game.Enemy.Data);
     }
 
     static void ResolveEnemyWin(GameContext game, ResolutionContext resolution)
     {
-        CombatEventManager.PlayDialogue(game.Enemy.Data.dialogue.winRound.PickOne(), 
-            game.Enemy.Data.backgroundColor, 
-            game.Enemy.Data.textColor);
+        DialogueService.WinRoundDialogue(game.Enemy.Data);
     }
 
     static void ResolveTie(GameContext game, ResolutionContext resolution)
     {
+        
     }
 
     static void Cleanup(GameContext context, ResolutionContext resolution)

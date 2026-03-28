@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae28e6e90e3541a887fca7c259721794, type: 3}
+  m_Name: CarmenVoice
+  m_EditorClassIdentifier: Assembly-CSharp::Audio.SfxClip
+  id: 12
+  volumePercentage: 0.4
+  variants:
+  - {fileID: 8300000, guid: 2fd7474764d8b4307b8ef3cd013abec9, type: 3}
+  - {fileID: 8300000, guid: 46d81f3f69f8649b09b82e78b1575abe, type: 3}
+  - {fileID: 8300000, guid: 3a26c9d9a4a624161a3252c897a6d1fd, type: 3}
+  - {fileID: 8300000, guid: b03dfb9b5eabc4ea38e574c0d60e477e, type: 3}
