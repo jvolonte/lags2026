@@ -91,6 +91,8 @@ namespace Animation
 
         public void UpdateShadowTexture()
         {
+            if (stickerView == null) return;
+
             Texture texSticker = stickerView.MeshRenderer.material.GetTexture("_MainTex");
             shadowMesh.material.SetTexture("_ShadowTex", texSticker);
             stickerShadow.localScale = stickerView.MeshRenderer.transform.localScale;

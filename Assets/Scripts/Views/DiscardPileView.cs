@@ -17,10 +17,11 @@ namespace Views
 
         [SerializeField] Transform cardAnchor;
         [SerializeField] CardView cardPrefab;
-        [SerializeField] TextMeshProUGUI countText;
 
         DiscardPile pile;
         CardView currentTopView;
+
+        public static event System.Action<int> OnDiscardChange;
 
         public Transform GetAnchor() => cardAnchor;
 
@@ -60,7 +61,7 @@ namespace Views
                 currentTopView = null;
             }
 
-            RefreshCount();
+            OnDiscardChange?.Invoke(pile.Count);
         }
 
         void OnDestroy()
@@ -83,14 +84,12 @@ namespace Views
 
         void Refresh()
         {
-            RefreshCount();
+            OnDiscardChange?.Invoke(pile.Count);
 
             var top = pile.Peek();
             RefreshTopCard(top);
             UpdateDummyCards();
         }
-
-        void RefreshCount() => countText.text = $"({pile.Count})";
 
         void RefreshTopCard(Card card)
         {

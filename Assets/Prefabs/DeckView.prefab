@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1978529185258081201}
-  - {fileID: 9223124158777090199}
+  - {fileID: 8518382231864340295}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1425898172067187771
@@ -47,81 +47,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Views.DeckView
   cardDummy: {fileID: 7217408031205327094}
-  countText: {fileID: 2648576308985055369}
-  deckUI: {fileID: 9223124158777090199}
---- !u!1001 &8199204069036731553
-PrefabInstance:
+  deckTop: {fileID: 8518382231864340295}
+--- !u!1 &4067120873942829468
+GameObject:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 9186320111841181120}
-    m_Modifications:
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.046
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.137
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.81832576
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5747548
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -70.165
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4277789714728196874, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-      propertyPath: m_Name
-      value: DeckUI
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
---- !u!114 &2648576308985055369 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6127374574625416232, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-  m_PrefabInstance: {fileID: 8199204069036731553}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!4 &9223124158777090199 stripped
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8518382231864340295}
+  m_Layer: 0
+  m_Name: DeckTop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8518382231864340295
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1024131475842550838, guid: e76726afbeb5d6a44aefc7112ce4b372, type: 3}
-  m_PrefabInstance: {fileID: 8199204069036731553}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4067120873942829468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9186320111841181120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8512221847050686158
 PrefabInstance:
   m_ObjectHideFlags: 0

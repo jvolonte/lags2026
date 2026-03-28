@@ -9,20 +9,19 @@ namespace Views
         const int MAX_DUMMYCARDS = 8;
 
         [SerializeField] GameObject cardDummy;
-        [SerializeField] TextMeshProUGUI countText;
-        [SerializeField] Transform deckUI;
+        [SerializeField] Transform deckTop;
 
         bool initialized;
         Transform[] cards;
         Quaternion baseRot;
         Deck deck;
 
+        public static System.Action<int> OnDeckChange;
+
         void Awake()
         {
             Initialize();
         }
-
-        public Transform GetDrawAnchor() => deckUI;
 
         void Initialize()
         {
@@ -61,7 +60,7 @@ namespace Views
 
         void Refresh()
         {
-            countText.text = $"{deck.Count}";
+            OnDeckChange?.Invoke(deck.Count);
             SetCardsAmount(deck.Count);
         }
 
@@ -74,9 +73,9 @@ namespace Views
                 cards[i].localRotation = baseRot * Quaternion.AngleAxis(Random.Range(-3, 3), Vector3.forward);
                 if (i < amount)
                 {
-                    var deckUIPosition = deckUI.localPosition;
-                    deckUIPosition.y = cards[i].localPosition.y + 0.1f;
-                    deckUI.localPosition = deckUIPosition;
+                    var deckTopPosition = deckTop.localPosition;
+                    deckTopPosition.y = cards[i].localPosition.y + 0.1f;
+                    deckTop.localPosition = deckTopPosition;
                 }
             }
         }

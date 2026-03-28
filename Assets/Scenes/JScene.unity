@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &139515496 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2121115330533410744, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-  m_PrefabInstance: {fileID: 503038277}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &160780881
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,14 +710,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 484642686505363417, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 768475519094288349, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2725160548276362669, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -766,26 +753,6 @@ PrefabInstance:
     - target: {fileID: 4597603175966762426, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
       propertyPath: m_Name
       value: GameplayView
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818843516584876098, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818843516584876098, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 9.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818843516584876098, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9774787
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818843516584876098, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.21103445
-      objectReference: {fileID: 0}
-    - target: {fileID: 5818843516584876098, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -24.366
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1826,6 +1793,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564193579}
   m_CullTransparentMesh: 1
+--- !u!4 &1613635929 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1488428854072232040, guid: 138aa597ec1bbcd40a5ba36730c01cb7, type: 3}
+  m_PrefabInstance: {fileID: 503038277}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1618330998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,7 +2238,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 3818786913521381892, guid: 4fe4cba8061894ae89253d1f69106682, type: 3}
   spacing: 0.8
   transitionService: {fileID: 189680142}
-  deckAnchor: {fileID: 139515496}
+  deckAnchor: {fileID: 1613635929}
 --- !u!1 &1866773974
 GameObject:
   m_ObjectHideFlags: 0
