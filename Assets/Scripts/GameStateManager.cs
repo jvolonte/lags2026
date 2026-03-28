@@ -142,7 +142,7 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaysCard()
     {
-        Debug.Log("Waiting for player to play a card...");
+        
     }
 
     void HandlePlayerSelectedCard(CardView view)
@@ -169,8 +169,6 @@ public class GameStateManager : MonoBehaviour
             DialogueService.TutorialStickerDialogue(Context.Enemy.Data);
             stickerTutorial = true;
         }
-
-        Debug.Log("Waiting for player to place a sticker...");
     }
 
     void HandlePlayerSelectedSticker(StickerPlacement sticker, Card card)
