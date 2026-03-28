@@ -16,6 +16,7 @@ Shader "Hand"
         _GradientScroll("Gradient Scroll Speed", Float) = 0.5
         _DitherThreshold("Dither Threshold", Range(0, 1)) = 0.5
         _DitherScale("Dither Scale", Float) = 1.0
+        _EffectBlend("Effect Blend", Range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -61,6 +62,7 @@ Shader "Hand"
             float4 _Color1;
             float _DitherThreshold;
             float _DitherScale;
+            float _EffectBlend;
 
             // 4x4 Bayer matrix dithering
             float Bayer4x4(float2 screenPos)
@@ -121,7 +123,7 @@ Shader "Hand"
                     fixed4 gradientColor = lerp(_GradientFade, _GradientApex, intensity);
                     
                     // Apply dithered gradient
-                    col = (blend > dither) ? col : gradientColor;
+                    col = (blend > dither) ? col : lerp(col, gradientColor, _EffectBlend);
                 }
 
                 col += _Add;
