@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.EnemyData
   id: 0
   dialogue: {fileID: 11400000, guid: 22059b9e782ff45798c180d3c62822dc, type: 2}
-  health: 1
+  health: 2
   stickersInCards: {x: 0, y: 0}
   prefab: {fileID: 8301369170142595094, guid: 9ff5bf59985c94f4480748e7342a4ff4, type: 3}
   bgmClipId: 0

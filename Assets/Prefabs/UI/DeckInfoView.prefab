@@ -47,11 +47,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4212023960408434931, guid: 2bb7432e050367f44a1fe594c2a039af, type: 3}
       propertyPath: m_text
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4212023960408434931, guid: 2bb7432e050367f44a1fe594c2a039af, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 4212023960408434931, guid: 2bb7432e050367f44a1fe594c2a039af, type: 3}
       propertyPath: m_TextWrappingMode
