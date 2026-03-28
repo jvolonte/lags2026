@@ -16,7 +16,7 @@ namespace Views
         private float WORLD_BOTTOM_CLIP = 4.4f;
         private float WORLD_TOP_CLIP = 7.6f;
         private float DITHER_BAND_WIDTH = 0.2f;
-        private float TRIGGER_DITHER_THRESHOLD = 0.75f;
+        private float TRIGGER_DITHER_THRESHOLD = 0.6f;
 
         [SerializeField] StickerShadow shadowCaster;
         [SerializeField] UnityEngine.Animation animator;
@@ -45,6 +45,8 @@ namespace Views
         private float randomAngle;
         private bool highlighted;
         private float highlightedTime;
+        private bool isCombatSticker;
+        private bool queuedForBorderCheck;
 
         private Coroutine borderStickerAnimation;
         private Coroutine coroutineReflection;
@@ -60,6 +62,9 @@ namespace Views
         {
             shadowCaster.enabled = false;
             shadowCaster.UpdateShadowTexture();
+
+            if (queuedForBorderCheck)
+                BorderCheck();
         }
 
         private void LateUpdate()
@@ -146,12 +151,24 @@ namespace Views
 
         public void SetAsCombatSticker ()
         {
-            if (borderStickerAnimation != null) return;
+            isCombatSticker = true;
+            BorderCheck();
+        }
 
+        public void BorderCheck ()
+        {
+            if (!gameObject.activeInHierarchy)
+            {
+                queuedForBorderCheck = true;
+                return;
+            }
+
+            if (borderStickerAnimation != null) return;
             if (transform.position.y - WORLD_BOTTOM_CLIP < TRIGGER_DITHER_THRESHOLD ||
                 WORLD_TOP_CLIP - transform.position.y < TRIGGER_DITHER_THRESHOLD)
             {
                 borderStickerAnimation = StartCoroutine(BorderStickerAnimation(1f));
+                queuedForBorderCheck = false;
             }
         }
 
