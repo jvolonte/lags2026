@@ -1,4 +1,5 @@
 using System.Collections;
+using Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -88,9 +89,30 @@ namespace Views
         IEnumerator TypeDialogue(string line, float display)
         {
             tmpBody.text = "";
+
+            var counter = 0;
+            var charsPerSound = 2;
+
+            var lastSoundTime = 0f;
+            var minInterval = 0.04f;
+
             foreach (var c in line)
             {
                 tmpBody.text += c;
+
+                if (char.IsLetterOrDigit(c))
+                {
+                    counter++;
+
+                    if (counter >= charsPerSound && Time.time - lastSoundTime > minInterval)
+                    {
+                        counter = 0;
+                        lastSoundTime = Time.time;
+
+                        SfxManager.Play(SfxClipId.Dialogue, 1f, Random.Range(0.92f, 1.08f));
+                    }
+                }
+
                 yield return new WaitForSeconds(characterDelay);
             }
 
