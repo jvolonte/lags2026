@@ -16,10 +16,17 @@ namespace Data
         [Header("Presentation")]
         public GameObject prefab;
         public BgmClipId bgmClipId;
+        public TimeOfDay TimeOfDay;
 
         [Header("Texts Presentation")]
         public Color backgroundColor;
         public Color textColor;
 
     }
+}
+
+public enum TimeOfDay
+{
+    Day,
+    Night
 }
