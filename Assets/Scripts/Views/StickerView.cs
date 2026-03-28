@@ -13,6 +13,10 @@ namespace Views
     {
         private const string ANIMATION_TRIGGER = "animStickerTrigger";
         private static readonly Vector3 highlightDisplacement = new Vector3(0f, 0.1f, -0.1f);
+        private float WORLD_BOTTOM_CLIP = 4.4f;
+        private float WORLD_TOP_CLIP = 7.6f;
+        private float DITHER_BAND_WIDTH = 0.2f;
+        private float TRIGGER_DITHER_THRESHOLD = 0.75f;
 
         [SerializeField] StickerShadow shadowCaster;
         [SerializeField] UnityEngine.Animation animator;
@@ -42,6 +46,7 @@ namespace Views
         private bool highlighted;
         private float highlightedTime;
 
+        private Coroutine borderStickerAnimation;
         private Coroutine coroutineReflection;
 
         private void Awake()
@@ -139,8 +144,42 @@ namespace Views
             HideStickerExtras();
         }
 
+        public void SetAsCombatSticker ()
+        {
+            if (borderStickerAnimation != null) return;
+
+            if (transform.position.y - WORLD_BOTTOM_CLIP < TRIGGER_DITHER_THRESHOLD ||
+                WORLD_TOP_CLIP - transform.position.y < TRIGGER_DITHER_THRESHOLD)
+            {
+                borderStickerAnimation = StartCoroutine(BorderStickerAnimation(1f));
+            }
+        }
+
         public Coroutine Trigger(float speed = 1f) =>
             StartCoroutine(TriggerAnimation(speed));
+
+        IEnumerator BorderStickerAnimation (float duration)
+        {
+            meshRenderer.material.EnableKeyword("WORLD_CLIP_ON");
+            meshRenderer.material.SetFloat("_DitherEdge", DITHER_BAND_WIDTH);
+
+            yield return null;
+
+            float t = 0f;
+            while(t < 1f)
+            {
+                t = Mathf.Clamp01(t + Time.deltaTime / duration);
+
+                meshRenderer.material.SetFloat("_TopThreshold",
+                    WORLD_TOP_CLIP + TRIGGER_DITHER_THRESHOLD * (1 - t));
+                meshRenderer.material.SetFloat("_BottomThreshold",
+                    WORLD_BOTTOM_CLIP - TRIGGER_DITHER_THRESHOLD * (1 - t));
+
+                yield return null;
+            }
+
+            borderStickerAnimation = null;
+        }
 
         IEnumerator TriggerAnimation(float speed)
         {

@@ -25,6 +25,7 @@ namespace Views
         public CardAnimations CardAnimations => cardAnimation;
 
         public bool canReceiveStickers = false;
+        bool isCombatCard = false;
 
         Card card;
 
@@ -110,6 +111,9 @@ namespace Views
                 );
 
                 view.DisableDragging();
+
+                if (isCombatCard) view.SetAsCombatSticker();
+
                 stickerViews.Add(view);
             }
         }
@@ -125,6 +129,7 @@ namespace Views
         public Card GetCard() => card;
 
         public void AllowStickers() => canReceiveStickers = true;
+        public void SetAsCombatCard() => isCombatCard = true;
 
         public List<StickerView> GetStickers() => stickerViews;
     }

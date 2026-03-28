@@ -55,6 +55,7 @@ namespace Views
             previewView.transform.localPosition = Vector3.zero;
             previewView.transform.localRotation = Quaternion.identity;
             previewView.transform.localScale = Vector3.one;
+            previewView.SetAsCombatCard();
             previewView.SetCard(c);
             if (allowStickers) previewView.AllowStickers();
 
