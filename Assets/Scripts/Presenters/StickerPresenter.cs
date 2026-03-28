@@ -28,6 +28,7 @@ namespace Presenters
         void Awake()
         {
             surfaceRoot.transform.localScale = Vector3.zero;
+            surfaceRoot.gameObject.SetActive(false);
 
             CombatEventManager.OnRevealStickers += ShowSheet;
             CombatEventManager.OnClearStickers += Clear;
