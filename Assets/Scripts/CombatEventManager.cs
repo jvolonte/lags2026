@@ -29,6 +29,7 @@ public static class CombatEventManager
     public static event Action<StickerView> OnStickerDestroyed;
     public static event Action<Enemy> OnEnemyReady;
     public static event Action OnEnemyCleared;
+    public static event Action<TimeOfDay> OnChangeTimeOfDay;
 
     public static void PlayCard(CardView view) => OnPlayCard?.Invoke(view);
     public static void EnemyPlayCard(Card card) => OnEnemyPlayCard?.Invoke(card);
@@ -65,4 +66,6 @@ public static class CombatEventManager
 
     public static void EnemyReady(Enemy enemy) => OnEnemyReady?.Invoke(enemy);
     public static void ClearEnemy() => OnEnemyCleared?.Invoke();
+    
+    public static void ChangeTimeOfDay(TimeOfDay time) => OnChangeTimeOfDay?.Invoke(time);
 }
