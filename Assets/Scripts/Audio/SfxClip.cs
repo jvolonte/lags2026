@@ -35,5 +35,6 @@ namespace Audio
         VincentVoice,
         IvanVoice,
         BaltasarVoice,
+        Dialogue,
     }
 }
