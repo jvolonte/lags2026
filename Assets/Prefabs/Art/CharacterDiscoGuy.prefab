@@ -78,14 +78,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8301369170142595094, guid: 9ff5bf59985c94f4480748e7342a4ff4, type: 3}
       propertyPath: m_Name
-      value: CharacterDiscoGuy Variant
+      value: CharacterDiscoGuy
       objectReference: {fileID: 0}
     - target: {fileID: 8301369170142595094, guid: 9ff5bf59985c94f4480748e7342a4ff4, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4080117251647312662, guid: 9ff5bf59985c94f4480748e7342a4ff4, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ff5bf59985c94f4480748e7342a4ff4, type: 3}
