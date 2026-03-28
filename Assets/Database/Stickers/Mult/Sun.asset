@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b665452123c84f278333539d1ff7131c, type: 3}
-  m_Name: Golden
+  m_Name: Sun
   m_EditorClassIdentifier: Assembly-CSharp::Data.Stickers.GoldenStickerData
-  id: Golden
-  descriptionTemplate: '{chance}% chance to x{value}'
+  id: Sun
+  descriptionTemplate: x3 if both played cards are odd or both are even.
   rarity: 1
   prefab: {fileID: 3218893417315888488, guid: 279ae144370304bdbb5ba6263a361a63, type: 3}
   value: 3
-  chance: 0.3
