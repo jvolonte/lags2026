@@ -15,4 +15,4 @@ MonoBehaviour:
   id: 2
   volumePercentage: 0.2
   variants:
-  - {fileID: 8300000, guid: 8c25ccd01c9ff485e8c54b1e15afa9b9, type: 3}
+  - {fileID: 8300000, guid: d03b2ee21ee984ac59e5eff3598ea295, type: 3}
