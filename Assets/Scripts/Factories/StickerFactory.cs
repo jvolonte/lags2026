@@ -1,7 +1,6 @@
 using System.Linq;
 using Data;
 using Data.Stickers;
-using Presenters;
 using Stickers;
 using UnityEngine;
 
@@ -29,9 +28,8 @@ namespace Factories
         static List<StickerData> ResolveContextPool(List<StickerData> stickers, GameContext context)
         {
             var pool = new List<StickerData>();
-            var isFirstOpponent = context.Enemy.Data.id == EnemyId.Alfonso;
 
-            if (isFirstOpponent)
+            if (context.IsFirstOpponent)
             {
                 pool = context.Round switch
                 {

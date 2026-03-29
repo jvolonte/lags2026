@@ -20,6 +20,13 @@ namespace Factories
             return Create(value, suit, stickerCount);
         }
 
+        public Card CreateRandom(int stickerCount, int maxValue)
+        {
+            var value = Random.Range(1, maxValue + 1);
+            var suit = (Suit)Random.Range(0, 4);
+            return Create(value, suit, stickerCount);
+        }
+
         public Card Create(int value, Suit suit, int stickerCount = 0)
         {
             var stickers = CreateStickers(stickerCount, value);

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Data.Stickers;
 using Factories;
-using Presenters;
 using UnityEngine;
 
 namespace Services
@@ -25,7 +24,7 @@ namespace Services
                 var (logic, data) = StickerFactory.GetRandomWeighted(pool, context);
                 result.Add(new StickerInstance { Logic = logic, Data = data });
 
-                if (IsTutorialRound(context))
+                if (context.IsTutorialRound)
                     pool.RemoveAll(s => IsSameVariant(s, data));
                 else
                     pool.RemoveAll(s => s.GetType() == data.GetType());
@@ -46,8 +45,5 @@ namespace Services
                 _ => false
             };
         }
-
-        static bool IsTutorialRound(GameContext context) =>
-            context.Round == 1 && context.Enemy.Data.id == EnemyId.Alfonso;
     }
 }

@@ -142,8 +142,7 @@ public class GameStateManager : MonoBehaviour
     {
         Context.Round++;
 
-        var stickerCount = Context.Enemy.Data.stickersInCards;
-        var card = cardFactory.CreateRandom(Random.Range(stickerCount.x, stickerCount.y + 1));
+        var card = enemyTurnService.PlayCard(Context, stickerFactory);
 
         Context.EnemyCurrentCard = card;
         CombatEventManager.EnemyPlayCard(card);
