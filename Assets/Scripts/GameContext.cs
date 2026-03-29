@@ -13,6 +13,8 @@ public class GameContext
     
     public List<StickerInstance> AvailableStickers = new();
     public WinRuleSet RuleSet;
+
+    public int Round;
 }
 
 public class StickerInstance

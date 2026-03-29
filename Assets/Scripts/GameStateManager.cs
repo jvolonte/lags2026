@@ -116,7 +116,7 @@ public class GameStateManager : MonoBehaviour
     void EnterSetup()
     {
         BgmManager.Play(BgmClipId.Bar);
-        
+
         var discardPile = new DiscardPile();
         var deck = deckFactory.CreatePooledDeck(discardPile);
         var hand = new Hand();
@@ -126,6 +126,7 @@ public class GameStateManager : MonoBehaviour
         discardPileView.Bind(discardPile);
         handView.Bind(hand);
 
+        Context.Round = 0;
         Context.Player = player;
 
         enemyManager.StartNextEnemy();
@@ -139,6 +140,8 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaysCard()
     {
+        Context.Round++;
+
         var stickerCount = Context.Enemy.Data.stickersInCards;
         var card = cardFactory.CreateRandom(Random.Range(stickerCount.x, stickerCount.y + 1));
 
@@ -149,7 +152,6 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaysCard()
     {
-        
     }
 
     void HandlePlayerSelectedCard(CardView view)
@@ -261,6 +263,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (enemyManager.HasMoreEnemies)
         {
+            Context.Round = 0;
             enemyManager.StartNextEnemy();
             Context.Enemy = enemyManager.CurrentEnemy;
         }
