@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 using Views;
 
@@ -9,7 +9,7 @@ namespace Services
     {
         EvaluationView playerView;
         EvaluationView enemyView;
-        
+
         CardCombatView playerCombatView;
         CardCombatView enemyCombatView;
 
@@ -36,11 +36,37 @@ namespace Services
             var result = ConflictResolver.Resolve(context);
 
             yield return PlayEvaluation(result);
-            yield return new WaitForSeconds(2);
+
+            if (context.IsTutorialRound)
+            {
+                PlayTutorialDialogue(context, result);
+                InputController.Instance.ConsumeContinue();
+                yield return new WaitUntil(() => InputController.Instance.ConsumeContinue());
+            }
+            else
+                yield return new WaitForSeconds(2);
+
             ConflictResolver.ApplyOutcome(result, context);
 
-            //TODO: check if this is needed
             yield return new WaitForSeconds(2);
+        }
+
+        static void PlayTutorialDialogue(GameContext context, ConflictResult result)
+        {
+            switch (result.Outcome)
+            {
+                case ConflictOutcome.EnemyWin:
+                    DialogueService.TutorialLoseDialogue(context.Enemy.Data);
+                    break;
+                case ConflictOutcome.PlayerWin:
+                    DialogueService.TutorialWinDialogue(context.Enemy.Data);
+                    break;
+                case ConflictOutcome.Tie:
+                    DialogueService.TutorialTieDialogue(context.Enemy.Data);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         IEnumerator PlayEvaluation(ConflictResult result)

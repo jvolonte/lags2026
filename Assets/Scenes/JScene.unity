@@ -887,6 +887,7 @@ GameObject:
   - component: {fileID: 638543746}
   - component: {fileID: 638543747}
   - component: {fileID: 638543748}
+  - component: {fileID: 638543749}
   m_Layer: 0
   m_Name: InputSystem
   m_TagString: Untagged
@@ -937,6 +938,27 @@ MonoBehaviour:
   stickerLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &638543749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638543745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fb3d0c7f2345589616f4620e0931c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Views.InputController
+  continueAction:
+    m_Name: Continue
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5da50770-8eb2-40b0-9ff5-f6ce8b5fa13c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &719145858
 GameObject:
   m_ObjectHideFlags: 0

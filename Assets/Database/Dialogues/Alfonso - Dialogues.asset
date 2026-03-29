@@ -33,3 +33,8 @@ MonoBehaviour:
   stickerPhase: "Now pick a sticker. Drag it on your card or one on your hand.\nI\u2019ll
     take from what you leave."
   encounterPhase: The winner takes the cards in play. Run out of cards, and you lose.
+  tutorialWin: There it is, your total went higher than mine. That's how you win
+    a round. You take both cards now.
+  tutorialLose: ah... mm... not quite. my value's higher, so I take this one.
+  tutorialTie: Oh?.. We tied. No one wins this round. We keep our cards and play
+    another round.

@@ -13,10 +13,10 @@ namespace Services
 
         public static void ThinkingDialogue(EnemyData data) =>
             PlayDialogue(data, data.dialogue.thinking.PickOne());
-        
+
         public static void WinRoundDialogue(EnemyData data) =>
             PlayDialogue(data, data.dialogue.winRound.PickOne());
-        
+
         public static void LoseRoundDialogue(EnemyData data) =>
             PlayDialogue(data, data.dialogue.loseRound.PickOne());
 
@@ -25,6 +25,13 @@ namespace Services
 
         public static void TutorialStickerDialogue(EnemyData data) =>
             PlayDialogue(data, data.dialogue.stickerPhase, true);
+
+        public static void TutorialWinDialogue(EnemyData data) =>
+            PlayDialogue(data, data.dialogue.tutorialWin, true);
+        public static void TutorialLoseDialogue(EnemyData data) =>
+            PlayDialogue(data, data.dialogue.tutorialLose, true);
+        public static void TutorialTieDialogue(EnemyData data) =>
+            PlayDialogue(data, data.dialogue.tutorialTie, true);
 
         public static void GameStart(EnemyData data, bool isTutorial = false) =>
             PlayDialogue(data, data.dialogue.onGameStart, isTutorial);

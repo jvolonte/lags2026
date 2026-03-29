@@ -21,5 +21,8 @@ namespace Data
         [Header("Tutorial")] 
         [TextArea] public string stickerPhase;
         [TextArea] public string encounterPhase;
+        [TextArea] public string tutorialWin;
+        [TextArea] public string tutorialLose;
+        [TextArea] public string tutorialTie;
     }
 }
