@@ -36,5 +36,6 @@ namespace Audio
         IvanVoice,
         BaltasarVoice,
         Dialogue,
+        RoundWon,
     }
 }

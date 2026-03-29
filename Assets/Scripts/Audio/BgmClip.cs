@@ -25,5 +25,7 @@ namespace Audio
         None = 0,
         Bar,
         BaltasarSoundtrack,
+        CarmenSoundtrack,
+        IvanSoundtrack,
     }
 }
