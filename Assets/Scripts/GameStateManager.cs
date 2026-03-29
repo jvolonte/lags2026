@@ -118,7 +118,7 @@ public class GameStateManager : MonoBehaviour
         BgmManager.Play(BgmClipId.Bar);
         
         var discardPile = new DiscardPile();
-        var deck = deckFactory.CreateRandom(discardPile);
+        var deck = deckFactory.CreatePooledDeck(discardPile);
         var hand = new Hand();
         var player = new Player(deck, hand, discardPile);
 
