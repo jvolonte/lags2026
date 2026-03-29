@@ -14,7 +14,7 @@ namespace Views
         private const string ANIMATION_TRIGGER = "animStickerTrigger";
         private static readonly Vector3 highlightDisplacement = new Vector3(0f, 0.1f, -0.1f);
         private float WORLD_BOTTOM_CLIP = 4.4f;
-        private float WORLD_TOP_CLIP = 7.6f;
+        private float WORLD_TOP_CLIP = 7.45f;
         private float DITHER_BAND_WIDTH = 0.2f;
         private float TRIGGER_DITHER_THRESHOLD = 0.6f;
 

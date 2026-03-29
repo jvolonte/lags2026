@@ -25,7 +25,7 @@ Shader "Sticker"
             #pragma fragment frag
             // make fog work
             #pragma multi_compile_fog
-            #pragma shader_feature_local WORLD_CLIP_ON
+            #pragma multi_compile_local _ WORLD_CLIP_ON
 
             #include "UnityCG.cginc"
             #include "cginc/Utils.cginc"
