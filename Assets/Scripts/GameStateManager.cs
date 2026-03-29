@@ -165,7 +165,7 @@ public class GameStateManager : MonoBehaviour
     void EnterRevealStickers()
     {
         Context.AvailableStickers.Clear();
-        Context.AvailableStickers = stickerDraftService.Draft(3);
+        Context.AvailableStickers = stickerDraftService.Draft(3, Context);
         CombatEventManager.RevealStickers(Context.AvailableStickers);
 
         TransitionTo(GameState.PlayerPlaceSticker);
