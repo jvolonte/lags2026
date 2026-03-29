@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CarmenVoice
   m_EditorClassIdentifier: Assembly-CSharp::Audio.SfxClip
   id: 12
-  volumePercentage: 0.4
+  volumePercentage: 0.2
   variants:
   - {fileID: 8300000, guid: 2fd7474764d8b4307b8ef3cd013abec9, type: 3}
   - {fileID: 8300000, guid: 46d81f3f69f8649b09b82e78b1575abe, type: 3}
