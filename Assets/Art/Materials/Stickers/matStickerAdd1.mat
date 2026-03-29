@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matStickerAdd
+  m_Name: matStickerAdd1
   m_Shader: {fileID: 4800000, guid: e6ba902f837fb8849a9da0e16cc664e6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
