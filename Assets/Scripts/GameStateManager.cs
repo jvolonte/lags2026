@@ -116,9 +116,9 @@ public class GameStateManager : MonoBehaviour
     void EnterSetup()
     {
         BgmManager.Play(BgmClipId.Bar);
-        
+
         var discardPile = new DiscardPile();
-        var deck = deckFactory.CreateRandom(discardPile);
+        var deck = deckFactory.CreatePooledDeck(discardPile);
         var hand = new Hand();
         var player = new Player(deck, hand, discardPile);
 
@@ -126,6 +126,7 @@ public class GameStateManager : MonoBehaviour
         discardPileView.Bind(discardPile);
         handView.Bind(hand);
 
+        Context.Round = 0;
         Context.Player = player;
 
         enemyManager.StartNextEnemy();
@@ -139,8 +140,9 @@ public class GameStateManager : MonoBehaviour
 
     void EnterEnemyPlaysCard()
     {
-        var stickerCount = Context.Enemy.Data.stickersInCards;
-        var card = cardFactory.CreateRandom(Random.Range(stickerCount.x, stickerCount.y + 1));
+        Context.Round++;
+
+        var card = enemyTurnService.PlayCard(Context, stickerFactory);
 
         Context.EnemyCurrentCard = card;
         CombatEventManager.EnemyPlayCard(card);
@@ -149,7 +151,6 @@ public class GameStateManager : MonoBehaviour
 
     void EnterPlayerPlaysCard()
     {
-        
     }
 
     void HandlePlayerSelectedCard(CardView view)
@@ -163,7 +164,7 @@ public class GameStateManager : MonoBehaviour
     void EnterRevealStickers()
     {
         Context.AvailableStickers.Clear();
-        Context.AvailableStickers = stickerDraftService.Draft(3);
+        Context.AvailableStickers = stickerDraftService.Draft(3, Context);
         CombatEventManager.RevealStickers(Context.AvailableStickers);
 
         TransitionTo(GameState.PlayerPlaceSticker);
@@ -261,6 +262,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (enemyManager.HasMoreEnemies)
         {
+            Context.Round = 0;
             enemyManager.StartNextEnemy();
             Context.Enemy = enemyManager.CurrentEnemy;
         }

@@ -2,6 +2,7 @@ using System.Linq;
 using Data;
 using Data.Stickers;
 using Stickers;
+using UnityEngine;
 
 namespace Factories
 {
@@ -16,10 +17,35 @@ namespace Factories
             Pool = pool;
         }
 
-        public static (ISticker logic, StickerData data) GetRandomWeighted(List<StickerData> stickers)
+        public static (ISticker logic, StickerData data) GetRandomWeighted(
+            List<StickerData> stickers,
+            GameContext context)
+        {
+            var overriddenPool = ResolveContextPool(stickers, context);
+            return GetRandomWeighted(overriddenPool);
+        }
+
+        static List<StickerData> ResolveContextPool(List<StickerData> stickers, GameContext context)
+        {
+            var pool = new List<StickerData>();
+
+            if (context.IsFirstOpponent)
+            {
+                pool = context.Round switch
+                {
+                    1 => stickers.Where(s => s is AdditiveStickerData or MultiplierStickerData).ToList(),
+                    2 => stickers.Where(s => s is OddStickerData or EvenStickerData or StackerStickerData).ToList(),
+                    _ => pool
+                };
+            }
+
+            return pool.Count > 0 ? pool : stickers;
+        }
+
+        static (ISticker logic, StickerData data) GetRandomWeighted(List<StickerData> stickers)
         {
             var totalWeight = stickers.Sum(s => StickerRarityWeights.GetWeight(s.rarity));
-            var roll = UnityEngine.Random.Range(0f, totalWeight);
+            var roll = Random.Range(0f, totalWeight);
             var cumulative = 0f;
 
             foreach (var data in stickers)

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Data;
-using Data.Stickers;
 using UnityEngine;
 
 namespace Factories
@@ -18,10 +17,20 @@ namespace Factories
         {
             var value = Random.Range(1, 13);
             var suit = (Suit)Random.Range(0, 4);
+            return Create(value, suit, stickerCount);
+        }
+
+        public Card CreateRandom(int stickerCount, int maxValue)
+        {
+            var value = Random.Range(1, maxValue + 1);
+            var suit = (Suit)Random.Range(0, 4);
+            return Create(value, suit, stickerCount);
+        }
+
+        public Card Create(int value, Suit suit, int stickerCount = 0)
+        {
             var stickers = CreateStickers(stickerCount, value);
-
             AssignPositions(stickers);
-
             return new Card(value, suit, stickers);
         }
 
