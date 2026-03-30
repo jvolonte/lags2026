@@ -20,7 +20,6 @@ namespace Views
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             continueAction = new InputAction(
                 type: InputActionType.Button,
