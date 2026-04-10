@@ -78,7 +78,7 @@ namespace Views
 
             if (highlightedTime > 0f)
             {
-                if (!shadowCaster.Shadow.gameObject.activeSelf) 
+                if (!shadowCaster.Shadow.gameObject.activeSelf)
                     shadowCaster.Shadow.gameObject.SetActive(true);
 
                 root.localPosition = highlightDisplacement * curveSelection.Evaluate(highlightedTime);
@@ -86,7 +86,10 @@ namespace Views
                 shadowCaster.Shadow.localPosition = -root.localPosition + Vector3.forward * 0.001f;
             }
             else
+            {
                 root.localPosition = Vector3.zero;
+                shadowCaster.Shadow.localPosition = Vector3.forward * 0.026f; //<-- depth test fix
+            }
         }
         public void Bind(StickerInstance inst)
         {
